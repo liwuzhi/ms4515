@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 1   
+C51 COMPILER V9.01   STORAGE                                                               05/17/2015 22:53:50 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE STORAGE
@@ -62,7 +62,7 @@ line level    source
   53          
   54          #define START1     0x6af0
   55          #define START2     0x6af1
-C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 2   
+C51 COMPILER V9.01   STORAGE                                                               05/17/2015 22:53:50 PAGE 2   
 
   56          
   57          /**********二级eeprom保护数据******************/
@@ -126,7 +126,7 @@ line level    source
  115   2                      temp2 =IapReadByte(AREA_2);
  116   2              g_iArea = temp1*100+temp2;
  117   2      
-C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 3   
+C51 COMPILER V9.01   STORAGE                                                               05/17/2015 22:53:50 PAGE 3   
 
  118   2                      /*积分系数初始化话*/
  119   2              g_cIntegral = IapReadByte(INTEGRAL);
@@ -190,7 +190,7 @@ line level    source
  177   2         }
  178   1         else
  179   1         {
-C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 4   
+C51 COMPILER V9.01   STORAGE                                                               05/17/2015 22:53:50 PAGE 4   
 
  180   2      
  181   2           g_iArea = 10000; //1.0平方米
@@ -254,7 +254,7 @@ line level    source
  239   2               IapProgramByte(0,SUM4);
  240   2      
  241   2           IapProgramByte(0,SUM1_BIAO_1);
-C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 5   
+C51 COMPILER V9.01   STORAGE                                                               05/17/2015 22:53:50 PAGE 5   
 
  242   2               IapProgramByte(0,SUM1_BIAO_2);
  243   2               IapProgramByte(0,SUM1_BIAO_3);
@@ -318,7 +318,7 @@ line level    source
  300   2                       g_cWorkChange  = IapReadByte(ISCH4_2);
  301   2      
  302   2                       g_cMaxOut = IapReadByte(MAXOUT_2);
-C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 6   
+C51 COMPILER V9.01   STORAGE                                                               05/17/2015 22:53:50 PAGE 6   
 
  303   2      
  304   2      //               g_cStart =  IapReadByte(START_2);
@@ -382,7 +382,7 @@ line level    source
  362   2                       IapProgramByte(0,SUM3);
  363   2                       IapProgramByte(0,SUM4);
  364   2              
-C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 7   
+C51 COMPILER V9.01   STORAGE                                                               05/17/2015 22:53:50 PAGE 7   
 
  365   2                   IapProgramByte(0,SUM1_BIAO_1);
  366   2                       IapProgramByte(0,SUM1_BIAO_2);
@@ -446,7 +446,7 @@ line level    source
  424   1         temp2 = (int)g_fK2%100;
  425   1         IapProgramByte(temp1,K2_ADD_1);
  426   1         IapProgramByte(temp2,K2_ADD_2);
-C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 8   
+C51 COMPILER V9.01   STORAGE                                                               05/17/2015 22:53:50 PAGE 8   
 
  427   1         g_fK2 = g_fK2/100;
  428   1      
@@ -510,7 +510,7 @@ line level    source
  486   2              
  487   2                  g_fZero_rev = g_fZero_rev*100;
  488   2                 temp1 = (int)g_fZero_rev/100;
-C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 9   
+C51 COMPILER V9.01   STORAGE                                                               05/17/2015 22:53:50 PAGE 9   
 
  489   2                 temp2 = (int)g_fZero_rev%100;
  490   2                 IapProgramByte(temp1,ZERO_ADD_REV_1_2);
@@ -574,7 +574,7 @@ line level    source
  548   2                      IapProgramByte(temp4,SUM2_BIAO_CUN_4);  
  549   2                }   
  550   1      }
-C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 10  
+C51 COMPILER V9.01   STORAGE                                                               05/17/2015 22:53:50 PAGE 10  
 
 
 

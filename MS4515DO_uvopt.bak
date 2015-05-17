@@ -1002,10 +1002,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>23</ColumnNumber>
+      <ColumnNumber>38</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>153</TopLine>
-      <CurrentLine>153</CurrentLine>
+      <TopLine>169</TopLine>
+      <CurrentLine>195</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Display.c</PathWithFileName>
       <FilenameWithoutPath>Display.c</FilenameWithoutPath>
@@ -1018,7 +1018,7 @@
       <Focus>0</Focus>
       <ColumnNumber>21</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>36</TopLine>
+      <TopLine>37</TopLine>
       <CurrentLine>62</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\global_var.c</PathWithFileName>
@@ -1072,10 +1072,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>16</ColumnNumber>
+      <ColumnNumber>109</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>155</TopLine>
-      <CurrentLine>165</CurrentLine>
+      <CurrentLine>167</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\SPD6000.C</PathWithFileName>
       <FilenameWithoutPath>SPD6000.C</FilenameWithoutPath>
@@ -1154,32 +1154,6 @@
     <PathWithFilename>F:\小舅程序\MS4515DO_NEW_新版字\MS4525.H</PathWithFilename>
     <TopLine>1</TopLine>
     <CurrentLine>10</CurrentLine>
-    <Constant>0</Constant>
-    <WindowPosition>
-      <length>0</length>
-      <flags>0</flags>
-      <showCmd>0</showCmd>
-      <MinPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MinPosition>
-      <MaxPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MaxPosition>
-      <NormalPosition>
-        <Top>0</Top>
-        <Left>0</Left>
-        <Right>0</Right>
-        <Bottom>0</Bottom>
-      </NormalPosition>
-    </WindowPosition>
-  </AlienFiles>
-
-  <AlienFiles>
-    <PathWithFilename>F:\小舅程序\MS4515DO_NEW_新版字\GLOBAL_VAR.H</PathWithFilename>
-    <TopLine>49</TopLine>
-    <CurrentLine>75</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -1284,6 +1258,32 @@
     <PathWithFilename>F:\小舅程序\MS4515DO_NEW_新版字\DISPLAY.H</PathWithFilename>
     <TopLine>1</TopLine>
     <CurrentLine>1</CurrentLine>
+    <Constant>0</Constant>
+    <WindowPosition>
+      <length>0</length>
+      <flags>0</flags>
+      <showCmd>0</showCmd>
+      <MinPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MinPosition>
+      <MaxPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MaxPosition>
+      <NormalPosition>
+        <Top>0</Top>
+        <Left>0</Left>
+        <Right>0</Right>
+        <Bottom>0</Bottom>
+      </NormalPosition>
+    </WindowPosition>
+  </AlienFiles>
+
+  <AlienFiles>
+    <PathWithFilename>F:\小舅程序\MS4515DO_NEW_新版字\GLOBAL_VAR.H</PathWithFilename>
+    <TopLine>50</TopLine>
+    <CurrentLine>75</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -2647,12 +2647,12 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>9</ActiveTab>
+      <ActiveTab>4</ActiveTab>
       <Documents>
         <Doc>
           <Name>GLOBAL_VAR.H</Name>
           <ColumnNumber>29</ColumnNumber>
-          <TopLine>49</TopLine>
+          <TopLine>50</TopLine>
           <CurrentLine>75</CurrentLine>
         </Doc>
         <Doc>
@@ -2670,14 +2670,14 @@
         <Doc>
           <Name>.\global_var.c</Name>
           <ColumnNumber>21</ColumnNumber>
-          <TopLine>36</TopLine>
+          <TopLine>37</TopLine>
           <CurrentLine>62</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\SPD6000.C</Name>
-          <ColumnNumber>16</ColumnNumber>
+          <ColumnNumber>109</ColumnNumber>
           <TopLine>155</TopLine>
-          <CurrentLine>165</CurrentLine>
+          <CurrentLine>167</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\main.c</Name>
@@ -2705,9 +2705,9 @@
         </Doc>
         <Doc>
           <Name>.\Display.c</Name>
-          <ColumnNumber>23</ColumnNumber>
-          <TopLine>153</TopLine>
-          <CurrentLine>153</CurrentLine>
+          <ColumnNumber>38</ColumnNumber>
+          <TopLine>169</TopLine>
+          <CurrentLine>195</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\CH4.C</Name>

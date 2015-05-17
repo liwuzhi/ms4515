@@ -1002,10 +1002,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>38</ColumnNumber>
+      <ColumnNumber>5</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>169</TopLine>
-      <CurrentLine>195</CurrentLine>
+      <TopLine>963</TopLine>
+      <CurrentLine>989</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Display.c</PathWithFileName>
       <FilenameWithoutPath>Display.c</FilenameWithoutPath>
@@ -1072,10 +1072,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>109</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>155</TopLine>
-      <CurrentLine>167</CurrentLine>
+      <TopLine>60</TopLine>
+      <CurrentLine>60</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\SPD6000.C</PathWithFileName>
       <FilenameWithoutPath>SPD6000.C</FilenameWithoutPath>
@@ -2647,7 +2647,7 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>4</ActiveTab>
+      <ActiveTab>9</ActiveTab>
       <Documents>
         <Doc>
           <Name>GLOBAL_VAR.H</Name>
@@ -2675,9 +2675,9 @@
         </Doc>
         <Doc>
           <Name>.\SPD6000.C</Name>
-          <ColumnNumber>109</ColumnNumber>
-          <TopLine>155</TopLine>
-          <CurrentLine>167</CurrentLine>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>60</TopLine>
+          <CurrentLine>60</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\main.c</Name>
@@ -2705,9 +2705,9 @@
         </Doc>
         <Doc>
           <Name>.\Display.c</Name>
-          <ColumnNumber>38</ColumnNumber>
-          <TopLine>169</TopLine>
-          <CurrentLine>195</CurrentLine>
+          <ColumnNumber>5</ColumnNumber>
+          <TopLine>963</TopLine>
+          <CurrentLine>989</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\CH4.C</Name>

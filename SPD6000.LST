@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   SPD6000                                                               05/16/2015 23:36:20 PAGE 1   
+C51 COMPILER V9.01   SPD6000                                                               05/17/2015 22:53:50 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE SPD6000
@@ -62,7 +62,7 @@ line level    source
   53   1        return rxByte;
   54   1      }
   55          
-C51 COMPILER V9.01   SPD6000                                                               05/16/2015 23:36:20 PAGE 2   
+C51 COMPILER V9.01   SPD6000                                                               05/17/2015 22:53:50 PAGE 2   
 
   56          /*向传感器读取压差值*/
   57          unsigned char MS4515DO_read(unsigned char * p,unsigned char* temperature)
@@ -126,7 +126,7 @@ line level    source
  114   1         float ret;
  115   1         float sum = 0;
  116   1         char j=0;
-C51 COMPILER V9.01   SPD6000                                                               05/16/2015 23:36:20 PAGE 3   
+C51 COMPILER V9.01   SPD6000                                                               05/17/2015 22:53:50 PAGE 3   
 
  117   1      //   static char i = 0;
  118   1      
@@ -190,7 +190,7 @@ line level    source
  176   1                return windSpeed ;      
  177   1       }
  178          
-C51 COMPILER V9.01   SPD6000                                                               05/16/2015 23:36:20 PAGE 4   
+C51 COMPILER V9.01   SPD6000                                                               05/17/2015 22:53:50 PAGE 4   
 
  179          
  180          

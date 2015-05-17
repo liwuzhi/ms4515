@@ -532,7 +532,7 @@ void mian2_chinese()
    unsigned char* chinese[] ={zong,font_02,font_00,font_00,font_00};	  //总量
    unsigned char* chineseWork[] ={gong,kuang,font_00,font_00,font_00};	  //工况
    unsigned char* chineseStandar[] ={biao,kuang,font_00,font_00,font_00}; //标况
-   unsigned char* chineseStandar_cun[] ={chun,biao,font_00,font_00,font_00}; //标况
+   unsigned char* chineseStandar_cun[] ={biao,chun,font_00,font_00,font_00}; //	 标纯
    unsigned char* chineseClear[] ={qing,font_03,font_00,font_00,font_00};	  //清零选择
    code char arrOFF[] = {'O','F','F',' ','\0'};
    code char arrON[] =  {'O','N',' ',' ','\0'};
@@ -1267,38 +1267,18 @@ unsigned char display_MaxOut()
    	unsigned char key_num;
 	char maxout ;
 	char temp_maxout;
-	//static char flag=0;
-   unsigned char* chinese[] ={zong,font_02,font_00,font_00,font_00};	  //总量选择
-   unsigned char* chineseClear[] ={qing,font_03,font_00,font_00,font_00};	  //清零选择
-   unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+	char flag = 0;
+    unsigned char* chineseClear[] ={qing,font_03,font_00,font_00,font_00};	  //清零选择
+	code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
    code char arrOFF[] = {'O','F','F',' ','\0'};
    code char arrON[] =  {'O','N',' ',' ','\0'};
-   code char arrm3[] = {'m',59,'\0'};
-   code char arr[] = {':','\0'};
-//   code char arr1[] = {' ',' ',' ',' ',' ',' ',' ',' ','\0'};
+  // code char arrm3[] = {'m',59,'\0'};
+ //  code char arr[] = {':','\0'};
+
    maxout = g_cMaxOut;
    temp_maxout = g_cMaxOut;
 
-	display_stringChinese(0,0,chinese);
-
-	display_stringChar(14,1,arrm3);
-	display_stringChar(4,0,arr);
-
-	 if(maxout == 1)
-	  {
-	     display_stringChar(7,0,arrOFF);
-	  }
-	   else if(maxout == 0)
-	  {
-	     display_stringChar(7,0,arrON);
-	  }
-	   else
-	  {
-	     display_stringChinese(7,0,chineseClear);
-	  }
-
-	   display_sum((long)g_fSum,6,1);
-	   display_stringChar(14,1,arrm3);
+   mian2_chinese();
 
 	while(1)
 	{
@@ -1306,11 +1286,19 @@ unsigned char display_MaxOut()
 		{
 	      read_Maxout();
 		}
-		if(g_iTime%10 == 0)
-		  {
-		    display_sum((long)g_fSum,6,1);
-			display_stringChar(14,1,arrm3);
-		  }
+		if(0 == flag && g_iTimebase <= 5  )
+			{
+				    flag = 1;
+					display_sum(g_fSum,5,1); //显示工况累积值
+					display_sum(g_fSum_biao,5,2); //显示工况累积值
+					display_sum(g_fSum_biao_ch4,5,3);
+					//display_sum(12345678,6,3);
+
+			}
+			else if(g_iTimebase>5)
+			{
+				     flag = 0 ;
+			}   		  
 		
 		key_num = key();
 		if(key_num == KEY_FUNC)
@@ -1380,21 +1368,10 @@ unsigned char display_MaxOut()
 				   Dateeprom();
 				 }
 		       Clean_Display(0,0,128,48,0);
-		       display_stringChinese(0,0,chinese);
-			   if(maxout == 1)
-			   {
-			     display_stringChar(7,0,arrOFF);
-			     //display_stringChinese(0,1,chinese_isCh4);
-			   }
-			   else	if(maxout == 0)
-			   {
-			     display_stringChar(7,0,arrON);
-			     //display_stringChinese(0,1,chinese_noCh4);
-			   }
-			   else
-			   {
-			     display_stringChinese(7,0,chineseClear);
-			   }
+		      mian2_chinese();
+			  display_sum(g_fSum,5,1); //显示工况累积值
+			  display_sum(g_fSum_biao,5,2); //显示工况累积值
+			  display_sum(g_fSum_biao_ch4,5,3); 
 		   }
 
 		key_delay();
