@@ -353,7 +353,7 @@ unsigned char display_Area()
 		{
 		   g_iProtect = 0;
 		   g_iArea = area;
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   if(display_Protect1(chinese2,10) == 0)
 		     {
 			    g_iArea = temp_area;
@@ -363,7 +363,7 @@ unsigned char display_Area()
 			 {
 			   Dateeprom();
 			 }
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   display_stringChinese(0,0,chinese);
 		   display_stringChar(5,1,arr);
 		   disylay_mun(area,0,0,1);
@@ -726,7 +726,7 @@ unsigned char display_WindSpeedZero()
 		  {
 		    g_iProtect = 0;
 		    key_release();
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   if(display_Protect1(chinese2,10) == 1 )
 		   {
 		          i =0;
@@ -756,7 +756,7 @@ unsigned char display_WindSpeedZero()
 				   g_fZero_rev = g_fZero;
 				   Dateeprom(); 
 		   }
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   display_stringChinese(0,0,chinese);
 		   display_stringChar(6,1,arr);
 		   	windSpeed = Wid_Speed();
@@ -846,7 +846,7 @@ unsigned char display_WindSpeedRate()
 		  if(key_num == KEY_SURE)
 		  {
 		    g_iProtect = 0;
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   if(display_Protect1(chinese2,10) == 0)
 		     {
 			    
@@ -857,7 +857,7 @@ unsigned char display_WindSpeedRate()
 			   Dateeprom();
 			   k1 = g_fK1;
 			 }
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   display_stringChinese(0,0,chinese);
 		   	windSpeed = Wid_Speed();
         	play = 	(int)(windSpeed*10);
@@ -909,7 +909,7 @@ unsigned char display_Rate()
 		{
 		   g_iProtect = 0;
 		   g_fK2 = (float)range/100;
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   if(display_Protect1(chinese2,10) == 0)
 		     {
 			  
@@ -920,7 +920,7 @@ unsigned char display_Rate()
 			 {
 			     Dateeprom();
 			 }
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   display_stringChinese(0,0,chinese);
 		   disylay_mun(range,2,0,1);
 		}
@@ -962,7 +962,7 @@ unsigned char display_Renew()
 		{
 		   g_iProtect = 0;
 		   g_cIntegral = integral;
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   if(display_Protect1(chinese2,10) == 0)
 		   {
 		     
@@ -973,7 +973,7 @@ unsigned char display_Renew()
 		   {
 		     Dateeprom();
 		   }
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   display_stringChinese(0,0,chinese);
 		   disylay_mun(integral,0,0,1);
 		}
@@ -1029,7 +1029,7 @@ unsigned char display_ZKSet()
 		   g_iProtect = 0;
 		   g_fK1 = 1.0;
 		   g_fZero =g_fZero_rev ;
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 
  		   if(display_Protect1(chinese3,10)==0)
 		     {
@@ -1041,7 +1041,7 @@ unsigned char display_ZKSet()
 			 {
 			  Dateeprom();
 			 }
-		   Clean_Display(0,0,128,48,0);
+		   Clean_Display(0,0,128,64,0);
 		   display_stringChinese(0,0,chinese);
 		   if((g_fZero>(g_fZero_rev-0.01)&&g_fZero<(g_fZero_rev+0.01)) && g_fK1>0.99 && g_fK1<1.01 )
 	       {
@@ -1130,7 +1130,7 @@ unsigned char display_uint()
 		   {
 		       g_iProtect = 0;
 		       g_cUint = uint1;
-			   Clean_Display(0,0,128,48,0);
+			   Clean_Display(0,0,128,64,0);
 		       if(display_Protect1(chinese2,10)==0)
 			     {
 				    g_cUint = temp_uint1;
@@ -1140,7 +1140,7 @@ unsigned char display_uint()
 				 {
 				   Dateeprom();
 				 }
-		       Clean_Display(0,0,128,48,0);
+		       Clean_Display(0,0,128,64,0);
 		       display_stringChinese(0,0,chinese);
 			   if(uint1 == 1)
 			   {
@@ -1230,7 +1230,7 @@ unsigned char display_workchang()
 		   {
 		       g_iProtect = 0;
 		       g_cWorkChange = workChange;
-			   Clean_Display(0,0,128,48,0);
+			   Clean_Display(0,0,128,64,0);
 		       if(display_Protect1(chinese2,10)==0)
 			     {
 				    g_cWorkChange = temp_workChange;
@@ -1240,7 +1240,7 @@ unsigned char display_workchang()
 				 {
 				   Dateeprom();
 				 }
-		       Clean_Display(0,0,128,48,0);
+		       Clean_Display(0,0,128,64,0);
 		       display_stringChinese(0,0,chinese);
 			   if(workChange == 1)
 			   {
@@ -1351,7 +1351,7 @@ unsigned char display_MaxOut()
 		   {
 		       g_iProtect = 0;
 		       g_cMaxOut = maxout;
-			   Clean_Display(0,0,128,48,0);
+			   Clean_Display(0,0,128,64,0);
 		       if(display_Protect1(chinese2,10)==0)
 			     {
 				    g_cMaxOut = temp_maxout;
@@ -1367,7 +1367,7 @@ unsigned char display_MaxOut()
 					 }
 				   Dateeprom();
 				 }
-		       Clean_Display(0,0,128,48,0);
+		       Clean_Display(0,0,128,64,0);
 		      mian2_chinese();
 			  display_sum(g_fSum,5,1); //显示工况累积值
 			  display_sum(g_fSum_biao,5,2); //显示工况累积值
@@ -1465,7 +1465,7 @@ unsigned char display_Range()
 		       g_iProtect = 0;
 		       g_iRange =range;
 	           g_iRangeMin = rangeMin ;
-			   Clean_Display(0,0,128,48,0);
+			   Clean_Display(0,0,128,64,0);
 		       if(display_Protect1(chinese2,10)==0)
 			     {
 				   g_iRange = temp_range;
@@ -1477,7 +1477,7 @@ unsigned char display_Range()
 				 {
 				   Dateeprom();
 				 }
-		       Clean_Display(0,0,128,48,0);
+		       Clean_Display(0,0,128,64,0);
 		       display_stringChinese(0,0,chinese);
 			   	if(g_cUint == 0)
 				{
