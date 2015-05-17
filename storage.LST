@@ -1,0 +1,592 @@
+C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE STORAGE
+OBJECT MODULE PLACED IN storage.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE storage.c COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include "eeprom.h"
+   3          #include "global_var.h"
+   4          
+   5          #define SECRIT     0x6800
+   6          #define START      0x6801
+   7          
+   8          #define ZERO_ADD_1 0x6fF0
+   9          #define ZERO_ADD_2 0x6fF1
+  10          
+  11          #define K2_ADD_1    0x6fF2
+  12          #define K2_ADD_2    0x6fF3
+  13          
+  14          #define K1_ADD_1    0x6fFB
+  15          #define K1_ADD_2    0x6fFC
+  16          
+  17          #define INTEGRAL   0x6ff4
+  18          
+  19          #define AREA_1     0x6ff9
+  20          #define AREA_2     0x6ffa
+  21          
+  22          #define UNIT       0x6ff7
+  23          
+  24          #define RANGE      0x6ff8
+  25          
+  26          #define RANGEMIN1  0x6ff5
+  27          #define RANGEMIN2  0x6ff6
+  28          
+  29          #define SECRIT_NUM 0x6fff
+  30          
+  31          #define ISCH4      0x6fef
+  32          
+  33          #define MAXOUT     0x6fea
+  34          
+  35          #define SUM1       0x6fee
+  36          #define SUM2       0x6fed
+  37          #define SUM3       0x6fec
+  38          #define SUM4       0x6feb
+  39          
+  40          #define SUM1_BIAO_1       0x6fe5
+  41          #define SUM1_BIAO_2       0x6fe6
+  42          #define SUM1_BIAO_3       0x6fe7
+  43          #define SUM1_BIAO_4       0x6fe8
+  44          
+  45          #define SUM1_BIAO_CUN_1       0x6fd1
+  46          #define SUM1_BIAO_CUN_2       0x6fd2
+  47          #define SUM1_BIAO_CUN_3       0x6fd3
+  48          #define SUM1_BIAO_CUN_4       0x6fd4
+  49          
+  50          #define ZERO_ADD_REV_1 0x6fe1
+  51          #define ZERO_ADD_REV_2 0x6fe2
+  52          
+  53          
+  54          #define START1     0x6af0
+  55          #define START2     0x6af1
+C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 2   
+
+  56          
+  57          /**********二级eeprom保护数据******************/
+  58          #define ZERO_ADD_1_2 0x64F0
+  59          #define ZERO_ADD_2_2 0x64F1
+  60          
+  61          #define K2_ADD_1_2    0x64F2
+  62          #define K2_ADD_2_2    0x64F3
+  63          
+  64          #define K1_ADD_1_2    0x64FB
+  65          #define K1_ADD_2_2    0x64FC
+  66          
+  67          #define INTEGRAL_2   0x64f4
+  68          
+  69          #define AREA_1_2     0x64f9
+  70          #define AREA_2_2     0x64fa
+  71          
+  72          #define UNIT_2       0x64f7
+  73          
+  74          #define RANGE_2      0x64f8
+  75          
+  76          #define RANGEMIN1_2  0x64f5
+  77          #define RANGEMIN2_2  0x64f6
+  78          
+  79          #define SECRIT_NUM_2 0x64ff
+  80          
+  81          #define ISCH4_2      0x64ef
+  82          
+  83          #define MAXOUT_2     0x64ea
+  84          
+  85          #define SUM1_2       0x64ee
+  86          #define SUM2_2       0x64ed
+  87          #define SUM3_2       0x64ec
+  88          #define SUM4_2       0x64eb
+  89          
+  90          #define SUM2_BIAO_1       0x64e6
+  91          #define SUM2_BIAO_2       0x64e7
+  92          #define SUM2_BIAO_3       0x64e8
+  93          #define SUM2_BIAO_4       0x64e9
+  94          
+  95          
+  96          #define SUM2_BIAO_CUN_1       0x64e5
+  97          #define SUM2_BIAO_CUN_2       0x64e4
+  98          #define SUM2_BIAO_CUN_3       0x64e3
+  99          #define SUM2_BIAO_CUN_4       0x64e0  
+ 100           
+ 101          #define ZERO_ADD_REV_1_2 0x64e1
+ 102          #define ZERO_ADD_REV_2_2 0x64e2
+ 103          
+ 104          
+ 105          void dat_Init()
+ 106          {
+ 107   1      
+ 108   1         char temp1,temp2,temp3,temp4;
+ 109   1         temp1 = IapReadByte(START1);
+ 110   1         temp2 = IapReadByte(START2);
+ 111   1         if(temp1 ==10 && temp2 == 10)
+ 112   1         {
+ 113   2              /*面积参数初始化*/
+ 114   2                      temp1 =IapReadByte(AREA_1);
+ 115   2                      temp2 =IapReadByte(AREA_2);
+ 116   2              g_iArea = temp1*100+temp2;
+ 117   2      
+C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 3   
+
+ 118   2                      /*积分系数初始化话*/
+ 119   2              g_cIntegral = IapReadByte(INTEGRAL);
+ 120   2      
+ 121   2                      /*零点值出事化*/
+ 122   2              temp1 = IapReadByte(ZERO_ADD_1);
+ 123   2                      temp2 = IapReadByte(ZERO_ADD_2);
+ 124   2                      g_fZero = (temp1*100+temp2)/100;
+ 125   2      
+ 126   2                      /*零点在回复时用的值*/
+ 127   2                      temp1 = IapReadByte(ZERO_ADD_REV_1);
+ 128   2                      temp2 = IapReadByte(ZERO_ADD_REV_2);
+ 129   2                      g_fZero_rev = (temp1*100+temp2)/100;
+ 130   2      
+ 131   2                      /*比例值初始化*/
+ 132   2              temp1 = IapReadByte(K1_ADD_1);
+ 133   2                      temp2 = IapReadByte(K1_ADD_2);
+ 134   2                      g_fK1 = (temp1*100+temp2)/1000;
+ 135   2      
+ 136   2                      /*补偿系数初始化*/
+ 137   2              temp1 = IapReadByte(K2_ADD_1);
+ 138   2                      temp2 = IapReadByte(K2_ADD_2);
+ 139   2                      g_fK2 = (temp1*100+temp2)/100;
+ 140   2      
+ 141   2                  /*单位初始化*/
+ 142   2                      g_cUint =  IapReadByte(UNIT);
+ 143   2      
+ 144   2                      /*量程初始化 秒为单位*/
+ 145   2                      g_iRange = IapReadByte(RANGE);
+ 146   2                  
+ 147   2                      /*量程初始化 分钟为单位*/
+ 148   2                       temp1 = IapReadByte(RANGEMIN1);
+ 149   2                       temp2 = IapReadByte(RANGEMIN2);
+ 150   2                       g_iRangeMin = temp1*100+temp2;
+ 151   2      
+ 152   2                       g_cSecrit = IapReadByte(SECRIT);
+ 153   2      
+ 154   2                       g_cWorkChange  = IapReadByte(ISCH4);
+ 155   2      
+ 156   2                       g_cMaxOut = IapReadByte(MAXOUT);
+ 157   2      
+ 158   2                       g_cStart =  IapReadByte(START);
+ 159   2      
+ 160   2                       temp1 = IapReadByte(SUM1);
+ 161   2                       temp2 = IapReadByte(SUM2);
+ 162   2                       temp3 = IapReadByte(SUM3);
+ 163   2                       temp4 = IapReadByte(SUM4);
+ 164   2                       g_fSum = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
+ 165   2      
+ 166   2                       temp1 = IapReadByte(SUM1_BIAO_1);
+ 167   2                       temp2 = IapReadByte(SUM1_BIAO_2);
+ 168   2                       temp3 = IapReadByte(SUM1_BIAO_3);
+ 169   2                       temp4 = IapReadByte(SUM1_BIAO_4);
+ 170   2                       g_fSum_biao = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
+ 171   2      
+ 172   2                       temp1 = IapReadByte(SUM1_BIAO_CUN_1);
+ 173   2                       temp2 = IapReadByte(SUM1_BIAO_CUN_2);
+ 174   2                       temp3 = IapReadByte(SUM1_BIAO_CUN_3);
+ 175   2                       temp4 = IapReadByte(SUM1_BIAO_CUN_4);
+ 176   2                       g_fSum_biao_ch4 = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
+ 177   2         }
+ 178   1         else
+ 179   1         {
+C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 4   
+
+ 180   2      
+ 181   2           g_iArea = 10000; //1.0平方米
+ 182   2               g_cIntegral = 0; //0
+ 183   2               g_fZero = 0.0;
+ 184   2               g_fZero_rev = 9.0;
+ 185   2               g_fK1 = 1.0;
+ 186   2               g_fK2 = 1.0;
+ 187   2               g_cUint = 1;
+ 188   2               g_iRange = 1;
+ 189   2               g_iRangeMin = 100;
+ 190   2               g_cSecrit = 0;
+ 191   2               g_cStart = 0;
+ 192   2               g_cSecrit_Num = 0;
+ 193   2               g_cWorkChange = 0;
+ 194   2               g_fSum = 0;
+ 195   2               g_fSum_biao = 0;
+ 196   2               g_fSum_biao_ch4 = 0;
+ 197   2               g_cMaxOut = 0;
+ 198   2               EA = 0;
+ 199   2               IapEraseSector(ZERO_ADD_1);
+ 200   2               IapEraseSector(START);
+ 201   2           IapEraseSector(START);
+ 202   2               IapProgramByte(0,SECRIT);
+ 203   2           IapProgramByte(0,START);
+ 204   2      
+ 205   2               IapProgramByte(0,ZERO_ADD_1);
+ 206   2               IapProgramByte(0,ZERO_ADD_2);
+ 207   2      
+ 208   2               IapProgramByte(9,ZERO_ADD_REV_1);
+ 209   2               IapProgramByte(0,ZERO_ADD_REV_2);
+ 210   2      
+ 211   2               IapProgramByte(10,K1_ADD_1);
+ 212   2               IapProgramByte(0,K1_ADD_2);
+ 213   2      
+ 214   2               IapProgramByte(1,K2_ADD_1);
+ 215   2               IapProgramByte(0,K2_ADD_2);
+ 216   2      
+ 217   2               IapProgramByte(g_cIntegral,INTEGRAL);   //IapProgramByte(0,INTEGRAL);
+ 218   2      
+ 219   2      
+ 220   2               IapProgramByte(100,AREA_1); //1.0平方米
+ 221   2               IapProgramByte(0,AREA_2);
+ 222   2      
+ 223   2      
+ 224   2               IapProgramByte(g_iRange,RANGE);
+ 225   2      
+ 226   2                IapProgramByte(1,RANGEMIN1);
+ 227   2                IapProgramByte(0,RANGEMIN2);
+ 228   2      
+ 229   2      
+ 230   2               IapProgramByte(0,UNIT);
+ 231   2       
+ 232   2           IapProgramByte(0,ISCH4);
+ 233   2      
+ 234   2               IapProgramByte(0,MAXOUT);
+ 235   2      
+ 236   2           IapProgramByte(0,SUM1);
+ 237   2               IapProgramByte(0,SUM2);
+ 238   2               IapProgramByte(0,SUM3);
+ 239   2               IapProgramByte(0,SUM4);
+ 240   2      
+ 241   2           IapProgramByte(0,SUM1_BIAO_1);
+C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 5   
+
+ 242   2               IapProgramByte(0,SUM1_BIAO_2);
+ 243   2               IapProgramByte(0,SUM1_BIAO_3);
+ 244   2               IapProgramByte(0,SUM1_BIAO_4);
+ 245   2           
+ 246   2               IapProgramByte(0,SUM1_BIAO_CUN_1);
+ 247   2               IapProgramByte(0,SUM1_BIAO_CUN_2);
+ 248   2               IapProgramByte(0,SUM1_BIAO_CUN_3);
+ 249   2               IapProgramByte(0,SUM1_BIAO_CUN_4);
+ 250   2      
+ 251   2               IapEraseSector(START1);
+ 252   2               IapEraseSector(START2);
+ 253   2               IapProgramByte(10,START1);
+ 254   2               IapProgramByte(10,START2);
+ 255   2         }
+ 256   1         
+ 257   1          if(g_iArea==0xffff && g_cIntegral==0xff && g_cUint==0xff && g_iRange==0xffff && g_iRangeMin==0xffff &&
+             - g_cSecrit==0xff )
+ 258   1                {
+ 259   2                   /*面积参数初始化*/
+ 260   2                      temp1 =IapReadByte(AREA_1_2);
+ 261   2                      temp2 =IapReadByte(AREA_2_2);
+ 262   2              g_iArea = temp1*100+temp2;
+ 263   2      
+ 264   2                      /*积分系数初始化话*/
+ 265   2              g_cIntegral = IapReadByte(INTEGRAL_2);
+ 266   2      
+ 267   2                      /*零点值出事化*/
+ 268   2              temp1 = IapReadByte(ZERO_ADD_1_2);
+ 269   2                      temp2 = IapReadByte(ZERO_ADD_2_2);
+ 270   2                      g_fZero = (temp1*100+temp2)/100;
+ 271   2      
+ 272   2                      /*零点在回复时用的值*/
+ 273   2                      temp1 = IapReadByte(ZERO_ADD_REV_1_2);
+ 274   2                      temp2 = IapReadByte(ZERO_ADD_REV_2_2);
+ 275   2                      g_fZero_rev = (temp1*100+temp2)/100;
+ 276   2      
+ 277   2                      /*比例值初始化*/
+ 278   2              temp1 = IapReadByte(K1_ADD_1_2);
+ 279   2                      temp2 = IapReadByte(K1_ADD_2_2);
+ 280   2                      g_fK1 = (temp1*100+temp2)/1000;
+ 281   2      
+ 282   2                      /*补偿系数初始化*/
+ 283   2              temp1 = IapReadByte(K2_ADD_1_2);
+ 284   2                      temp2 = IapReadByte(K2_ADD_2_2);
+ 285   2                      g_fK2 = (temp1*100+temp2)/100;
+ 286   2      
+ 287   2                  /*单位初始化*/
+ 288   2                      g_cUint =  IapReadByte(UNIT_2);
+ 289   2      
+ 290   2                      /*量程初始化 秒为单位*/
+ 291   2                      g_iRange = IapReadByte(RANGE_2);
+ 292   2                  
+ 293   2                      /*量程初始化 分钟为单位*/
+ 294   2                       temp1 = IapReadByte(RANGEMIN1_2);
+ 295   2                       temp2 = IapReadByte(RANGEMIN2_2);
+ 296   2                       g_iRangeMin = temp1*100+temp2;
+ 297   2      
+ 298   2      //               g_cSecrit = IapReadByte(SECRIT_2);
+ 299   2      
+ 300   2                       g_cWorkChange  = IapReadByte(ISCH4_2);
+ 301   2      
+ 302   2                       g_cMaxOut = IapReadByte(MAXOUT_2);
+C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 6   
+
+ 303   2      
+ 304   2      //               g_cStart =  IapReadByte(START_2);
+ 305   2      
+ 306   2                       temp1 = IapReadByte(SUM1_2);
+ 307   2                       temp2 = IapReadByte(SUM2_2);
+ 308   2                       temp3 = IapReadByte(SUM3_2);
+ 309   2                       temp4 = IapReadByte(SUM4_2);
+ 310   2                       g_fSum = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
+ 311   2      
+ 312   2               temp1 = IapReadByte(SUM2_BIAO_1);
+ 313   2                       temp2 = IapReadByte(SUM2_BIAO_2);
+ 314   2                       temp3 = IapReadByte(SUM2_BIAO_3);
+ 315   2                       temp4 = IapReadByte(SUM2_BIAO_4);
+ 316   2                       g_fSum_biao = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
+ 317   2      
+ 318   2               temp1 = IapReadByte(SUM2_BIAO_CUN_1);
+ 319   2                       temp2 = IapReadByte(SUM2_BIAO_CUN_2);
+ 320   2                       temp3 = IapReadByte(SUM2_BIAO_CUN_3);
+ 321   2                       temp4 = IapReadByte(SUM2_BIAO_CUN_4);
+ 322   2                       g_fSum_biao_ch4 = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;     
+ 323   2      
+ 324   2                       IapEraseSector(ZERO_ADD_1);
+ 325   2                   IapEraseSector(START);
+ 326   2                       IapProgramByte(0,SECRIT);
+ 327   2                   IapProgramByte(0,START);
+ 328   2              
+ 329   2                       IapProgramByte(0,ZERO_ADD_1);
+ 330   2                       IapProgramByte(0,ZERO_ADD_2);
+ 331   2              
+ 332   2                       IapProgramByte(9,ZERO_ADD_REV_1);
+ 333   2                       IapProgramByte(0,ZERO_ADD_REV_2);
+ 334   2              //
+ 335   2                       IapProgramByte(10,K1_ADD_1);
+ 336   2                       IapProgramByte(0,K1_ADD_2);
+ 337   2              
+ 338   2                       IapProgramByte(1,K2_ADD_1);
+ 339   2                       IapProgramByte(0,K2_ADD_2);
+ 340   2              
+ 341   2              //       IapEraseSector(INTEGRAL);
+ 342   2                       IapProgramByte(g_cIntegral,INTEGRAL);   //IapProgramByte(0,INTEGRAL);
+ 343   2              
+ 344   2              //       IapEraseSector(AREA_1);
+ 345   2                       IapProgramByte(100,AREA_1); //1.0平方米
+ 346   2                       IapProgramByte(0,AREA_2);
+ 347   2              
+ 348   2              //       IapEraseSector(RANGE);
+ 349   2                       IapProgramByte(g_iRange,RANGE);
+ 350   2              
+ 351   2                        IapProgramByte(1,RANGEMIN1);
+ 352   2                        IapProgramByte(0,RANGEMIN2);
+ 353   2              
+ 354   2                       IapProgramByte(0,UNIT);
+ 355   2               
+ 356   2                   IapProgramByte(0,ISCH4);
+ 357   2              
+ 358   2                       IapProgramByte(0,MAXOUT);
+ 359   2              
+ 360   2                   IapProgramByte(0,SUM1);
+ 361   2                       IapProgramByte(0,SUM2);
+ 362   2                       IapProgramByte(0,SUM3);
+ 363   2                       IapProgramByte(0,SUM4);
+ 364   2              
+C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 7   
+
+ 365   2                   IapProgramByte(0,SUM1_BIAO_1);
+ 366   2                       IapProgramByte(0,SUM1_BIAO_2);
+ 367   2                       IapProgramByte(0,SUM1_BIAO_3);
+ 368   2                       IapProgramByte(0,SUM1_BIAO_4);
+ 369   2      
+ 370   2                       IapProgramByte(0,SUM1_BIAO_CUN_1);
+ 371   2                       IapProgramByte(0,SUM1_BIAO_CUN_2);
+ 372   2                       IapProgramByte(0,SUM1_BIAO_CUN_3);
+ 373   2                       IapProgramByte(0,SUM1_BIAO_CUN_4);
+ 374   2      
+ 375   2                       IapEraseSector(START1);
+ 376   2                       IapEraseSector(START2);
+ 377   2                       IapProgramByte(10,START1);
+ 378   2                       IapProgramByte(10,START2);
+ 379   2                } 
+ 380   1         EA = 1;
+ 381   1      }
+ 382          
+ 383          void StrotPrect()
+ 384          {
+ 385   1        IapEraseSector(SECRIT);
+ 386   1        IapProgramByte(g_cSecrit,SECRIT);
+ 387   1        IapProgramByte(g_cStart,START);
+ 388   1      }
+ 389          
+ 390          void Dateeprom()
+ 391          {
+ 392   1         unsigned char temp1,temp2,temp3,temp4;
+ 393   1         IapEraseSector(ISCH4);
+ 394   1      
+ 395   1          temp1 = g_iArea/100;
+ 396   1              temp2 = g_iArea%100;
+ 397   1              
+ 398   1              IapProgramByte(temp1,AREA_1);
+ 399   1              IapProgramByte(temp2,AREA_2);
+ 400   1      
+ 401   1         g_fZero = g_fZero*100;
+ 402   1         temp1 = (int)g_fZero/100;
+ 403   1         temp2 = (int)g_fZero%100;
+ 404   1         IapProgramByte(temp1,ZERO_ADD_1);
+ 405   1         IapProgramByte(temp2,ZERO_ADD_2);
+ 406   1         g_fZero = g_fZero/100;
+ 407   1      
+ 408   1          g_fZero_rev = g_fZero_rev*100;
+ 409   1         temp1 = (int)g_fZero_rev/100;
+ 410   1         temp2 = (int)g_fZero_rev%100;
+ 411   1         IapProgramByte(temp1,ZERO_ADD_REV_1);
+ 412   1         IapProgramByte(temp2,ZERO_ADD_REV_2);
+ 413   1         g_fZero_rev = g_fZero_rev/100;
+ 414   1         
+ 415   1         g_fK1 = g_fK1*1000;
+ 416   1         temp1 = (int)g_fK1/100;
+ 417   1         temp2 = (int)g_fK1%100;
+ 418   1         IapProgramByte(temp1,K1_ADD_1);
+ 419   1         IapProgramByte(temp2,K1_ADD_2);
+ 420   1         g_fK1 = g_fK1/1000;
+ 421   1      
+ 422   1         g_fK2 = g_fK2*100;
+ 423   1         temp1 = (int)g_fK2/100;
+ 424   1         temp2 = (int)g_fK2%100;
+ 425   1         IapProgramByte(temp1,K2_ADD_1);
+ 426   1         IapProgramByte(temp2,K2_ADD_2);
+C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 8   
+
+ 427   1         g_fK2 = g_fK2/100;
+ 428   1      
+ 429   1         IapProgramByte(g_cIntegral,INTEGRAL);
+ 430   1      
+ 431   1              IapProgramByte(g_iRange,RANGE);
+ 432   1      
+ 433   1              temp1 = g_iRangeMin/100;
+ 434   1              temp2 = g_iRangeMin%100;
+ 435   1              IapProgramByte(temp1,RANGEMIN1);
+ 436   1              IapProgramByte(temp2,RANGEMIN2);
+ 437   1      
+ 438   1              IapProgramByte(g_cUint,UNIT);
+ 439   1      
+ 440   1          IapProgramByte(g_cWorkChange,ISCH4);
+ 441   1      
+ 442   1          IapProgramByte(g_cMaxOut,MAXOUT);
+ 443   1      
+ 444   1              temp1 = ((long)(g_fSum))%100L;
+ 445   1              temp2 = ((long)(g_fSum))%10000L/100L;
+ 446   1              temp3 = ((long)(g_fSum))%1000000L/10000L;
+ 447   1              temp4 = ((long)(g_fSum))%100000000L/1000000L;
+ 448   1              IapProgramByte(temp1,SUM1);
+ 449   1              IapProgramByte(temp2,SUM2);
+ 450   1              IapProgramByte(temp3,SUM3);
+ 451   1              IapProgramByte(temp4,SUM4);
+ 452   1         
+ 453   1              temp1 = ((long)(g_fSum_biao))%100L;
+ 454   1              temp2 = ((long)(g_fSum_biao))%10000L/100L;
+ 455   1              temp3 = ((long)(g_fSum_biao))%1000000L/10000L;
+ 456   1              temp4 = ((long)(g_fSum_biao))%100000000L/1000000L;
+ 457   1              IapProgramByte(temp1,SUM1_BIAO_1);
+ 458   1              IapProgramByte(temp2,SUM1_BIAO_2);
+ 459   1              IapProgramByte(temp3,SUM1_BIAO_3);
+ 460   1              IapProgramByte(temp4,SUM1_BIAO_4) ;
+ 461   1      
+ 462   1          temp1 = ((long)(g_fSum_biao_ch4))%100L;
+ 463   1              temp2 = ((long)(g_fSum_biao_ch4))%10000L/100L;
+ 464   1              temp3 = ((long)(g_fSum_biao_ch4))%1000000L/10000L;
+ 465   1              temp4 = ((long)(g_fSum_biao_ch4))%100000000L/1000000L;
+ 466   1              IapProgramByte(temp1,SUM1_BIAO_CUN_1);
+ 467   1              IapProgramByte(temp2,SUM1_BIAO_CUN_2);
+ 468   1              IapProgramByte(temp3,SUM1_BIAO_CUN_3);
+ 469   1              IapProgramByte(temp4,SUM1_BIAO_CUN_4) ;
+ 470   1      
+ 471   1          if(g_cSecrit == 0) 
+ 472   1                {
+ 473   2                  IapEraseSector(ISCH4_2);
+ 474   2                      temp1 = g_iArea/100;
+ 475   2                      temp2 = g_iArea%100;
+ 476   2                      
+ 477   2                      IapProgramByte(temp1,AREA_1_2);
+ 478   2                      IapProgramByte(temp2,AREA_2_2);
+ 479   2              
+ 480   2                 g_fZero = g_fZero*100;
+ 481   2                 temp1 = (int)g_fZero/100;
+ 482   2                 temp2 = (int)g_fZero%100;
+ 483   2                 IapProgramByte(temp1,ZERO_ADD_1_2);
+ 484   2                 IapProgramByte(temp2,ZERO_ADD_2_2);
+ 485   2                 g_fZero = g_fZero/100;
+ 486   2              
+ 487   2                  g_fZero_rev = g_fZero_rev*100;
+ 488   2                 temp1 = (int)g_fZero_rev/100;
+C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 9   
+
+ 489   2                 temp2 = (int)g_fZero_rev%100;
+ 490   2                 IapProgramByte(temp1,ZERO_ADD_REV_1_2);
+ 491   2                 IapProgramByte(temp2,ZERO_ADD_REV_2_2);
+ 492   2                 g_fZero_rev = g_fZero_rev/100;
+ 493   2                 
+ 494   2                 g_fK1 = g_fK1*1000;
+ 495   2                 temp1 = (int)g_fK1/100;
+ 496   2                 temp2 = (int)g_fK1%100;
+ 497   2                 IapProgramByte(temp1,K1_ADD_1_2);
+ 498   2                 IapProgramByte(temp2,K1_ADD_2_2);
+ 499   2                 g_fK1 = g_fK1/1000;
+ 500   2              
+ 501   2                 g_fK2 = g_fK2*100;
+ 502   2                 temp1 = (int)g_fK2/100;
+ 503   2                 temp2 = (int)g_fK2%100;
+ 504   2                 IapProgramByte(temp1,K2_ADD_1_2);
+ 505   2                 IapProgramByte(temp2,K2_ADD_2_2);
+ 506   2                 g_fK2 = g_fK2/100;
+ 507   2              
+ 508   2                 IapProgramByte(g_cIntegral,INTEGRAL_2);
+ 509   2              
+ 510   2                      IapProgramByte(g_iRange,RANGE_2);
+ 511   2              
+ 512   2                      temp1 = g_iRangeMin/100;
+ 513   2                      temp2 = g_iRangeMin%100;
+ 514   2                      IapProgramByte(temp1,RANGEMIN1_2);
+ 515   2                      IapProgramByte(temp2,RANGEMIN2_2);
+ 516   2              
+ 517   2                      IapProgramByte(g_cUint,UNIT_2);
+ 518   2              
+ 519   2                  IapProgramByte(g_cWorkChange,ISCH4_2);
+ 520   2              
+ 521   2                  IapProgramByte(g_cMaxOut,MAXOUT_2);
+ 522   2      
+ 523   2                      temp1 = ((long)(g_fSum))%100L;
+ 524   2                      temp2 = ((long)(g_fSum))%10000L/100L;
+ 525   2                      temp3 = ((long)(g_fSum))%1000000L/10000L;
+ 526   2                      temp4 = ((long)(g_fSum))%100000000L/1000000L;
+ 527   2                      IapProgramByte(temp1,SUM1_2);
+ 528   2                      IapProgramByte(temp2,SUM2_2);
+ 529   2                      IapProgramByte(temp3,SUM3_2);
+ 530   2                      IapProgramByte(temp4,SUM4_2);
+ 531   2      
+ 532   2                      temp1 = ((long)(g_fSum_biao))%100L;
+ 533   2                      temp2 = ((long)(g_fSum_biao))%10000L/100L;
+ 534   2                      temp3 = ((long)(g_fSum_biao))%1000000L/10000L;
+ 535   2                      temp4 = ((long)(g_fSum_biao))%100000000L/1000000L;
+ 536   2                      IapProgramByte(temp1,SUM2_BIAO_1);
+ 537   2                      IapProgramByte(temp2,SUM2_BIAO_2);
+ 538   2                      IapProgramByte(temp3,SUM2_BIAO_3);
+ 539   2                      IapProgramByte(temp4,SUM2_BIAO_4);
+ 540   2      
+ 541   2                      temp1 = ((long)(g_fSum_biao_ch4))%100L;
+ 542   2                      temp2 = ((long)(g_fSum_biao_ch4))%10000L/100L;
+ 543   2                      temp3 = ((long)(g_fSum_biao_ch4))%1000000L/10000L;
+ 544   2                      temp4 = ((long)(g_fSum_biao_ch4))%100000000L/1000000L;
+ 545   2                      IapProgramByte(temp1,SUM2_BIAO_CUN_1);
+ 546   2                      IapProgramByte(temp2,SUM2_BIAO_CUN_2);
+ 547   2                      IapProgramByte(temp3,SUM2_BIAO_CUN_3);
+ 548   2                      IapProgramByte(temp4,SUM2_BIAO_CUN_4);  
+ 549   2                }   
+ 550   1      }
+C51 COMPILER V9.01   STORAGE                                                               05/16/2015 23:36:19 PAGE 10  
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   3694    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----       8
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

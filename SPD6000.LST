@@ -1,0 +1,213 @@
+C51 COMPILER V9.01   SPD6000                                                               05/16/2015 23:36:20 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE SPD6000
+OBJECT MODULE PLACED IN SPD6000.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE SPD6000.C COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "SPD6000.h"
+   2          #include "intrins.h"
+   3          #include "math.h"
+   4          #include "global_var.h"
+   5          #include "ch4.h"
+   6          #include "ms4525.h"
+   7          
+   8          #define SMOTH_NUMBER 3
+   9          
+  10          //#define ZER0_SIZE 3
+  11          
+  12          #define INTEGRAL_MAX 19
+  13          
+  14          typedef enum{
+  15          ACK = 0,
+  16          NO_ACK = 1
+  17          }etI2cAck;
+  18          
+  19          
+  20          /*¼òµ¥µÄÑÓÊ±º¯Êý*/
+  21          void SomeNOP()
+  22          {
+  23   1        int i;
+  24   1        for(i=0;i<12;i++)
+  25   1        {
+  26   2        _nop_();
+  27   2        _nop_();
+  28   2        _nop_();
+  29   2        _nop_();
+  30   2        _nop_();
+  31   2        }
+  32   1      }
+  33          
+  34          
+  35          
+  36          /*Í¨¹ýI2C×ÜÏßÏò´«¸ÐÆ÷¶Á³öÒ»¸ö×Ö½ÚÊý¾Ýº¯Êý*/
+  37          unsigned char SPI_ReadByte()
+  38          {
+  39   1        unsigned char mask ,rxByte = 0;
+  40   1        SCL = 1;
+  41   1        SomeNOP();
+  42   1        for(mask=0x80;mask>0;mask>>=1)  //¶Á°Ë´Î£¬Ã¿´ÎÖ»¶ÁÒ»Î»
+  43   1        {
+  44   2          SCL = 0;
+  45   2              SomeNOP();
+  46   2              SomeNOP();
+  47   2              if(SDA == 1)
+  48   2               rxByte = (rxByte|mask);
+  49   2               SCL = 1;
+  50   2               SomeNOP();
+  51   2        }
+  52   1        SomeNOP();
+  53   1        return rxByte;
+  54   1      }
+  55          
+C51 COMPILER V9.01   SPD6000                                                               05/16/2015 23:36:20 PAGE 2   
+
+  56          /*Ïò´«¸ÐÆ÷¶ÁÈ¡Ñ¹²îÖµ*/
+  57          unsigned char MS4515DO_read(unsigned char * p,unsigned char* temperature)
+  58          {
+  59   1        unsigned char error = 0;
+  60   1       // EA = 0; 
+  61   1        SS= 0;
+  62   1        SCL = 1; //SDP600 ÏµÁÐ´«¸ÐÆ÷(´Ó»ú) ¿ÉÒÔÀ­µÍSCLÏßÀ´Ç¿ÖÆÖ÷»ú½øÈëµÈ´ý×´Ì¬¡£´«¸ÐÆ÷Í¨¹ýÊÍ·ÅSCLÏßÖ¸Ê¾ÄÚ²¿´¦ÀíÒ
+             -ÑÍê³É
+  63   1        *p = SPI_ReadByte();       //¶ÁÈ¡´«¸ÐÆ÷µÚÒ»¸ö×Ö½ÚÊý¾Ý
+  64   1        *(p+1) = SPI_ReadByte();  //¶ÁÈ¡´«¸ÐÆ÷Êý¾ÝµÚ¶þ¸ö×Ö½ÚÊý¾Ý
+  65   1        *temperature = SPI_ReadByte();
+  66   1        *(temperature+1) = SPI_ReadByte();
+  67   1        SS = 1;
+  68   1       // EA = 1;
+  69   1          if((((*p)&0xc0) == 0xc0) || (((*p)&0x40) == 0x40))
+  70   1                 {
+  71   2                    error = 1;
+  72   2                 }
+  73   1                 *p = (*p)&0x3f;
+  74   1         return error;
+  75   1      }
+  76          
+  77           void data_read(Ms4515* date)
+  78           {
+  79   1          int dat1;
+  80   1              int temp;
+  81   1              unsigned int temper;
+  82   1              if(MS4515DO_read((unsigned char*)&dat1,(unsigned char*)temper) == 0)
+  83   1              {
+  84   2                    if(dat1<=1638)
+  85   2                          {
+  86   3                                dat1 = 1638;
+  87   3                      }
+  88   2                    if(dat1>=14746)
+  89   2                  {
+  90   3                            dat1 = 14746;
+  91   3                      }
+  92   2                  date->pressure = ((dat1)*0.07751938-635)-g_fZero;
+  93   2                       temp = date->pressure*10;
+  94   2                       date->pressure = temp/10;
+  95   2                       if(date->pressure< 0.0)
+  96   2                         {
+  97   3                           date->pressure = -date->pressure;
+  98   3                         }
+  99   2                        if(date->pressure>508.0)
+ 100   2                          {
+ 101   3                                date->pressure = 508.0;
+ 102   3                              }
+ 103   2                              temper = temper/32;
+ 104   2                      date->temperature = temper*0.0977-50;
+ 105   2              }
+ 106   1       }
+ 107          
+ 108           float date_Smooth()
+ 109           {
+ 110   1          
+ 111   1      //   static float pressre[SMOTH_NUMBER] = {0.0,0.0,0.0};
+ 112   1         static float sum_old = 0;
+ 113   1      //   static char first_flag = 1;
+ 114   1         float ret;
+ 115   1         float sum = 0;
+ 116   1         char j=0;
+C51 COMPILER V9.01   SPD6000                                                               05/16/2015 23:36:20 PAGE 3   
+
+ 117   1      //   static char i = 0;
+ 118   1      
+ 119   1        Ms4515 date1;
+ 120   1        /*    if(first_flag == 1)
+ 121   1                {
+ 122   1                    data_read(&date1);
+ 123   1                    pressre[0] = date1.pressure;
+ 124   1                        
+ 125   1                        data_read(&date1);
+ 126   1                    pressre[1] = date1.pressure;
+ 127   1                        
+ 128   1                        data_read(&date1);
+ 129   1                    pressre[2] = date1.pressure;      
+ 130   1                        
+ 131   1                        for(j=0;j<10;i++)
+ 132   1      
+ 133   1                        SomeNOP()
+ 134   1                        first_flag = 0;      
+ 135   1                }*/
+ 136   1           data_read(&date1);
+ 137   1      //       pressre[i] = date1.pressure;
+ 138   1      //       i++;
+ 139   1      //       if(i == SMOTH_NUMBER)
+ 140   1      //         {
+ 141   1      //           i= 0;
+ 142   1      //         }
+ 143   1      //        for(j=0;j<SMOTH_NUMBER;j++)
+ 144   1      //         {
+ 145   1      //           sum = sum+pressre[j];
+ 146   1      //         }
+ 147   1              sum = date1.pressure;
+ 148   1                 //sum = sum/SMOTH_NUMBER;
+ 149   1                 ret = ((INTEGRAL_MAX+1-g_cIntegral)*sum+g_cIntegral*sum_old)/(INTEGRAL_MAX+1);
+ 150   1                 sum_old = ret;
+ 151   1                 return ret;
+ 152   1       }
+ 153          
+ 154           /***·çËÙÖµ******/
+ 155          float Wid_Speed()
+ 156           {
+ 157   1              
+ 158   1           float windSpeed; //×îºóµÄÁ÷ËÙ
+ 159   1               int pressure; // ·çËÙµÄ²îÑ¹Öµ
+ 160   1               float ch4;  //¼×ÍéÖµ
+ 161   1               float tmpter;    //ÎÂ¶ÈÖµ
+ 162   1               float p_pase;    //¾øÑ¹Öµ
+ 163   1               #ifndef _DEBUG_
+ 164   1                pressure = date_Smooth();
+ 165   1                ch4= read_ch4();
+ 166   1                if(ch4<0.001)
+ 167   1                {
+ 168   2                  ch4 = 0.0;
+ 169   2                }
+ 170   1                p_pase = date_Smooth_4525(&tmpter);
+ 171   1               #endif
+ 172   1               // windSpeed = (sqrt(pressure*1.6))*g_fK1*g_fK2;
+ 173   1               windSpeed = (sqrt(pressure*2/((3.458-0.01533*ch4)*p_pase/(273.15+tmpter))))*g_fK1*g_fK2;
+ 174   1      //        ret = ((INTEGRAL_MAX+1-g_cIntegral)*windSpeed+g_cIntegral*windSpeed_old)/(INTEGRAL_MAX+1);
+ 175   1      //        windSpeed_old = ret;
+ 176   1                return windSpeed ;      
+ 177   1       }
+ 178          
+C51 COMPILER V9.01   SPD6000                                                               05/16/2015 23:36:20 PAGE 4   
+
+ 179          
+ 180          
+ 181          
+ 182          
+ 183           
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    835    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =      4      45
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

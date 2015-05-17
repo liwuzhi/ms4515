@@ -1,0 +1,60 @@
+#ifndef _ZIKU_
+#define _ZIKU_
+
+extern unsigned char code font_00[];
+extern unsigned char code font_01[];
+extern unsigned char code font_02[];
+extern unsigned char code font_03[];
+extern unsigned char code font_04[];
+extern unsigned char code font_05[];
+extern unsigned char code font_06[];
+extern unsigned char code font_07[];
+extern unsigned char code font_08[];
+extern unsigned char code font_09[];
+extern unsigned char code font_10[];
+extern unsigned char code font_11[];
+extern unsigned char code font_12[];
+extern unsigned char code font_13[];
+extern unsigned char code font_13[];
+extern unsigned char code font_14[];
+extern unsigned char code font_15[];
+extern unsigned char code font_16[];
+extern unsigned char code font_17[];
+extern unsigned char code font_18[];
+extern unsigned char code font_19[];
+extern unsigned char code font_20[];
+extern unsigned char code font_21[];
+extern unsigned char code font_22[];
+extern unsigned char code font_23[];
+extern unsigned char code font_24[];
+extern unsigned char code font_25[];
+extern unsigned char code font_26[];
+extern unsigned char code font_27[];
+extern unsigned char code font_28[];
+extern unsigned char code font_29[];
+extern unsigned char code font_30[];
+extern unsigned char code font_31[];
+extern unsigned char code font_32[];
+extern unsigned char code font_33[];
+extern unsigned char code font_33[];
+extern unsigned char code font_34[];
+extern unsigned char code font_35[];
+extern unsigned char code font_36[];
+extern unsigned char code font_37[];
+extern unsigned char code font_38[];
+extern unsigned char code font_39[];
+extern unsigned char code font_40[];
+extern unsigned char code font_41[];
+extern unsigned char code font_42[];
+extern  uchar code yi[];
+extern  uchar code er[];
+extern  uchar code jia[];
+extern  uchar code wan[];
+extern  uchar code zong[];
+extern  uchar code chun[];
+extern  uchar code hun[];
+extern  uchar code he[];
+extern uchar code qing[];
+extern unsigned char code nAsciiDot[];
+
+#endif

@@ -1,0 +1,77 @@
+C51 COMPILER V9.01   CH4                                                                   05/16/2015 23:36:21 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE CH4
+OBJECT MODULE PLACED IN CH4.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE CH4.C COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include "global_var.h"
+   3          #include "CH4.h"
+   4          #include "Display.h"
+   5          void startCH4()
+   6          {
+   7   1        g_cCh4Flag = 1;
+   8   1        g_iCh4Num = 0;
+   9   1        IT0 = 1 ;
+  10   1        EX0 = 1;
+  11   1        
+  12   1      }
+  13          
+  14          void stopCH4()
+  15          {
+  16   1         
+  17   1         g_iCh4Num_test = g_iCh4Num;
+  18   1         g_cCh4Flag = 0;
+  19   1         EX0 = 0;
+  20   1         //IT0 = 0;
+  21   1           
+  22   1      }
+  23          
+  24          /*读取计数器里面记录的脉冲数，只有在计数器停下时才去读*/
+  25          float read_ch4()
+  26          {
+  27   1          float temp;
+  28   1              static float temp_old = 120;
+  29   1      //      static int mun=0;
+  30   1              if(g_cCh4Flag == 0)
+  31   1                              {
+  32   2                                  if(g_iCh4Num_test>1001)
+  33   2                                        {
+  34   3                                          g_iCh4Num_test = 1001;
+  35   3                                        }
+  36   2                                       temp = (g_iCh4Num_test-201.0)/8;
+  37   2                                       
+  38   2                                      
+  39   2                              //      if(temp<49.5 || temp>50.5)
+  40   2                              //      {
+  41   2                              //       disylay_mun(g_iCh4Num_test,0,0,3);
+  42   2                              //       mun++;
+  43   2                              //      }
+  44   2                              //      disylay_mun(mun,0,8,3);
+  45   2                                      temp_old = temp;                                        
+  46   2                         }
+  47   1                         else
+  48   1                         {
+  49   2                            temp = temp_old;
+  50   2                         }
+  51   1              return temp;
+  52   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.01   CH4                                                                   05/16/2015 23:36:21 PAGE 2   
+
+   CODE SIZE        =    135    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =      4       4
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

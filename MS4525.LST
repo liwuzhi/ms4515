@@ -1,0 +1,108 @@
+C51 COMPILER V9.01   MS4525                                                                05/16/2015 23:36:21 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE MS4525
+OBJECT MODULE PLACED IN MS4525.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE MS4525.c COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "SPD6000.h"
+   2          #include "intrins.h"
+   3          #include "math.h"
+   4          #include "global_var.h"
+   5          #include "MS4525.h"
+   6          
+   7          #define SMOTH_NUMBER 5
+   8          
+   9          #define ZER0_SIZE 3
+  10          
+  11          #define INTEGRAL_MAX 19
+  12          
+  13          
+  14          /*Ïò´«¸ÐÆ÷¶ÁÈ¡Ñ¹²îÖµ*/
+  15          unsigned char MS4525DO_read(unsigned char * p,unsigned char* temperature)
+  16          {
+  17   1        unsigned char error = 0;
+  18   1        SS2= 0;
+  19   1        SCL = 1; //SDP600 ÏµÁÐ´«¸ÐÆ÷(´Ó»ú) ¿ÉÒÔÀ­µÍSCLÏßÀ´Ç¿ÖÆÖ÷»ú½øÈëµÈ´ý×´Ì¬¡£´«¸ÐÆ÷Í¨¹ýÊÍ·ÅSCLÏßÖ¸Ê¾ÄÚ²¿´¦ÀíÒ
+             -ÑÍê³É
+  20   1        *p = SPI_ReadByte();       //¶ÁÈ¡´«¸ÐÆ÷µÚÒ»¸ö×Ö½ÚÊý¾Ý
+  21   1        *(p+1) = SPI_ReadByte();  //¶ÁÈ¡´«¸ÐÆ÷Êý¾ÝµÚ¶þ¸ö×Ö½ÚÊý¾Ý
+  22   1        *temperature = SPI_ReadByte();
+  23   1        *(temperature+1) = SPI_ReadByte();
+  24   1        SS2 = 1;
+  25   1          if((((*p)&0xc0) == 0xc0) || (((*p)&0x40) == 0x40))
+  26   1                 {
+  27   2                    error = 1;
+  28   2                 }
+  29   1                 *p = (*p)&0x3f;
+  30   1         return error;
+  31   1      }
+  32          
+  33           void data_read_4525(Ms4515* date)
+  34           {
+  35   1          int dat1;
+  36   1              unsigned int temper;
+  37   1              if(MS4525DO_read((unsigned char*)&dat1,(unsigned char*)&temper) == 0)
+  38   1              {
+  39   2                    if(dat1<=1638)
+  40   2                          {
+  41   3                                dat1 = 1638;
+  42   3                      }
+  43   2                    if(dat1>=14746)
+  44   2                  {
+  45   3                            dat1 = 14746;
+  46   3                      }
+  47   2                   date->pressure = (dat1)*0.00789-12.928;//  date->pressure = ((dat1)*0.07751938-635)-g_fZero;
+  48   2                       if(date->pressure< 0.0)
+  49   2                         {
+  50   3                           date->pressure = -date->pressure;
+  51   3                         }
+  52   2                         temper = temper/32;
+  53   2                      date->temperature = temper*0.0977-50;
+  54   2              }
+C51 COMPILER V9.01   MS4525                                                                05/16/2015 23:36:21 PAGE 2   
+
+  55   1       }
+  56           
+  57          
+  58          float date_Smooth_4525(float *tmp)
+  59           {
+  60   1         static float pressre[SMOTH_NUMBER] = {0.0,0.0,0.0};
+  61   1         float sum = 0;
+  62   1         char j=0;
+  63   1         static char i = 0;
+  64   1      
+  65   1        Ms4515 date1;
+  66   1           data_read_4525(&date1);
+  67   1               *tmp = date1.temperature;
+  68   1               pressre[i] = date1.pressure;
+  69   1               i++;
+  70   1               if(i == SMOTH_NUMBER)
+  71   1                 {
+  72   2                   i= 0;
+  73   2                 }
+  74   1                for(j=0;j<SMOTH_NUMBER;j++)
+  75   1                 {
+  76   2                   sum = sum+pressre[j];
+  77   2                 }
+  78   1                 sum = sum/SMOTH_NUMBER;
+  79   1      
+  80   1                 return sum;
+  81   1       }
+  82                   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    496    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =     21      30
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,1499 @@
+#include "display.h"
+#include "ziku.h"
+#include "key.h"
+#include "storage.h"
+#include "spd6000.h"
+#include "MS4525.h"
+#include "pwm.h"
+#include "CH4.h"
+
+#define POINT_0 0
+#define POINT_1 1
+#define POINT_2 2
+#define POINT_3 3
+
+#define READ_TIME 10
+
+
+void delay( int x)
+{
+    int y,z;
+   for(y=x;y>0;y--)
+    {
+	   for(z=100;z>0;z--)
+	    {
+		}
+	}
+}
+
+void key_delay()
+{
+   static char num;
+   if(key() != 0)
+     {
+	    num++;
+		if(num > 20)
+		  {
+		    num = 11;
+		  }
+	   if(num >10)
+	     {
+		   delay(1);
+		 }
+		 else
+		 {
+		   delay(300);
+		 }
+	 }
+	 else
+	 {
+	   num =0;
+	 }
+   if(num >10)
+     {
+	   delay(10);
+	 }
+	 else
+	 {
+	   delay(1000);
+	 }
+}
+
+unsigned char return_Main()
+{
+            if(g_iProtect > 900)
+			   {
+			      g_cFunc = 0;
+			      return 1;
+			   }
+			   else
+			   {
+			      return 0;
+			   }
+}
+void disylay_mun(unsigned int num,char point,char start_x,char start_y)
+{
+  unsigned char temp_num[5];
+  unsigned char temp[6]={0,0,0,0,0,0};
+  unsigned char i=0,j=0;
+  temp_num[0] = num/10000+'0';
+  temp_num[1] = num%10000/1000+'0';
+  temp_num[2] = num%1000/100+'0';
+  temp_num[3] = num%100/10+'0';
+  temp_num[4] = num%10+'0';
+   temp[5-point] = '.';
+  for(i=0;i<6;i++)
+  {
+     if(0 == temp[i])
+	 {
+	    temp[i] = temp_num[j];
+		j++;
+	 }
+  }
+  for(i=0;i<4-point;i++)
+	 {
+	   if(temp[i] == '0')
+	     {
+		   temp[i] = ' ';
+		 }
+		 else
+		 {
+		   break;
+		 }
+	 }
+    if(point>0)
+	{
+	   Display_Onechar(start_x*8,start_y*2,temp[0],0);
+       Display_Onechar((start_x+1)*8,start_y*2,temp[1],0);
+	   Display_Onechar((start_x+2)*8,start_y*2,temp[2],0);
+	   Display_Onechar((start_x+3)*8,start_y*2,temp[3],0);
+	   Display_Onechar((start_x+4)*8,start_y*2,temp[4],0);
+	   Display_Onechar((start_x+5)*8,start_y*2,temp[5],0);
+	}
+	else
+	{
+	   Display_Onechar(start_x*8,start_y*2,temp[0],0);
+	   Display_Onechar((start_x+1)*8,start_y*2,temp[1],0);
+	   Display_Onechar((start_x+2)*8,start_y*2,temp[2],0);
+	   Display_Onechar((start_x+3)*8,start_y*2,temp[3],0);
+	   Display_Onechar((start_x+4)*8,start_y*2,temp[4],0);
+	}
+}
+
+void display_stringChar(unsigned char start_x,unsigned char start_y,char* s)
+{
+      unsigned char i=0;
+   	  while(*s != '\0')
+	  {
+	     Display_Onechar((start_x+i)*8,start_y*2,*s,0);
+		 i++;
+		 s++;
+	  }	  
+}
+
+void display_stringChinese(unsigned char start_x,unsigned char start_y,unsigned char** s)
+{
+  unsigned char i=0;
+  for(i=0;i<5;i++)
+  {
+   Display_Graphic(start_x*8+i*16,start_y*2,16,16,*s,0);
+   s++;
+   }
+}
+
+void display_sum(long sum,char start_x,char start_y)
+{
+   unsigned char temp[8] = {0,0,0,0,0,0,0,0};
+   char i;
+   temp[0] = sum/10000000L+'0';
+   temp[1] = sum%10000000L/1000000L+'0';
+   temp[2] = sum%1000000L/100000L+'0';
+   temp[3] = sum%100000L/10000L+'0';
+   temp[4] = sum%10000L/1000L+'0';
+   temp[5] = sum%1000L/100L+'0';
+   temp[6] = sum%100L/10L+'0';
+   temp[7] = sum%10L+'0';
+
+   for(i=0;i<7;i++)
+	 {
+	   if(temp[i] == '0')
+	     {
+		   temp[i] = ' ';
+		 }
+		 else
+		 {
+		   break;
+		 }
+	 }
+   for(i=0;i<8;i++)
+   {
+      Display_Onechar((start_x+i)*8,start_y*2,temp[i],0);
+   }
+}
+
+void read_senser(float* p_flux,float* p_pase)
+{
+           *p_pase = date_Smooth_4525(); //读取绝压值
+	       if(g_cUint == 0)
+		   {
+		    if(g_cIsCh4 == 0)
+			{
+		      *p_flux =  Wid_Speed()*g_iArea/10000;
+			}
+			else
+			{
+			 *p_flux =  Wid_Speed()*g_iArea/10000;
+			 // *p_flux =  Wid_Speed()*g_iArea/10000*(*p_pase)/100;
+			}
+			if(*p_flux>g_iRange)
+			  {					   
+			     *p_flux = g_iRange;
+			  }
+		  }
+		  else
+		  {
+		    if(g_cIsCh4 == 0)
+			{
+		      *p_flux =  Wid_Speed()*g_iArea/10000*60;
+			}
+			else
+			{
+			  *p_flux =  Wid_Speed()*g_iArea/10000*60;
+			  //*p_flux =  Wid_Speed()*g_iArea/10000*(*p_pase)/100*60;
+			}
+		    if(*p_flux>g_iRangeMin)
+			  {
+			     *p_flux = g_iRangeMin;
+			  } 
+		 }
+}
+
+
+
+void read_Maxout()
+{
+   float p_flux;
+   float p_pase;
+   float ch4;
+   static char flag=0;
+   static char flag1=0;
+
+   if(g_iTime < 10 && flag1 ==0)
+		{
+		  if(g_cMaxOut == 0 || g_cMaxOut == 2)
+		   {
+		    Dateeprom();
+		   }
+		   flag1 = 1;
+		}
+		else if(g_iTime > 10)
+		 {
+		   flag1 = 0;
+		 }
+
+  // if(g_iTimebase <= 10 && flag == 0 )
+   if(g_iTime%57 < 20 && flag ==0 )
+   {
+        flag = 1;
+        ch4 = read_ch4();
+	   read_senser(&p_flux,&p_pase);
+		 if(g_cUint == 0)
+		  {
+		    g_fSum = g_fSum + p_flux*60*ch4/100 ;
+		  }
+		  else
+		  {
+		    g_fSum = g_fSum + p_flux*ch4/100 ;
+		  }
+	}
+	else if(g_iTime%57 > 20)
+	{
+	   flag = 0;
+	}
+
+	 
+} 	
+/*
+  显示压力界面
+*/
+unsigned char display_Preassure()
+{
+   	unsigned char key_num;
+	unsigned int preassure;
+    code unsigned char* chinese[] ={font_13,font_14,font_00,font_00,font_00};
+    code char arr[] = {'p','a','\0'};
+
+    preassure = date_Smooth();
+	display_stringChinese(0,0,chinese);
+	display_stringChar(6,1,arr);
+	disylay_mun(preassure,0,0,1); 
+
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+		#ifdef _DEBUG_
+		preassure = key_AddSub(preassure,1,0,1,10000);
+		date.pressure = ((float)preassure)/10; 
+		#else
+		if((g_iTimebase%READ_TIME) == 0)
+		  {
+		   preassure = date_Smooth();
+		   disylay_mun(preassure,0,0,1);
+		  }
+		#endif
+		
+		key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+	}
+      return 0;
+}
+
+unsigned char display_Area()
+{
+   	unsigned char key_num;
+	unsigned int area;
+	unsigned int temp_area;
+   code unsigned char* chinese[] ={font_11,font_12,font_07,font_00,font_00,font_00};	//截面积
+   code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+   code char arr[] = {'c','m',60,'\0'};
+       area = g_iArea;
+	   temp_area = area;
+	display_stringChinese(0,0,chinese);
+	display_stringChar(5,1,arr);
+	disylay_mun(area,0,0,1); 
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+        area = key_AddSub(area,0,0,1,10000);
+		if(key_num == KEY_SURE)
+		{
+		   g_iArea = area;
+		   Clean_Display(0,0,128,48,0);
+		   if(display_Protect1(chinese2,10) == 0)
+		     {
+			    g_iArea = temp_area;
+				area = g_iArea;
+			 }
+			 else
+			 {
+			   Dateeprom();
+			 }
+		   Clean_Display(0,0,128,48,0);
+		   display_stringChinese(0,0,chinese);
+		   display_stringChar(5,1,arr);
+		   disylay_mun(area,0,0,1);
+		}
+		key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+	//	disylay_mun(100,2,0,2);
+	}
+}
+
+
+
+unsigned char display_Main()
+{
+   unsigned char key_num;
+   float flux;
+   float pase;
+   float ch4;
+   static float flag=0;
+  code unsigned char* chineseFlux[] ={font_38,font_02,font_37,font_00,font_00};	 //流量
+  code unsigned char* chinesePase[] = {font_13,font_14,font_37,font_00,font_00}; //压力
+  code unsigned char* chineseCH4[] = {jia,wan,font_37,font_00,font_00}; //目前显示的面积，
+//  code unsigned char* chineseSUM[] ={zong,font_02,font_37,font_00,font_00}; // 要显示总量，目前显示的量程
+  code unsigned char*  chineseMin[] = {font_32,font_33,font_34,font_35,font_36};//流量变送器
+  // unsigned char* chinesesich4[] ={font_38,font_02,font_37,font_00,font_00};
+   unsigned char * code chineseisch4[] = {chun,font_02,font_37,font_00,font_00};
+   code char arr[] = {':','\0'};
+   code char arrS[] = {'m',59,'/','s','\0'};	 //m3/s
+   code char arrMin[] = {'m',59,'/','m','i','n','\0'}; //m3/min
+ //  char arrArea[] = {'c','m',60,'\0'};  //cm2
+   code char arrKPa[] = {'K','P','a','\0'};
+   code char arrERR[] = {' ','-','-',' ',' ',' ',' ','\0'};
+   code char arrch4[]	= {'%','\0'};
+
+    if(g_cIsCh4 == 0)
+	{ 
+	  display_stringChinese(0,0,chineseFlux);	 //显示中文流量
+	}
+	else
+	{
+	  display_stringChinese(0,0,chineseisch4);	
+	}
+	display_stringChinese(0,1,chinesePase);	 //显示中文压力
+	display_stringChar(13,1,arrKPa);         //显示绝压单位
+	display_stringChinese(3,3,chineseMin);	 //显示流量变送器   
+
+   	display_stringChinese(0,2,chineseCH4);	//显示甲烷中文两个字
+	display_stringChar(15,2,arrch4);	   //显示甲烷中的%
+	display_stringChar(5,2,arrERR);		   //显示甲烷中的--
+	
+	 /*显示流量单位*/
+	  if(g_cUint == 0)
+	  {
+	   	display_stringChar(12,0,arrS);
+	  }
+	  else
+	  {
+	    display_stringChar(10,0,arrMin);
+	  }
+
+	  pase = date_Smooth_4525(); //读取绝压值
+	  disylay_mun(pase*10,POINT_1,5,1);	//显示绝压值
+
+	 /* 显示流量值*/
+	  if(g_cUint == 0)
+	  {
+	    if(g_cIsCh4 == 0)  //为甲烷流量时要乘以甲烷的比例值
+		{
+	      flux =  Wid_Speed()*g_iArea/10000;
+		}
+		else
+		{
+		  flux =  Wid_Speed()*g_iArea/10000*pase/100;
+		}
+		if(flux>g_iRange)
+		  {
+		     flux = g_iRange;
+		  }
+	    disylay_mun(flux*100,POINT_2,6,0);
+	  }
+	  else
+	  {
+	    if(g_cIsCh4 == 0)
+		{
+	      flux =  Wid_Speed()*g_iArea/10000*60;
+		}
+		else
+		{
+		  flux =  Wid_Speed()*g_iArea/10000*ch4/100*60;
+		}
+	    if(flux>g_iRangeMin)
+		  {
+		     flux = g_iRangeMin;
+		  }
+		if(flux<100) //数值在100以下显示两位小数点
+		{
+	     disylay_mun(flux*100,POINT_2,4,0);
+		 display_stringChar(4,0,arr);
+		}
+		else  //数值在100以上显示1个小数点并重新刷新 ：
+		{
+		  if(flux >999.9)
+		    {
+			   flux = 999.9;
+			}
+		  disylay_mun(flux*10,POINT_1,4,0);
+		  display_stringChar(4,0,arr);
+		}
+	  }
+
+	while(1)
+	{//	disylay_mun(time,POINT_0,0,3);
+		key_num = key();	//检查按键
+		if(key_num == KEY_FUNC)
+		{
+		   if(g_iProtect>=900)	 //在第一次按下时跳转到密码一界面，不然跳转跳转到正常的下一个界面
+		   {
+			 g_cFunc = 15;
+		   }
+		   else
+		   {
+	    	 g_cFunc++;
+		   }
+			key_release();	//按键释放
+			g_iProtect = 0;
+	    	return 0;
+		}
+		
+		
+	//	disylay_mun(ch4*10,POINT_1,5,2);
+	   
+		/*读取绝压和差压的传感器并显示*/
+		//if((g_iTimebase%READ_TIME) == 0)
+		 if(flag == 0 && (g_iTimebase <= 5 || (g_iTimebase >=10 && g_iTimebase<=15)) )
+		 {
+		    flag = 1;
+			ch4= read_ch4();
+		    read_senser(&flux,&pase);
+	       disylay_mun(pase*10,POINT_1,5,1);	//显示绝压的数据
+		   pca_set2(50);//设置绝压的输出脉冲
+		   /*设置甲烷的数据*/
+		   if(ch4 >= 0.0 && ch4 < 100.001)
+			{
+			    disylay_mun(ch4*10,POINT_1,5,2);	//显示甲烷的百分比
+			}
+			else
+			{
+				display_stringChar(5,2,arrERR);	//显示--
+			}
+
+	       if(g_cUint == 0)	  //在秒单位下的流量显示
+		   {
+		    disylay_mun(flux*100,POINT_2,6,0);
+		    g_cOut1[0] = (65536-500000/(200+800.0/g_iRange*((float)flux))+3)/256; 
+		    g_cOut1[1] = (65536-500000/(int)(200+800.0/g_iRange*(float)flux)+3)%256;
+		   }
+		   else
+		   {
+		    if(flux>g_iRangeMin)
+			  {
+			     flux = g_iRangeMin;
+			  }
+			   if(flux<100)
+			    {
+			     disylay_mun(flux*100,POINT_2,4,0);
+				 display_stringChar(4,0,arr);
+				}
+				else
+				{
+				 if(flux>999.9)
+				   {
+				     flux = 999.9;
+				   }
+				  disylay_mun(flux*10,POINT_1,4,0);
+				  display_stringChar(4,0,arr);
+				}
+				g_cOut1[0] = (65536-500000/(200+800.0/g_iRangeMin*flux))/256;  
+		        g_cOut1[1] = (unsigned int)(65536-500000/(200+800.0/g_iRangeMin*flux))%256;
+		   }
+	  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	   {
+		read_Maxout();
+	   }	 
+		 }
+		 else if((g_iTimebase >=5&&g_iTimebase<=10) || (g_iTimebase>=15&&g_iTimebase<=20))
+		  {
+		     flag = 0 ;
+		  }
+	}
+}
+
+unsigned char display_WindSpeed()
+{
+   	unsigned char key_num;
+	float windSpeed;
+	unsigned int play;
+    code unsigned char* chinese[] ={font_01,font_04,font_00,font_00,font_00};
+    code char arr[] = {'m','/','s','\0'};
+
+	display_stringChinese(0,0,chinese);
+	display_stringChar(6,1,arr);
+	windSpeed = Wid_Speed();
+	play = windSpeed*10;
+	disylay_mun(play,1,0,1); 
+
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+
+	    if((g_iTimebase%READ_TIME) == 0)
+		 {
+		    windSpeed = Wid_Speed();
+			play =windSpeed*10;
+			disylay_mun(play,POINT_1,0,1);
+		 }
+		key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+	}
+}
+
+unsigned char display_WindSpeedZero()
+{
+    char i;
+	char error;
+   	unsigned char key_num;
+	float windSpeed;
+    int pressure = 0;
+	unsigned int temper;
+	float pressure_sum = 0;
+    int play;
+    code unsigned char* chinese[] ={font_03,font_24,font_05,font_06,font_00};	  //零点校准
+	code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+    code char arr[] = {'m','/','s','\0'};
+
+	display_stringChinese(0,0,chinese);
+	display_stringChar(6,1,arr);
+	windSpeed = Wid_Speed();
+	play = 	(int)(windSpeed*10);
+	disylay_mun(play,1,0,1);  
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+		if(key_num == KEY_SURE)
+		  {
+		    key_release();
+		   Clean_Display(0,0,128,48,0);
+		   if(display_Protect1(chinese2,10) == 1 )
+		   {
+		          i =0;
+                // for(i=0;i<5;i++)
+				while(i<5)
+				   {
+				       error = MS4515DO_read((unsigned char*)&pressure,(unsigned char*)&temper);
+				//	   MS4515DO_read((unsigned char*)&dat1,(unsigned char*)temper) == 0
+					    if( error == 0)
+						{
+						   i++;
+						  	if(pressure<=1638)
+						    {
+							  pressure = 1638;
+					        }
+					      if(pressure>=14746)
+				            {
+						      pressure = 14746;
+					        }
+						 pressure_sum =pressure_sum+pressure;
+						 
+						}
+			//			disylay_mun(i,0,7,2);
+						delay(500);
+				   }   
+				   pressure_sum = pressure_sum/5;
+				   g_fZero = pressure_sum*0.07751938-635;
+				   Dateeprom(); 
+		   }
+		   Clean_Display(0,0,128,48,0);
+		   display_stringChinese(0,0,chinese);
+		   display_stringChar(6,1,arr);
+		   	windSpeed = Wid_Speed();
+        	play = 	(int)(windSpeed*10);
+        	disylay_mun(play,1,0,1);
+		
+		  }
+		if((g_iTimebase%READ_TIME) == 0)
+		  {
+		    windSpeed = Wid_Speed();
+			play = 	(int)(windSpeed*10);
+			disylay_mun(play,1,0,1);
+//			disylay_mun(g_fZero*100,2,0,2);   //调试用，显示零点值为多少
+		  }
+		key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+	}
+}
+
+unsigned char display_WindSpeedRate()
+{
+   	unsigned char key_num;
+	float windSpeed;
+	unsigned int play;
+	float k1;
+   code unsigned char* chinese[] ={font_26,font_27,font_05,font_06,font_00};	  //精度校准
+   code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+   code char arr[] = {'m','/','s','\0'};
+     k1=g_fK1;
+	display_stringChinese(0,0,chinese);
+	display_stringChar(6,1,arr);
+	windSpeed = Wid_Speed();
+	play = 	(int)(windSpeed*10);
+	disylay_mun(play,1,0,1); 
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+	    	g_cFunc++;
+			g_fK1 = k1;
+			key_release();
+	    	return 0;
+		}
+
+		if(key_num == KEY_ADD)
+		  {
+		   windSpeed = Wid_Speed(); 
+		   g_fK1 = (windSpeed+0.1)/windSpeed*g_fK1;
+	       if(g_fK1 >= 20)
+			{
+			  g_fK1 = 20;
+		    }
+		   if(g_fK1 <= 0.1)
+			{
+			  g_fK1 = 0.1;
+		    }
+			windSpeed = Wid_Speed();
+			play = 	(int)(windSpeed*10);
+			disylay_mun(play,1,0,1);  
+		  }
+		  
+		  if(key_num == KEY_SUB)
+		  {
+		   windSpeed = Wid_Speed(); 
+		   g_fK1 = (windSpeed-0.1)/windSpeed*g_fK1;
+	       if(g_fK1 >= 20)
+			{
+			  g_fK1 = 20;
+		    }
+		   if(g_fK1 <= 0.1)
+			{
+			  g_fK1 = 0.1;
+		    }
+			windSpeed = Wid_Speed();
+			play = 	(int)(windSpeed*10);
+			disylay_mun(play,POINT_1,0,1);  
+		  }
+
+		  if(key_num == KEY_SURE)
+		  {
+		   Clean_Display(0,0,128,48,0);
+		   if(display_Protect1(chinese2,10) == 0)
+		     {
+			    
+			    g_fK1 = k1;
+			 }
+			 else
+			 {
+			   Dateeprom();
+			   k1 = g_fK1;
+			 }
+		   Clean_Display(0,0,128,48,0);
+		   display_stringChinese(0,0,chinese);
+		   	windSpeed = Wid_Speed();
+        	play = 	(int)(windSpeed*10);
+     	   disylay_mun(play,POINT_1,0,1);
+		 //  disylay_mun(range,2,3,1);  
+		  }
+		 if(g_iTimebase == 0)
+		 {
+		   windSpeed = Wid_Speed();
+			play = 	(int)(windSpeed*10);
+			disylay_mun(play,POINT_1,0,1);
+		 }
+		key_delay();
+	    if(return_Main())
+		{
+		   // g_fK1 = k1;
+			return 0;
+		}
+	//	disylay_mun(100,2,0,2);
+	}
+}
+
+unsigned char display_Rate()
+{
+   	unsigned char key_num;
+   unsigned int range ;
+    float temp_K2;   						
+   code unsigned char* chinese[] = {font_39,font_40,font_09,font_10,font_00};	  //补偿系数
+   code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+    range = g_fK2*100;
+	temp_K2 = g_fK2;
+ //  char arr[] = {'m','/','s','\0'};
+	display_stringChinese(0,0,chinese);
+//	display_stringChar(6,1,arr);
+    disylay_mun(range,2,0,1); 
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+		range = key_AddSub(range,2,0,1,200);
+		if(key_num == KEY_SURE)
+		{
+		   g_fK2 = (float)range/100;
+		   Clean_Display(0,0,128,48,0);
+		   if(display_Protect1(chinese2,10) == 0)
+		     {
+			  
+			    g_fK2 = temp_K2;
+				range = g_fK2*100;
+			 }
+			 else
+			 {
+			     Dateeprom();
+			 }
+		   Clean_Display(0,0,128,48,0);
+		   display_stringChinese(0,0,chinese);
+		   disylay_mun(range,2,0,1);
+		}
+		 key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+	//	disylay_mun(100,2,0,2);
+	}
+}
+
+unsigned char display_Renew()
+{
+   	unsigned char key_num;
+	unsigned char integral;
+	unsigned char temp_integral;
+    code unsigned char* chinese[] ={font_07,font_08,font_09,font_10,font_00};	  //积分系数
+    code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+ //  char arr[] = {'m','/','s','\0'};
+    integral = g_cIntegral;
+	temp_integral = g_cIntegral;
+	display_stringChinese(0,0,chinese);
+	disylay_mun(g_cIntegral,0,0,1);
+//	display_stringChar(6,1,arr); 
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+		integral = key_AddSub(integral,0,0,1,19);
+        if(key_num == KEY_SURE)
+		{
+		   g_cIntegral = integral;
+		   Clean_Display(0,0,128,48,0);
+		   if(display_Protect1(chinese2,10) == 0)
+		   {
+		     
+		     g_cIntegral = temp_integral;
+			 integral = g_cIntegral; 
+		   }
+		   else
+		   {
+		     Dateeprom();
+		   }
+		   Clean_Display(0,0,128,48,0);
+		   display_stringChinese(0,0,chinese);
+		   disylay_mun(integral,0,0,1);
+		}
+
+		key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+		
+	//	disylay_mun(100,2,0,2);
+	}
+}
+
+unsigned char display_ZKSet()
+{
+   	unsigned char key_num;
+	float k1,zero;
+   code unsigned char* chinese[] ={font_17,font_18,font_25,font_28,font_29};	  //恢复初始值
+   code unsigned char* chinese1[] ={font_30,font_29,font_00,font_00,font_00};  //原值
+   code unsigned char* chinese2[] ={font_31,font_29,font_00,font_00,font_00};   //新值
+   code unsigned char* chinese3[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+ //  char arr[] = {'m','/','s','\0'};
+       k1 = g_fK1;
+	   zero = g_fZero;
+	display_stringChinese(0,0,chinese);
+//	display_stringChar(6,1,arr); 
+     if(g_fZero>-0.01&&g_fZero<0.01 && g_fK1>0.99 && g_fK1<1.01 )
+	   {
+	      display_stringChinese(0,1,chinese1);
+	   }
+	   else
+	   {
+	      display_stringChinese(0,1,chinese2);
+	   }
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+		if(key_num == KEY_SURE)
+		{
+		   g_fK1 = 1.0;
+		   g_fZero = 0.0;
+		   Clean_Display(0,0,128,48,0);
+
+ 		   if(display_Protect1(chinese3,10)==0)
+		     {
+			   
+			   g_fK1 = k1;
+			   g_fZero = zero;
+			 }
+			 else
+			 {
+			  Dateeprom();
+			 }
+		   Clean_Display(0,0,128,48,0);
+		   display_stringChinese(0,0,chinese);
+		   if(g_fZero>-0.01&&g_fZero<0.01 && g_fK1>0.99 && g_fK1<1.01 )
+	       {
+	         display_stringChinese(0,1,chinese1);
+	       }
+	       else
+	       {
+	         display_stringChinese(0,1,chinese2);
+	       } 	
+		}
+
+
+		key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+	//	disylay_mun(100,2,0,2);
+	}
+}
+
+
+unsigned char display_uint()
+{
+   	unsigned char key_num;
+	char uint1 ;
+	char temp_uint1;
+  code unsigned char* chinese[] ={font_15,font_16,font_00,font_00,font_00};	  //单位
+  code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+  code char arr0[] = {'m',59,'/','s',' ',' ','\0'};
+  code char arr1[] = {'m',59,'/','m','i','n','\0'};
+   uint1 = g_cUint;
+   temp_uint1 = g_cUint;
+	display_stringChinese(0,0,chinese);
+	 if(uint1 == 1)
+	  {
+		  display_stringChar(3,1,arr1);
+	  }
+	   else
+	  {
+		  display_stringChar(3,1,arr0);
+	  }
+	while(1)
+	{
+	   if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+		    g_iProtect = 0;
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+        if(key_num == KEY_ADD)
+		 {
+		    g_iProtect = 0;
+		    uint1++;
+			if(uint1 == 2)
+			  uint1 = 0;
+		   if(uint1 == 1)
+		   {
+		     display_stringChar(3,1,arr1);
+		   }
+		   else
+		   {
+		     display_stringChar(3,1,arr0);
+		   }
+		 }
+		 if(key_num == KEY_SUB)
+		 {
+		   g_iProtect = 0;
+		   uint1--;
+		   if(uint1 < 0)
+		    uint1 = 1;
+			if(uint1 == 1)
+		   {
+		     display_stringChar(3,1,arr1);
+		   }
+		   else
+		   {
+		     display_stringChar(3,1,arr0);
+		   }
+		 }
+
+		 if(key_num == KEY_SURE)
+		   {
+		       g_iProtect = 0;
+		       g_cUint = uint1;
+			   Clean_Display(0,0,128,48,0);
+		       if(display_Protect1(chinese2,10)==0)
+			     {
+				    g_cUint = temp_uint1;
+					uint1 = g_cUint;
+				 }
+				 else
+				 {
+				   Dateeprom();
+				 }
+		       Clean_Display(0,0,128,48,0);
+		       display_stringChinese(0,0,chinese);
+			   if(uint1 == 1)
+			   {
+			     display_stringChar(3,1,arr1);
+			   }
+			   else
+			   {
+			     display_stringChar(3,1,arr0);
+			   }
+		   }
+
+		key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+	//	disylay_mun(100,2,0,2);
+	}
+
+}
+
+unsigned char display_isCH4()
+{
+   	unsigned char key_num;
+	char isCh4 ;
+	char temp_isCh4;
+  code unsigned char* chinese[] ={font_15,font_16,font_00,font_00,font_00};	  //流量选择
+  code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+  code unsigned char* chinese_isCh4[] ={chun,jia,wan,font_38,font_02};	  //纯甲烷流量
+  code unsigned char* chinese_noCh4[] ={hun,he,font_38,font_02,font_00};	  //混合流量
+   isCh4 = g_cIsCh4;
+   temp_isCh4 = g_cIsCh4;
+	display_stringChinese(0,0,chinese);
+	 if(isCh4 == 1)
+	  {
+	     display_stringChinese(0,1,chinese_isCh4);
+	  }
+	   else
+	  {
+		  display_stringChinese(0,1,chinese_noCh4);
+	  }
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+		    g_iProtect = 0;
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+        if(key_num == KEY_ADD)
+		 {
+		    g_iProtect = 0;
+		    isCh4++;
+			if(isCh4 == 2)
+			  isCh4 = 0;
+		   if(isCh4 == 1)
+		   {
+		     display_stringChinese(0,1,chinese_isCh4);
+		   }
+		   else
+		   {
+		     display_stringChinese(0,1,chinese_noCh4);
+		   }
+		 }
+		 if(key_num == KEY_SUB)
+		 {
+		   g_iProtect = 0;
+		   isCh4--;
+		   if(isCh4 < 0)
+		    isCh4 = 1;
+			if(isCh4 == 1)
+		   {
+		     display_stringChinese(0,1,chinese_isCh4);
+		   }
+		   else
+		   {
+		     display_stringChinese(0,1,chinese_noCh4);
+		   }
+		 }
+
+		 if(key_num == KEY_SURE)
+		   {
+		       g_iProtect = 0;
+		       g_cIsCh4 = isCh4;
+			   Clean_Display(0,0,128,48,0);
+		       if(display_Protect1(chinese2,10)==0)
+			     {
+				    g_cIsCh4 = temp_isCh4;
+					isCh4 = g_cIsCh4;
+				 }
+				 else
+				 {
+				   Dateeprom();
+				 }
+		       Clean_Display(0,0,128,48,0);
+		       display_stringChinese(0,0,chinese);
+			   if(isCh4 == 1)
+			   {
+			     display_stringChinese(0,1,chinese_isCh4);
+			   }
+			   else
+			   {
+			     display_stringChinese(0,1,chinese_noCh4);
+			   }
+		   }
+
+		key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+	}
+
+}
+
+
+unsigned char display_MaxOut()
+{
+   	unsigned char key_num;
+	char maxout ;
+	char temp_maxout;
+	//static char flag=0;
+   unsigned char* chinese[] ={zong,font_02,font_00,font_00,font_00};	  //流量选择
+   unsigned char* chineseClear[] ={qing,font_03,font_00,font_00,font_00};	  //清零选择
+   unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+   code char arrOFF[] = {'O','F','F',' ','\0'};
+   code char arrON[] =  {'O','N',' ',' ','\0'};
+   code char arrm3[] = {'m',59,'\0'};
+   code char arr[] = {':','\0'};
+//   code char arr1[] = {' ',' ',' ',' ',' ',' ',' ',' ','\0'};
+   maxout = g_cMaxOut;
+   temp_maxout = g_cMaxOut;
+	display_stringChinese(0,0,chinese);
+	display_stringChar(14,1,arrm3);
+	display_stringChar(4,0,arr);
+	 if(maxout == 1)
+	  {
+	     display_stringChar(7,0,arrOFF);
+	     //display_stringChinese(0,1,chinese);
+	  }
+	   else if(maxout == 0)
+	  {
+	     display_stringChar(7,0,arrON);
+		  //display_stringChinese(0,1,chinese_noCh4);
+	  }
+	   else
+	  {
+	     display_stringChinese(7,0,chineseClear);
+	  }
+
+	 // if(maxout == 0)
+	//	{
+		    display_sum((long)g_fSum,6,1);
+			display_stringChar(14,1,arrm3);
+	//	}
+	//	else if(maxout == 1)
+	//	{
+	//	   display_stringChar(6,1,arr1);
+	  //  }
+
+	while(1)
+	{
+	    if(maxout == 0 || maxout == 2)
+		{
+	      read_Maxout();
+		}
+		//if(maxout == 0 || maxout == 2)
+		//{
+		if(g_iTime%10 == 0)
+		  {
+		    display_sum((long)g_fSum,6,1);
+			display_stringChar(14,1,arrm3);
+		  }
+		//}
+	/*	else 
+		{
+		   display_stringChar(6,1,arr1);
+		}*/
+		
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+		    g_iProtect = 0;
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+        if(key_num == KEY_ADD)
+		 {
+		    g_iProtect = 0;
+		    maxout++;
+			if(maxout == 3)
+			  maxout = 0;
+		   if(maxout == 1)
+		   {
+		     display_stringChar(7,0,arrOFF);
+		     //display_stringChinese(0,1,chinese_isCh4);
+		   }
+		   else	if(maxout == 0)
+		   {
+		     display_stringChar(7,0,arrON);
+		    // display_stringChinese(0,1,chinese_noCh4);
+		   }
+		   else
+		   {
+		     display_stringChinese(7,0,chineseClear);
+		   }
+		 }
+		 if(key_num == KEY_SUB)
+		 {
+		   g_iProtect = 0;
+		   maxout--;
+		   if(maxout < 0)
+		    maxout = 2;
+			if(maxout == 1)
+		   {
+		     display_stringChar(7,0,arrOFF);
+		     //display_stringChinese(0,1,chinese_isCh4);
+		   }
+		   else if(maxout == 0)
+		   {
+		     display_stringChar(7,0,arrON);
+		     //display_stringChinese(0,1,chinese_noCh4);
+		   }
+		   else
+		   {
+		     display_stringChinese(7,0,chineseClear);
+		   }
+
+		 }
+
+		 if(key_num == KEY_SURE)
+		   {
+		       g_iProtect = 0;
+		       g_cMaxOut = maxout;
+			   Clean_Display(0,0,128,48,0);
+		       if(display_Protect1(chinese2,10)==0)
+			     {
+				    g_cMaxOut = temp_maxout;
+					maxout = g_cMaxOut;
+				 }
+				 else
+				 {
+				   if(maxout == 2)
+				     {
+					    g_fSum = 0.0;
+					 }
+				   Dateeprom();
+				 }
+		       Clean_Display(0,0,128,48,0);
+		       display_stringChinese(0,0,chinese);
+			   if(maxout == 1)
+			   {
+			     display_stringChar(7,0,arrOFF);
+			     //display_stringChinese(0,1,chinese_isCh4);
+			   }
+			   else	if(maxout == 0)
+			   {
+			     display_stringChar(7,0,arrON);
+			     //display_stringChinese(0,1,chinese_noCh4);
+			   }
+			   else
+			   {
+			     display_stringChinese(7,0,chineseClear);
+			   }
+		   }
+
+		key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+	}
+
+}  
+unsigned char display_Range()
+{
+   	unsigned char key_num;
+	unsigned int range,rangeMin,temp_range,temp_rangeMin;
+
+  code unsigned char* chinese[] ={font_02,font_21,font_00,font_00,font_00};	  //量程
+  code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
+  code char arr0[] = {'m',59,'/','s',' ',' ','\0'};
+  code char arr1[] = {'m',59,'/','m','i','n','\0'};
+     range = g_iRange;
+	 temp_range = range;
+	 rangeMin = g_iRangeMin;
+	 temp_rangeMin = rangeMin;
+	display_stringChinese(0,0,chinese);
+	if(g_cUint == 0)
+	{
+	  display_stringChar(5,1,arr0);
+	  disylay_mun(range,0,0,1);
+	}
+	else
+	{
+	  display_stringChar(5,1,arr1);
+	  disylay_mun(rangeMin,0,0,1);
+	} 
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+		if(key_num == KEY_FUNC)
+		{
+		   g_iProtect = 0;
+	    	g_cFunc++;
+			key_release();
+	    	return 0;
+		}
+
+		if(key_num == KEY_ADD)
+		{
+		    g_iProtect = 0;
+	        if(g_cUint == 0)
+			  {
+			    range++;
+				if(range > 10)
+				 {
+				  range = 10;
+				 }
+				 disylay_mun(range,0,0,1);
+			  }
+			  else
+			  {
+			    rangeMin = rangeMin+5;
+				if(rangeMin > 1000)
+				   rangeMin = 1000;
+				disylay_mun(rangeMin,0,0,1);
+			  }
+		}
+
+		if(key_num == KEY_SUB)
+		{
+		    g_iProtect = 0;
+	        if(g_cUint == 0)
+			  {
+			    range--;
+				if(range == 0)
+				 {
+				  range = 1;
+				 }
+				 disylay_mun(range,0,0,1);
+			  }
+			  else
+			  {
+			    rangeMin = rangeMin-5;
+				if(rangeMin == 0)
+				   rangeMin = 5;
+				disylay_mun(rangeMin,0,0,1);
+			  }
+		}
+
+		if(key_num == KEY_SURE)
+		  {
+		       g_iProtect = 0;
+		       g_iRange =range;
+	           g_iRangeMin = rangeMin ;
+			   Clean_Display(0,0,128,48,0);
+		       if(display_Protect1(chinese2,10)==0)
+			     {
+				   g_iRange = temp_range;
+				   g_iRangeMin = temp_rangeMin;
+				   range = g_iRange;
+				   rangeMin = g_iRangeMin;
+				 }
+				 else
+				 {
+				   Dateeprom();
+				 }
+		       Clean_Display(0,0,128,48,0);
+		       display_stringChinese(0,0,chinese);
+			   	if(g_cUint == 0)
+				{
+				  display_stringChar(5,1,arr0);
+				  disylay_mun(range,0,0,1);
+				}
+				else
+				{
+				  display_stringChar(5,1,arr1);
+				  disylay_mun(rangeMin,0,0,1);
+				} 
+		  }
+
+		key_delay();
+	    if(return_Main())
+		{
+			return 0;
+		}
+	//	disylay_mun(100,2,0,2);
+	}
+}
+
+unsigned char display_Protect1(unsigned char ** chinese,char num)
+{
+   	unsigned char key_num;
+//	unsigned char i;
+    
+   unsigned char password=0;
+ //  unsigned char* chinese[] ={font_22,font_23,yi,font_00,font_00};	  //密码1
+   code char arrOK[] = {'O','K',' ',' ',' ','\0'};
+   code char arrNO[] = {'N','O',' ',' ',' ','\0'};
+   code char arr[] = {'e','r','r','\0'};
+	display_stringChinese(0,0,chinese);
+	
+  //	display_stringChar(6,1,arr); 
+    disylay_mun(password,0,0,1);
+	key_release();
+	while(1)
+	{
+	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
+	    read_Maxout();
+		key_num = key();
+//		if(key_num == KEY_FUNC)
+//		{
+//			key_release();
+//	    	return 0;
+//		}																						`
+		if(key_num == KEY_ADD)
+		{
+		   g_iProtect = 0;
+		   password++;
+		   disylay_mun(password,0,0,1);
+		  
+		}
+		if(key_num == KEY_SUB)
+		{
+		   g_iProtect = 0;
+		   password--;
+		   disylay_mun(password,0,0,1);
+		  
+		}
+		if(key_num == KEY_SURE)
+		{
+		   key_release();
+		   g_iProtect = 0;
+		   if(password == num)
+		     {
+				display_stringChar(0,1,arrOK);
+				delay(1000);
+				g_cFunc = 1;
+				return 1;
+			 }
+			 else
+			 {
+				display_stringChar(0,1,arrNO);
+				delay(1000);
+				disylay_mun(password,0,0,1);
+				if(g_cFunc == 13) 
+				  {
+				     g_cSecrit_Num++;
+					   if(g_cSecrit_Num == 5)
+					       g_cSecrit_Num = 4;
+					 Dateeprom();
+					 if(g_cSecrit_Num>=3)
+					  {
+					    Clean_Display(0,0,128,48,0);
+	   					 display_stringChar(6,1,arr);
+							while(1)
+						{
+						}
+					  }
+				  }
+			 }
+		}
+		if(key_num == KEY_FUNC)
+		{
+		    key_release();
+			return 0;
+		}
+		   key_delay();
+			if(return_Main())
+			 {
+			    return 0;
+			 }
+	//	disylay_mun(100,2,0,2);
+	}
+}
+
+
+

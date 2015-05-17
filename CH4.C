@@ -1,0 +1,52 @@
+#include "reg52.h"
+#include "global_var.h"
+#include "CH4.h"
+#include "Display.h"
+void startCH4()
+{
+  g_cCh4Flag = 1;
+  g_iCh4Num = 0;
+  IT0 = 1 ;
+  EX0 = 1;
+  
+}
+
+void stopCH4()
+{
+   
+   g_iCh4Num_test = g_iCh4Num;
+   g_cCh4Flag = 0;
+   EX0 = 0;
+   //IT0 = 0;
+     
+}
+
+/*读取计数器里面记录的脉冲数，只有在计数器停下时才去读*/
+float read_ch4()
+{
+    float temp;
+	static float temp_old = 120;
+//	static int mun=0;
+        if(g_cCh4Flag == 0)
+			{
+			    if(g_iCh4Num_test>1001)
+				  {
+				    g_iCh4Num_test = 1001;
+				  }
+				 temp = (g_iCh4Num_test-201.0)/8;
+				 
+				
+			//	if(temp<49.5 || temp>50.5)
+			//	{
+			//	 disylay_mun(g_iCh4Num_test,0,0,3);
+			//	 mun++;
+			//	}
+			//	disylay_mun(mun,0,8,3);
+				temp_old = temp;					
+		   }
+		   else
+		   {
+		      temp = temp_old;
+		   }
+	return temp;
+}

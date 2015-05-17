@@ -1,0 +1,88 @@
+C51 COMPILER V9.01   GLOBAL_VAR                                                            05/16/2015 23:36:19 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE GLOBAL_VAR
+OBJECT MODULE PLACED IN global_var.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE global_var.c COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          
+   2          
+   3          xdata float dat1_zero;
+   4          
+   5          xdata char g_cFunc=0;
+   6          
+   7          xdata unsigned int g_iTimebase;
+   8          
+   9          xdata unsigned int g_iProtect = 900;
+  10          
+  11          
+  12          xdata unsigned char g_cIntegral=5;
+  13          
+  14          xdata unsigned char g_cSecrit = 0;
+  15          
+  16          xdata unsigned char g_cSecrit_Num = 0;
+  17          
+  18          xdata unsigned char g_cStart = 0;
+  19          
+  20          unsigned int temper1;
+  21          
+  22          xdata unsigned int g_iArea = 50;
+  23          
+  24          xdata char g_cUint = 1;
+  25          
+  26          xdata char g_cWorkChange =0;
+  27          
+  28           char g_cMaxOut=0;
+  29          
+  30          xdata float g_fSum = 0;
+  31          
+  32          xdata float g_fZero = 0.0;
+  33          
+  34          xdata float g_fZero_rev = 0.0;
+  35          
+  36          xdata float g_fK1 = 1.0;
+  37          
+  38          xdata unsigned int g_iRange = 1;
+  39          
+  40          xdata unsigned int g_iRangeMin = 100;
+  41          
+  42          unsigned char g_cOut1[2] ={0,0};
+  43          
+  44          unsigned int g_iOut2;
+  45          
+  46          xdata float g_fK2=1.0;
+  47          
+  48          unsigned int g_iCh4Num_test = 0;
+  49          
+  50          xdata unsigned int g_iCh4Num = 0;  //甲烷脉冲数个数记录的变量
+  51          
+  52          xdata unsigned char g_cCh4Flag= 1;  //甲烷脉冲计数空闲的标志位
+  53          
+  54          xdata char g_cReadCh4 = 0;      //读取甲烷的时间基准计数
+  55          
+C51 COMPILER V9.01   GLOBAL_VAR                                                            05/16/2015 23:36:19 PAGE 2   
+
+  56          unsigned int g_iTime=0;
+  57          
+  58          unsigned int g_iLed_light = 0;
+  59          
+  60          float g_fSum_biao;
+  61          
+  62          float g_fSum_biao_ch4 = 0;
+  63          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     45    ----
+   PDATA SIZE       =     21    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
