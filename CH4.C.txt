@@ -2,6 +2,9 @@
 #include "global_var.h"
 #include "CH4.h"
 #include "Display.h"
+
+
+
 void startCH4()
 {
   g_cCh4Flag = 1;
