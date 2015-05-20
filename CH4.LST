@@ -1,9 +1,9 @@
-C51 COMPILER V9.01   CH4                                                                   05/20/2015 21:09:22 PAGE 1   
+C51 COMPILER V9.01   CH4                                                                   05/20/2015 23:55:48 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE CH4
 OBJECT MODULE PLACED IN CH4.OBJ
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE CH4.C COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE CH4.C LARGE ROM(COMPACT) OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND
 
 line level    source
 
@@ -62,12 +62,12 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-C51 COMPILER V9.01   CH4                                                                   05/20/2015 21:09:22 PAGE 2   
+C51 COMPILER V9.01   CH4                                                                   05/20/2015 23:55:48 PAGE 2   
 
-   CODE SIZE        =    135    ----
+   CODE SIZE        =    145    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
-   PDATA SIZE       =      4       4
+   XDATA SIZE       =      4       4
+   PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

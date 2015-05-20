@@ -105,7 +105,9 @@
 void dat_Init()
 {
 
-   char temp1,temp2,temp3,temp4;
+   //char temp1,temp2,temp3,temp4;
+   char temp1,temp2;
+   char *p;
    temp1 = IapReadByte(START1);
    temp2 = IapReadByte(START2);
    if(temp1 ==10 && temp2 == 10)
@@ -157,23 +159,40 @@ void dat_Init()
 
 		 g_cStart =  IapReadByte(START);
 
-		 temp1 = IapReadByte(SUM1);
+		  p = (char *)&g_fSum;
+		 *p = IapReadByte(SUM1);
+		 *(p+1) = IapReadByte(SUM2);
+		 *(p+2) = IapReadByte(SUM3);
+		 *(p+3) = IapReadByte(SUM4);
+	/*	 temp1 = IapReadByte(SUM1);
 		 temp2 = IapReadByte(SUM2);
 		 temp3 = IapReadByte(SUM3);
 		 temp4 = IapReadByte(SUM4);
-		 g_fSum = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
+		 g_fSum = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;*/
 
+         p = (char *)&g_fSum_biao;
+		 *p = IapReadByte(SUM1_BIAO_1);
+		 *(p+1) = IapReadByte(SUM1_BIAO_2);
+		 *(p+2) = IapReadByte(SUM1_BIAO_3);
+		 *(p+3) = IapReadByte(SUM1_BIAO_4);
+		 /*
 		 temp1 = IapReadByte(SUM1_BIAO_1);
 		 temp2 = IapReadByte(SUM1_BIAO_2);
 		 temp3 = IapReadByte(SUM1_BIAO_3);
 		 temp4 = IapReadByte(SUM1_BIAO_4);
-		 g_fSum_biao = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
+		 g_fSum_biao = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;	*/
 
+		 p = (char *)&g_fSum_biao_ch4;
+		 *p = IapReadByte(SUM1_BIAO_CUN_1);
+		 *(p+1) = IapReadByte(SUM1_BIAO_CUN_2);
+		 *(p+2) = IapReadByte(SUM1_BIAO_CUN_3);
+		 *(p+3) = IapReadByte(SUM1_BIAO_CUN_4);
+		 /*
 		 temp1 = IapReadByte(SUM1_BIAO_CUN_1);
 		 temp2 = IapReadByte(SUM1_BIAO_CUN_2);
 		 temp3 = IapReadByte(SUM1_BIAO_CUN_3);
 		 temp4 = IapReadByte(SUM1_BIAO_CUN_4);
-		 g_fSum_biao_ch4 = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
+		 g_fSum_biao_ch4 = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;	*/
    }
    else
    {
@@ -233,20 +252,23 @@ void dat_Init()
 
 	 IapProgramByte(0,MAXOUT);
 
-     IapProgramByte(0,SUM1);
-	 IapProgramByte(0,SUM2);
-	 IapProgramByte(0,SUM3);
-	 IapProgramByte(0,SUM4);
+	 p = (char *)&g_fSum;
+     IapProgramByte(*p,SUM1);
+	 IapProgramByte(*(p+1),SUM2);
+	 IapProgramByte(*(p+2),SUM3);
+	 IapProgramByte(*(p+3),SUM4);
 
-     IapProgramByte(0,SUM1_BIAO_1);
-	 IapProgramByte(0,SUM1_BIAO_2);
-	 IapProgramByte(0,SUM1_BIAO_3);
-	 IapProgramByte(0,SUM1_BIAO_4);
+	  p = (char *)&g_fSum_biao;
+     IapProgramByte(*p,SUM1_BIAO_1);
+	 IapProgramByte(*(p+1),SUM1_BIAO_2);
+	 IapProgramByte(*(p+2),SUM1_BIAO_3);
+	 IapProgramByte(*(p+3),SUM1_BIAO_4);
      
-	 IapProgramByte(0,SUM1_BIAO_CUN_1);
-	 IapProgramByte(0,SUM1_BIAO_CUN_2);
-	 IapProgramByte(0,SUM1_BIAO_CUN_3);
-	 IapProgramByte(0,SUM1_BIAO_CUN_4);
+	 p = (char *)&g_fSum_biao_ch4;
+	 IapProgramByte(*p,SUM1_BIAO_CUN_1);
+	 IapProgramByte(*(p+1),SUM1_BIAO_CUN_2);
+	 IapProgramByte(*(p+2),SUM1_BIAO_CUN_3);
+	 IapProgramByte(*(p+3),SUM1_BIAO_CUN_4);
 
 	 IapEraseSector(START1);
 	 IapEraseSector(START2);
@@ -302,24 +324,41 @@ void dat_Init()
 		 g_cMaxOut = IapReadByte(MAXOUT_2);
 
 //		 g_cStart =  IapReadByte(START_2);
+		 p = (char *)&g_fSum;
+		 *p = IapReadByte(SUM1_2);
+		 *(p+1) = IapReadByte(SUM2_2);
+		 *(p+2) = IapReadByte(SUM3_2);
+		 *(p+3) = IapReadByte(SUM4_2);
+		 
+//		 temp1 = IapReadByte(SUM1_2);
+//		 temp2 = IapReadByte(SUM2_2);
+//		 temp3 = IapReadByte(SUM3_2);
+//		 temp4 = IapReadByte(SUM4_2);
+//		 g_fSum = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0; 
 
-		 temp1 = IapReadByte(SUM1_2);
-		 temp2 = IapReadByte(SUM2_2);
-		 temp3 = IapReadByte(SUM3_2);
-		 temp4 = IapReadByte(SUM4_2);
-		 g_fSum = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
+		 p = (char *)&g_fSum_biao;
+		 *p = IapReadByte(SUM2_BIAO_1);
+		 *(p+1) = IapReadByte(SUM2_BIAO_2);
+		 *(p+2) = IapReadByte(SUM2_BIAO_3);
+		 *(p+3) = IapReadByte(SUM2_BIAO_4);
+		 
+//         temp1 = IapReadByte(SUM2_BIAO_1);
+//		 temp2 = IapReadByte(SUM2_BIAO_2);
+//		 temp3 = IapReadByte(SUM2_BIAO_3);
+//		 temp4 = IapReadByte(SUM2_BIAO_4);
+//		 g_fSum_biao = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
 
-         temp1 = IapReadByte(SUM2_BIAO_1);
-		 temp2 = IapReadByte(SUM2_BIAO_2);
-		 temp3 = IapReadByte(SUM2_BIAO_3);
-		 temp4 = IapReadByte(SUM2_BIAO_4);
-		 g_fSum_biao = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;
-
-         temp1 = IapReadByte(SUM2_BIAO_CUN_1);
-		 temp2 = IapReadByte(SUM2_BIAO_CUN_2);
-		 temp3 = IapReadByte(SUM2_BIAO_CUN_3);
-		 temp4 = IapReadByte(SUM2_BIAO_CUN_4);
-		 g_fSum_biao_ch4 = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;	
+		 p = (char *)&g_fSum_biao_ch4;
+		 *p = IapReadByte(SUM2_BIAO_CUN_1);
+		 *(p+1) = IapReadByte(SUM2_BIAO_CUN_2);
+		 *(p+2) = IapReadByte(SUM2_BIAO_CUN_3);
+		 *(p+3) = IapReadByte(SUM2_BIAO_CUN_4);
+//		 
+//         temp1 = IapReadByte(SUM2_BIAO_CUN_1);
+//		 temp2 = IapReadByte(SUM2_BIAO_CUN_2);
+//		 temp3 = IapReadByte(SUM2_BIAO_CUN_3);
+//		 temp4 = IapReadByte(SUM2_BIAO_CUN_4);
+//		 g_fSum_biao_ch4 = temp1+temp2*100.0+temp3*10000.0+temp4*1000000.0;	
 
 		 IapEraseSector(ZERO_ADD_1);
 	     IapEraseSector(START);
@@ -357,20 +396,23 @@ void dat_Init()
 	
 		 IapProgramByte(0,MAXOUT);
 	
-	     IapProgramByte(0,SUM1);
-		 IapProgramByte(0,SUM2);
-		 IapProgramByte(0,SUM3);
-		 IapProgramByte(0,SUM4);
+	      p = (char *)&g_fSum; 
+	     IapProgramByte(*p,SUM1);
+		 IapProgramByte(*(p+1),SUM2);
+		 IapProgramByte(*(p+2),SUM3);
+		 IapProgramByte(*(p+3),SUM4);
 	
-	     IapProgramByte(0,SUM1_BIAO_1);
-		 IapProgramByte(0,SUM1_BIAO_2);
-		 IapProgramByte(0,SUM1_BIAO_3);
-		 IapProgramByte(0,SUM1_BIAO_4);
+	      p = (char *)&g_fSum_biao;
+	     IapProgramByte(*p,SUM1_BIAO_1);
+		 IapProgramByte(*(p+1),SUM1_BIAO_2);
+		 IapProgramByte(*(p+2),SUM1_BIAO_3);
+		 IapProgramByte(*(p+3),SUM1_BIAO_4);
 
-		 IapProgramByte(0,SUM1_BIAO_CUN_1);
-		 IapProgramByte(0,SUM1_BIAO_CUN_2);
-		 IapProgramByte(0,SUM1_BIAO_CUN_3);
-		 IapProgramByte(0,SUM1_BIAO_CUN_4);
+		  p = (char *)&g_fSum_biao_ch4;
+		 IapProgramByte(*p,SUM1_BIAO_CUN_1);
+		 IapProgramByte(*(p+1),SUM1_BIAO_CUN_2);
+		 IapProgramByte(*(p+2),SUM1_BIAO_CUN_3);
+		 IapProgramByte(*(p+3),SUM1_BIAO_CUN_4);
 
 		 IapEraseSector(START1);
 		 IapEraseSector(START2);
@@ -389,7 +431,8 @@ void StrotPrect()
 
 void Dateeprom()
 {
-   unsigned char temp1,temp2,temp3,temp4;
+   unsigned char temp1,temp2;//,temp3,temp4;
+   char * p;
    IapEraseSector(ISCH4);
 
     temp1 = g_iArea/100;
@@ -441,6 +484,13 @@ void Dateeprom()
 
     IapProgramByte(g_cMaxOut,MAXOUT);
 
+
+    p = (char *)&g_fSum;
+	IapProgramByte(*p,SUM1);
+	IapProgramByte(*(p+1),SUM2);
+	IapProgramByte(*(p+2),SUM3);
+	IapProgramByte(*(p+3),SUM4);
+	/*
 	temp1 = ((long)(g_fSum))%100L;
 	temp2 = ((long)(g_fSum))%10000L/100L;
 	temp3 = ((long)(g_fSum))%1000000L/10000L;
@@ -448,8 +498,14 @@ void Dateeprom()
 	IapProgramByte(temp1,SUM1);
 	IapProgramByte(temp2,SUM2);
 	IapProgramByte(temp3,SUM3);
-	IapProgramByte(temp4,SUM4);
-   
+	IapProgramByte(temp4,SUM4);	 */
+    
+	p = (char *)&g_fSum_biao;
+	IapProgramByte(*p,SUM1_BIAO_1);
+	IapProgramByte(*(p+1),SUM1_BIAO_2);
+	IapProgramByte(*(p+2),SUM1_BIAO_3);
+	IapProgramByte(*(p+3),SUM1_BIAO_4) ;
+	/*
 	temp1 = ((long)(g_fSum_biao))%100L;
 	temp2 = ((long)(g_fSum_biao))%10000L/100L;
 	temp3 = ((long)(g_fSum_biao))%1000000L/10000L;
@@ -457,8 +513,14 @@ void Dateeprom()
 	IapProgramByte(temp1,SUM1_BIAO_1);
 	IapProgramByte(temp2,SUM1_BIAO_2);
 	IapProgramByte(temp3,SUM1_BIAO_3);
-	IapProgramByte(temp4,SUM1_BIAO_4) ;
+	IapProgramByte(temp4,SUM1_BIAO_4) ;	*/
 
+	p = (char *)&g_fSum_biao_ch4;
+	IapProgramByte(*p,SUM1_BIAO_CUN_1);
+	IapProgramByte(*(p+1),SUM1_BIAO_CUN_2);
+	IapProgramByte(*(p+2),SUM1_BIAO_CUN_3);
+	IapProgramByte(*(p+3),SUM1_BIAO_CUN_4) ;
+	/*
     temp1 = ((long)(g_fSum_biao_ch4))%100L;
 	temp2 = ((long)(g_fSum_biao_ch4))%10000L/100L;
 	temp3 = ((long)(g_fSum_biao_ch4))%1000000L/10000L;
@@ -466,7 +528,7 @@ void Dateeprom()
 	IapProgramByte(temp1,SUM1_BIAO_CUN_1);
 	IapProgramByte(temp2,SUM1_BIAO_CUN_2);
 	IapProgramByte(temp3,SUM1_BIAO_CUN_3);
-	IapProgramByte(temp4,SUM1_BIAO_CUN_4) ;
+	IapProgramByte(temp4,SUM1_BIAO_CUN_4) ;		 */
 
     if(g_cSecrit == 0) 
 	  {
@@ -520,6 +582,12 @@ void Dateeprom()
 	
 	    IapProgramByte(g_cMaxOut,MAXOUT_2);
 
+		p = (char *)&g_fSum;
+		IapProgramByte(*p,SUM1_2);
+		IapProgramByte(*(p+1),SUM2_2);
+		IapProgramByte(*(p+2),SUM3_2);
+		IapProgramByte(*(p+3),SUM4_2);
+		/*
 		temp1 = ((long)(g_fSum))%100L;
 		temp2 = ((long)(g_fSum))%10000L/100L;
 		temp3 = ((long)(g_fSum))%1000000L/10000L;
@@ -527,8 +595,14 @@ void Dateeprom()
 		IapProgramByte(temp1,SUM1_2);
 		IapProgramByte(temp2,SUM2_2);
 		IapProgramByte(temp3,SUM3_2);
-		IapProgramByte(temp4,SUM4_2);
+		IapProgramByte(temp4,SUM4_2);  */
 
+		p = (char *)&g_fSum_biao;
+		IapProgramByte(*p,SUM2_BIAO_1);
+		IapProgramByte(*(p+1),SUM2_BIAO_2);
+		IapProgramByte(*(p+2),SUM2_BIAO_3);
+		IapProgramByte(*(p+3),SUM2_BIAO_4);
+		/*
 		temp1 = ((long)(g_fSum_biao))%100L;
 		temp2 = ((long)(g_fSum_biao))%10000L/100L;
 		temp3 = ((long)(g_fSum_biao))%1000000L/10000L;
@@ -536,8 +610,14 @@ void Dateeprom()
 		IapProgramByte(temp1,SUM2_BIAO_1);
 		IapProgramByte(temp2,SUM2_BIAO_2);
 		IapProgramByte(temp3,SUM2_BIAO_3);
-		IapProgramByte(temp4,SUM2_BIAO_4);
+		IapProgramByte(temp4,SUM2_BIAO_4); */
 
+		p = (char *)&g_fSum_biao_ch4;
+		IapProgramByte(*p,SUM2_BIAO_CUN_1);
+		IapProgramByte(*(p+1),SUM2_BIAO_CUN_2);
+		IapProgramByte(*(p+2),SUM2_BIAO_CUN_3);
+		IapProgramByte(*(p+3),SUM2_BIAO_CUN_4);
+		/*
 		temp1 = ((long)(g_fSum_biao_ch4))%100L;
 		temp2 = ((long)(g_fSum_biao_ch4))%10000L/100L;
 		temp3 = ((long)(g_fSum_biao_ch4))%1000000L/10000L;
@@ -545,6 +625,6 @@ void Dateeprom()
 		IapProgramByte(temp1,SUM2_BIAO_CUN_1);
 		IapProgramByte(temp2,SUM2_BIAO_CUN_2);
 		IapProgramByte(temp3,SUM2_BIAO_CUN_3);
-		IapProgramByte(temp4,SUM2_BIAO_CUN_4);	
+		IapProgramByte(temp4,SUM2_BIAO_CUN_4);	*/
 	  }   
 }

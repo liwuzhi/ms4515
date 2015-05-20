@@ -92,9 +92,9 @@ unsigned char MS4515DO_read(unsigned char * p,unsigned char* temperature)
 	    date->pressure = ((dat1)*0.07751938-635)-g_fZero;
 		 temp = date->pressure*10;
 		 date->pressure = temp/10;
-		 if(date->pressure< 0.0)
+		 if(date->pressure< 0.1)
 		   {
-		     date->pressure = -date->pressure;
+		     date->pressure = 0.0;
 		   }
 		  if(date->pressure>508.0)
 		    {
@@ -159,6 +159,10 @@ float Wid_Speed()
 
       temp = windSpeed*10;
 	  windSpeed = (float)temp/10;
+	  if(windSpeed < 0.01)
+	    {
+		  windSpeed = 0.0;
+		}
 	  return windSpeed ;      
  }
 

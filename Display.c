@@ -21,7 +21,6 @@
 sbit  OUT2  = P3^7;
 
 
-
 void delay( int x)
 {
     int y,z;
@@ -296,7 +295,7 @@ unsigned char display_Preassure()
 	unsigned int preassure;
     code unsigned char* chinese[] ={font_13,font_14,font_00,font_00,font_00};
     code char arr[] = {'p','a','\0'};
-
+	char flag=0;
     preassure = date_Smooth();
 	display_stringChinese(0,0,chinese);
 	display_stringChar(6,1,arr);
@@ -305,25 +304,29 @@ unsigned char display_Preassure()
 	while(1)
 	{
 	    if(g_cMaxOut ==0 || g_cMaxOut ==2)
-	    read_Maxout();
+		{
+	      read_Maxout();
+		}
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
 		}
-		#ifdef _DEBUG_
-		preassure = key_AddSub(preassure,1,0,1,10000);
-		date.pressure = ((float)preassure)/10; 
-		#else
-		if((g_iTimebase%READ_TIME) == 0)
-		  {
-		   preassure = date_Smooth();
-		   disylay_mun(preassure,0,0,1);
-		  }
-		#endif
-		
+
+		     if(0 == flag && g_iTimebase <= 5  )
+				 {
+				    flag = 1;
+					preassure = date_Smooth();
+		            disylay_mun(preassure,0,0,1);
+				 }
+				 else if(g_iTimebase>5)
+				  {
+				     flag = 0 ;
+				  }
+
 		key_delay();
 	    if(return_Main())
 		{
@@ -353,6 +356,7 @@ unsigned char display_Area()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
@@ -409,7 +413,7 @@ void mian1_chinese()
 	 
     if(g_cWorkChange == 1)
 	{ 
-	  display_stringChinese(0,0,chineseWork);	 //显示中文流量
+	  display_stringChinese(0,0,chineseWork);	 //显示中文
 	}
 	else
 	{
@@ -424,11 +428,13 @@ void mian1_chinese()
 	  {
 	    display_stringChar(10,0,arrMin);
 	  }
-
+	 display_stringChar(4,0,arr);
 	display_stringChinese(0,1,chinesePase);	 //显示中文压力
+	display_stringChar(4,1,arr);
 	display_stringChar(13,1,arrKPa);         //显示绝压单位 
 
    	display_stringChinese(0,2,chineseCH4);	//显示甲烷中文两个字
+	display_stringChar(4,2,arr);
 	display_stringChar(15,2,arrch4);	   //显示甲烷中的%
 	//display_stringChar(5,2,arrERR);		   //显示甲烷中的--
 
@@ -610,6 +616,7 @@ unsigned char display_Main()
 				   {
 			    	 g_cFunc++;
 				   }
+				   g_iProtect = 0;
 					key_release();	//按键释放
 			    	return 0;
 				}
@@ -686,6 +693,7 @@ unsigned char display_WindSpeed()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
@@ -731,6 +739,7 @@ unsigned char display_WindSpeedZero()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
@@ -814,6 +823,7 @@ unsigned char display_WindSpeedRate()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			g_fK1 = k1;
 			key_release();
@@ -913,6 +923,7 @@ unsigned char display_Rate()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
@@ -967,6 +978,7 @@ unsigned char display_Renew()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
@@ -1032,12 +1044,14 @@ unsigned char display_ZKSet()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
 		}
 		if(key_num == KEY_SURE)
 		{
+		  
 		   temp1 = IapReadByte(ZERO_ADD_REV_1);
 		   temp2 = IapReadByte(ZERO_ADD_REV_2);
 		   g_fZero_rev = (temp1*100+temp2)/100;
@@ -1106,6 +1120,7 @@ unsigned char display_uint()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
@@ -1204,6 +1219,7 @@ unsigned char display_workchang()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
@@ -1318,6 +1334,7 @@ unsigned char display_MaxOut()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
@@ -1428,6 +1445,7 @@ unsigned char display_Range()
 		key_num = key();
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 	    	g_cFunc++;
 			key_release();
 	    	return 0;
@@ -1589,6 +1607,7 @@ unsigned char display_Protect1(unsigned char ** chinese,char num)
 		}
 		if(key_num == KEY_FUNC)
 		{
+		    g_iProtect = 0;
 		    key_release();
 			return 0;
 		}
