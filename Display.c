@@ -186,21 +186,30 @@ void display_sum(long sum,char start_x,char start_y)
 void read_senser(float* p_flux,float* p_pase,float ch4,float* tmpter)
 {
         float ch4_temp;
+		float temp = 0;
+	//	static int num = 0;
 		   ch4_temp = ch4;
 		   if(ch4_temp<0.001)
 		      {
 			     ch4_temp= 0.0;
 			  }
            *p_pase = date_Smooth_4525(tmpter); //读取绝压值
+		   temp = Wid_Speed();
+		  // if(temp>0.001)
+		   //  {
+		//	   num++;
+		//	 }
+		   //disylay_mun(temp*100,POINT_2,6,1);
+		   //disylay_mun(num,POINT_0,6,2);
 	       if(g_cUint == 0)
 		   {
 		    if(g_cWorkChange == 1)	//工况
 			{
-		      *p_flux =  Wid_Speed()*g_iArea/10000;
+		      *p_flux =  temp*g_iArea/10000;
 			}
 			else  //标况
 			{
-			 *p_flux =  Wid_Speed()*g_iArea/10000*(*p_pase/101.325)*(293/(273+*tmpter));
+			 *p_flux =  temp*g_iArea/10000*(*p_pase/101.325)*(293/(273+*tmpter));
 			}
 			if(*p_flux>g_iRange)
 			  {					   
@@ -211,11 +220,11 @@ void read_senser(float* p_flux,float* p_pase,float ch4,float* tmpter)
 		  {
 		    if(g_cWorkChange == 1)
 			{
-		      *p_flux =  Wid_Speed()*g_iArea/10000*60;
+		      *p_flux =  temp*g_iArea/10000*60;
 			}
 			else
 			{
-			  *p_flux =  Wid_Speed()*g_iArea/10000*60*(*p_pase/101.325)*(293/(273+*tmpter));
+			  *p_flux =  temp*g_iArea/10000*60*(*p_pase/101.325)*(293/(273+*tmpter));
 			}
 		    if(*p_flux>g_iRangeMin)
 			  {
@@ -437,6 +446,7 @@ void mian1_num(char i)
    static float flux_sum =0.0;
    static float flux_sum_old =0.0;
    static char flux_num_1 = 0;
+   static char flux_num_2 = 0;
   // static char first_flag = 1;
    code char arrERR[] = {' ','-','-',' ',' ',' ',' ','\0'};
    code char arr[] = {':','\0'};
@@ -445,10 +455,6 @@ void mian1_num(char i)
 				    read_senser(&flux,&pase,ch4,&tmper);
 			        disylay_mun(tmper*10,POINT_1,8,3);
 						
-					if(flux_sum_old<0.01 && flux_sum_old>-0.01)
-					{
-					  // flux_sum_old = flux;
-					}
 									 
 				   if(pase<1.0)
 				   {
@@ -479,8 +485,9 @@ void mian1_num(char i)
                     flux_num_1++;
 				    flux_sum =flux_sum + flux;
 				   }
-				  if(40 == flux_num_1 || i == 1)
+				  if(10 == flux_num_1 || i == 1)
 					{
+					 
 					 if(i == 1)
 					 {
 					    flux = flux_sum_old ;
@@ -488,11 +495,15 @@ void mian1_num(char i)
 					 else
 					 {
 					  flux_num_1 = 0;
-					  flux = flux_sum/40;
+					  flux = flux_sum/10;
 					  flux_sum_old = flux;
 					  flux_sum = 0.0;
 					 }
-					 
+					 flux_num_2++;
+					 if(flux_num_2 == 4 || i == 1)
+					 {
+					    i = 0;
+					    flux_num_2=0;
 					 if(g_cUint == 0)	  //在秒单位下的流量显示
 					   {
 					    disylay_mun(flux*100,POINT_2,6,0);
@@ -521,8 +532,10 @@ void mian1_num(char i)
 							}
 							g_cOut1[0] = (65536-500000/(200+800.0/g_iRangeMin*flux)+3)/256;  
 					        g_cOut1[1] = (unsigned int)(65536-500000/(200+800.0/g_iRangeMin*flux)+3)%256;
-					   }	 
-					}
+					   }
+					  }
+					   	
+				}
 
 }
 
@@ -883,7 +896,7 @@ unsigned char display_WindSpeedRate()
 unsigned char display_Rate()
 {
    	unsigned char key_num;
-   unsigned int range ;
+   unsigned int range , temp ;
     float temp_K2;   						
    code unsigned char* chinese[] = {font_39,font_40,font_09,font_10,font_00};	  //补偿系数
    code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
@@ -904,7 +917,8 @@ unsigned char display_Rate()
 			key_release();
 	    	return 0;
 		}
-		range = key_AddSub(range,2,0,1,200);
+		temp = key_AddSub(range,2,0,1,200);
+		range = temp;
 		if(key_num == KEY_SURE)
 		{
 		   g_iProtect = 0;
@@ -936,7 +950,7 @@ unsigned char display_Rate()
 unsigned char display_Renew()
 {
    	unsigned char key_num;
-	unsigned char integral;
+	unsigned char integral,temp;
 	unsigned char temp_integral;
     code unsigned char* chinese[] ={font_07,font_08,font_09,font_10,font_00};	  //积分系数
     code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
@@ -957,7 +971,8 @@ unsigned char display_Renew()
 			key_release();
 	    	return 0;
 		}
-		integral = key_AddSub(integral,0,0,1,19);
+		temp = key_AddSub(integral,0,0,1,19);
+		 integral  = temp;
         if(key_num == KEY_SURE)
 		{
 		   g_iProtect = 0;

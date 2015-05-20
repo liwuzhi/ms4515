@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   MAIN                                                                  05/17/2015 23:01:56 PAGE 1   
+C51 COMPILER V9.01   MAIN                                                                  05/20/2015 21:09:19 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   53   2                  Clean_Display(0,0,128,48,0);
   54   2                  display_stringChar(6,1,arr);
   55   2                      while(1)
-C51 COMPILER V9.01   MAIN                                                                  05/17/2015 23:01:56 PAGE 2   
+C51 COMPILER V9.01   MAIN                                                                  05/20/2015 21:09:19 PAGE 2   
 
   56   2                      {
   57   3                      }
@@ -126,7 +126,7 @@ line level    source
  115   1      }
  116          
  117          void Timeinit()
-C51 COMPILER V9.01   MAIN                                                                  05/17/2015 23:01:56 PAGE 3   
+C51 COMPILER V9.01   MAIN                                                                  05/20/2015 21:09:19 PAGE 3   
 
  118          {
  119   1        TMOD|= 0x11;
@@ -190,7 +190,7 @@ line level    source
  177   2                   stopCH4(); 
  178   2                 }
  179   1      
-C51 COMPILER V9.01   MAIN                                                                  05/17/2015 23:01:56 PAGE 4   
+C51 COMPILER V9.01   MAIN                                                                  05/20/2015 21:09:19 PAGE 4   
 
  180   1              WDT_CONTR=0x3c;
  181   1              if(g_iTimebase%10 == 0)

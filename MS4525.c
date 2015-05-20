@@ -59,6 +59,8 @@ float date_Smooth_4525(float *tmp)
  {
    static float pressre[SMOTH_NUMBER] = {0.0,0.0,0.0};
    float sum = 0;
+   static float sum_old = 0;
+   float ret ;
    char j=0;
    static char i = 0;
 
@@ -76,7 +78,8 @@ float date_Smooth_4525(float *tmp)
 	     sum = sum+pressre[j];
 	   }
 	   sum = sum/SMOTH_NUMBER;
-
-	   return sum;
+	   ret = ((INTEGRAL_MAX+1-g_cIntegral)*sum+g_cIntegral*sum_old)/(INTEGRAL_MAX+1);
+	   sum_old = ret;
+	   return ret;
  }
 	 

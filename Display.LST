@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 1   
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE DISPLAY
@@ -62,7 +62,7 @@ line level    source
   53   3                       }
   54   2               }
   55   1               else
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 2   
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 2   
 
   56   1               {
   57   2                 num =0;
@@ -126,7 +126,7 @@ line level    source
  115   2                 Display_Onechar((start_x+2)*8,start_y*2,temp[2],0);
  116   2                 Display_Onechar((start_x+3)*8,start_y*2,temp[3],0);
  117   2                 Display_Onechar((start_x+4)*8,start_y*2,temp[4],0);
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 3   
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 3   
 
  118   2                 Display_Onechar((start_x+5)*8,start_y*2,temp[5],0);
  119   2              }
@@ -190,7 +190,7 @@ line level    source
  177   3                         break;
  178   3                       }
  179   2               }
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 4   
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 4   
 
  180   1         for(i=0;i<9;i++)
  181   1         {
@@ -201,967 +201,967 @@ line level    source
  186          void read_senser(float* p_flux,float* p_pase,float ch4,float* tmpter)
  187          {
  188   1              float ch4_temp;
- 189   1                         ch4_temp = ch4;
- 190   1                         if(ch4_temp<0.001)
- 191   1                            {
- 192   2                                   ch4_temp= 0.0;
- 193   2                                }
- 194   1                 *p_pase = date_Smooth_4525(tmpter); //读取绝压值
- 195   1                     if(g_cUint == 0)
- 196   1                         {
- 197   2                          if(g_cWorkChange == 1)      //工况
- 198   2                              {
- 199   3                            *p_flux =  Wid_Speed()*g_iArea/10000;
- 200   3                              }
- 201   2                              else  //标况
- 202   2                              {
- 203   3                               *p_flux =  Wid_Speed()*g_iArea/10000*(*p_pase/101.325)*(293/(273+*tmpter));
- 204   3                              }
- 205   2                              if(*p_flux>g_iRange)
- 206   2                                {                                        
- 207   3                                   *p_flux = g_iRange;
- 208   3                                }
- 209   2                        }
- 210   1                        else
- 211   1                        {
- 212   2                          if(g_cWorkChange == 1)
- 213   2                              {
- 214   3                            *p_flux =  Wid_Speed()*g_iArea/10000*60;
- 215   3                              }
- 216   2                              else
- 217   2                              {
- 218   3                                *p_flux =  Wid_Speed()*g_iArea/10000*60*(*p_pase/101.325)*(293/(273+*tmpter));
- 219   3                              }
- 220   2                          if(*p_flux>g_iRangeMin)
- 221   2                                {
- 222   3                                   *p_flux = g_iRangeMin;
- 223   3                                } 
- 224   2                       }
- 225   1      }
- 226             
- 227          
- 228          
- 229          void read_Maxout()
- 230          {
- 231   1         float p_flux;
- 232   1         float p_pase;
- 233   1         float ch4;
- 234   1         static char flag=0;
- 235   1         static char flag1=0;
- 236   1         float temper;
- 237   1      
- 238   1         if(g_iTime < 10 && flag1 ==0)        //每一小时保存一次
- 239   1                      {
- 240   2                        if(g_cMaxOut == 0 || g_cMaxOut == 2)
- 241   2                         {
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 5   
+ 189   1                      float temp = 0;
+ 190   1              //      static int num = 0;
+ 191   1                         ch4_temp = ch4;
+ 192   1                         if(ch4_temp<0.001)
+ 193   1                            {
+ 194   2                                   ch4_temp= 0.0;
+ 195   2                                }
+ 196   1                 *p_pase = date_Smooth_4525(tmpter); //读取绝压值
+ 197   1                         temp = Wid_Speed();
+ 198   1                        // if(temp>0.001)
+ 199   1                         //  {
+ 200   1                      //         num++;
+ 201   1                      //       }
+ 202   1                         //disylay_mun(temp*100,POINT_2,6,1);
+ 203   1                         //disylay_mun(num,POINT_0,6,2);
+ 204   1                     if(g_cUint == 0)
+ 205   1                         {
+ 206   2                          if(g_cWorkChange == 1)      //工况
+ 207   2                              {
+ 208   3                            *p_flux =  temp*g_iArea/10000;
+ 209   3                              }
+ 210   2                              else  //标况
+ 211   2                              {
+ 212   3                               *p_flux =  temp*g_iArea/10000*(*p_pase/101.325)*(293/(273+*tmpter));
+ 213   3                              }
+ 214   2                              if(*p_flux>g_iRange)
+ 215   2                                {                                        
+ 216   3                                   *p_flux = g_iRange;
+ 217   3                                }
+ 218   2                        }
+ 219   1                        else
+ 220   1                        {
+ 221   2                          if(g_cWorkChange == 1)
+ 222   2                              {
+ 223   3                            *p_flux =  temp*g_iArea/10000*60;
+ 224   3                              }
+ 225   2                              else
+ 226   2                              {
+ 227   3                                *p_flux =  temp*g_iArea/10000*60*(*p_pase/101.325)*(293/(273+*tmpter));
+ 228   3                              }
+ 229   2                          if(*p_flux>g_iRangeMin)
+ 230   2                                {
+ 231   3                                   *p_flux = g_iRangeMin;
+ 232   3                                } 
+ 233   2                       }
+ 234   1      }
+ 235             
+ 236          
+ 237          
+ 238          void read_Maxout()
+ 239          {
+ 240   1         float p_flux;
+ 241   1         float p_pase;
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 5   
 
- 242   3                          Dateeprom();
- 243   3                         }
- 244   2                         flag1 = 1;
- 245   2                      }
- 246   1                      else if(g_iTime > 10)
- 247   1                       {
- 248   2                         flag1 = 0;
- 249   2                       }
- 250   1      
- 251   1        // if(g_iTimebase <= 10 && flag == 0 )
- 252   1         if(g_iTime%57 < 20 && flag ==0 )     //每一分钟计算一次
- 253   1         {
- 254   2              flag = 1;
- 255   2              ch4 = read_ch4();
- 256   2                      if(ch4 < 0.001)
- 257   2                        {
- 258   3                           ch4 =0.0;
- 259   3                        }
- 260   2                 p_pase = date_Smooth_4525(&temper); //读取绝压值
- 261   2                        p_flux = Wid_Speed()*g_iArea/10000;
- 262   2                     
- 263   2                       if(g_cUint == 0)
- 264   2                        {
- 265   3                               g_fSum = g_fSum + p_flux;
- 266   3                               g_fSum_biao = g_fSum_biao +  p_flux*(p_pase/101.325)*(293/(273+temper));
- 267   3                               g_fSum_biao_ch4 = g_fSum_biao_ch4 + p_flux*(p_pase/101.325)*(293/(273+temper))*ch4/100;
+ 242   1         float ch4;
+ 243   1         static char flag=0;
+ 244   1         static char flag1=0;
+ 245   1         float temper;
+ 246   1      
+ 247   1         if(g_iTime < 10 && flag1 ==0)        //每一小时保存一次
+ 248   1                      {
+ 249   2                        if(g_cMaxOut == 0 || g_cMaxOut == 2)
+ 250   2                         {
+ 251   3                          Dateeprom();
+ 252   3                         }
+ 253   2                         flag1 = 1;
+ 254   2                      }
+ 255   1                      else if(g_iTime > 10)
+ 256   1                       {
+ 257   2                         flag1 = 0;
+ 258   2                       }
+ 259   1      
+ 260   1        // if(g_iTimebase <= 10 && flag == 0 )
+ 261   1         if(g_iTime%57 < 20 && flag ==0 )     //每一分钟计算一次
+ 262   1         {
+ 263   2              flag = 1;
+ 264   2              ch4 = read_ch4();
+ 265   2                      if(ch4 < 0.001)
+ 266   2                        {
+ 267   3                           ch4 =0.0;
  268   3                        }
- 269   2                        else
- 270   2                        {
- 271   3                            g_fSum = g_fSum + p_flux*60 ;
- 272   3                                g_fSum_biao = g_fSum_biao + p_flux*60*(p_pase/101.325)*(293/(273+temper));
- 273   3                                g_fSum_biao_ch4 = g_fSum_biao_ch4 + p_flux*60*(p_pase/101.325)*(293/(273+temper))*ch4/100;
- 274   3                        }
- 275   2              }
- 276   1              else if(g_iTime%57 > 20)
- 277   1              {
- 278   2                 flag = 0;
- 279   2              }
- 280   1      }       
- 281          /*
- 282            显示压力界面
- 283          */
- 284          unsigned char display_Preassure()
- 285          {
- 286   1              unsigned char key_num;
- 287   1              unsigned int preassure;
- 288   1          code unsigned char* chinese[] ={font_13,font_14,font_00,font_00,font_00};
- 289   1          code char arr[] = {'p','a','\0'};
- 290   1      
- 291   1          preassure = date_Smooth();
- 292   1              display_stringChinese(0,0,chinese);
- 293   1              display_stringChar(6,1,arr);
- 294   1              disylay_mun(preassure,0,0,1); 
- 295   1      
- 296   1              while(1)
- 297   1              {
- 298   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
- 299   2                  read_Maxout();
- 300   2                      key_num = key();
- 301   2                      if(key_num == KEY_FUNC)
- 302   2                      {
- 303   3                      g_cFunc++;
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 6   
+ 269   2                 p_pase = date_Smooth_4525(&temper); //读取绝压值
+ 270   2                        p_flux = Wid_Speed()*g_iArea/10000;
+ 271   2                     
+ 272   2                       if(g_cUint == 0)
+ 273   2                        {
+ 274   3                               g_fSum = g_fSum + p_flux;
+ 275   3                               g_fSum_biao = g_fSum_biao +  p_flux*(p_pase/101.325)*(293/(273+temper));
+ 276   3                               g_fSum_biao_ch4 = g_fSum_biao_ch4 + p_flux*(p_pase/101.325)*(293/(273+temper))*ch4/100;
+ 277   3                        }
+ 278   2                        else
+ 279   2                        {
+ 280   3                            g_fSum = g_fSum + p_flux*60 ;
+ 281   3                                g_fSum_biao = g_fSum_biao + p_flux*60*(p_pase/101.325)*(293/(273+temper));
+ 282   3                                g_fSum_biao_ch4 = g_fSum_biao_ch4 + p_flux*60*(p_pase/101.325)*(293/(273+temper))*ch4/100;
+ 283   3                        }
+ 284   2              }
+ 285   1              else if(g_iTime%57 > 20)
+ 286   1              {
+ 287   2                 flag = 0;
+ 288   2              }
+ 289   1      }       
+ 290          /*
+ 291            显示压力界面
+ 292          */
+ 293          unsigned char display_Preassure()
+ 294          {
+ 295   1              unsigned char key_num;
+ 296   1              unsigned int preassure;
+ 297   1          code unsigned char* chinese[] ={font_13,font_14,font_00,font_00,font_00};
+ 298   1          code char arr[] = {'p','a','\0'};
+ 299   1      
+ 300   1          preassure = date_Smooth();
+ 301   1              display_stringChinese(0,0,chinese);
+ 302   1              display_stringChar(6,1,arr);
+ 303   1              disylay_mun(preassure,0,0,1); 
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 6   
 
- 304   3                              key_release();
- 305   3                      return 0;
- 306   3                      }
- 307   2                      #ifdef _DEBUG_
+ 304   1      
+ 305   1              while(1)
+ 306   1              {
+ 307   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+ 308   2                  read_Maxout();
+ 309   2                      key_num = key();
+ 310   2                      if(key_num == KEY_FUNC)
+ 311   2                      {
+ 312   3                      g_cFunc++;
+ 313   3                              key_release();
+ 314   3                      return 0;
+ 315   3                      }
+ 316   2                      #ifdef _DEBUG_
                               preassure = key_AddSub(preassure,1,0,1,10000);
                               date.pressure = ((float)preassure)/10; 
                               #else
- 311   2                      if((g_iTimebase%READ_TIME) == 0)
- 312   2                        {
- 313   3                         preassure = date_Smooth();
- 314   3                         disylay_mun(preassure,0,0,1);
- 315   3                        }
- 316   2                      #endif
- 317   2                      
- 318   2                      key_delay();
- 319   2                  if(return_Main())
- 320   2                      {
- 321   3                              return 0;
- 322   3                      }
- 323   2              }
- 324   1            return 0;
- 325   1      }
- 326          
- 327          unsigned char display_Area()
- 328          {
- 329   1              unsigned char key_num;
- 330   1              unsigned int area;
- 331   1              unsigned int temp_area;
- 332   1         code unsigned char* chinese[] ={font_11,font_12,font_07,font_00,font_00,font_00};    //截面积
- 333   1         code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};          //密码2
- 334   1         code char arr[] = {'c','m',60,'\0'};
- 335   1             area = g_iArea;
- 336   1                 temp_area = area;
- 337   1              display_stringChinese(0,0,chinese);
- 338   1              display_stringChar(5,1,arr);
- 339   1              disylay_mun(area,0,0,1); 
- 340   1              while(1)
- 341   1              {
- 342   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
- 343   2                  read_Maxout();
- 344   2                      key_num = key();
- 345   2                      if(key_num == KEY_FUNC)
- 346   2                      {
- 347   3                      g_cFunc++;
- 348   3                              key_release();
- 349   3                      return 0;
- 350   3                      }
- 351   2              area = key_AddSub(area,0,0,1,10000);
- 352   2                      if(key_num == KEY_SURE)
- 353   2                      {
- 354   3                         g_iProtect = 0;
- 355   3                         g_iArea = area;
- 356   3                         Clean_Display(0,0,128,64,0);
- 357   3                         if(display_Protect1(chinese2,10) == 0)
- 358   3                           {
- 359   4                                  g_iArea = temp_area;
- 360   4                                      area = g_iArea;
- 361   4                               }
- 362   3                               else
- 363   3                               {
- 364   4                                 Dateeprom();
- 365   4                               }
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 7   
+ 320   2                      if((g_iTimebase%READ_TIME) == 0)
+ 321   2                        {
+ 322   3                         preassure = date_Smooth();
+ 323   3                         disylay_mun(preassure,0,0,1);
+ 324   3                        }
+ 325   2                      #endif
+ 326   2                      
+ 327   2                      key_delay();
+ 328   2                  if(return_Main())
+ 329   2                      {
+ 330   3                              return 0;
+ 331   3                      }
+ 332   2              }
+ 333   1            return 0;
+ 334   1      }
+ 335          
+ 336          unsigned char display_Area()
+ 337          {
+ 338   1              unsigned char key_num;
+ 339   1              unsigned int area;
+ 340   1              unsigned int temp_area;
+ 341   1         code unsigned char* chinese[] ={font_11,font_12,font_07,font_00,font_00,font_00};    //截面积
+ 342   1         code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};          //密码2
+ 343   1         code char arr[] = {'c','m',60,'\0'};
+ 344   1             area = g_iArea;
+ 345   1                 temp_area = area;
+ 346   1              display_stringChinese(0,0,chinese);
+ 347   1              display_stringChar(5,1,arr);
+ 348   1              disylay_mun(area,0,0,1); 
+ 349   1              while(1)
+ 350   1              {
+ 351   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+ 352   2                  read_Maxout();
+ 353   2                      key_num = key();
+ 354   2                      if(key_num == KEY_FUNC)
+ 355   2                      {
+ 356   3                      g_cFunc++;
+ 357   3                              key_release();
+ 358   3                      return 0;
+ 359   3                      }
+ 360   2              area = key_AddSub(area,0,0,1,10000);
+ 361   2                      if(key_num == KEY_SURE)
+ 362   2                      {
+ 363   3                         g_iProtect = 0;
+ 364   3                         g_iArea = area;
+ 365   3                         Clean_Display(0,0,128,64,0);
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 7   
 
- 366   3                         Clean_Display(0,0,128,64,0);
- 367   3                         display_stringChinese(0,0,chinese);
- 368   3                         display_stringChar(5,1,arr);
- 369   3                         disylay_mun(area,0,0,1);
- 370   3                      }
- 371   2                      key_delay();
- 372   2                  if(return_Main())
- 373   2                      {
- 374   3                              return 0;
- 375   3                      }
- 376   2              //      disylay_mun(100,2,0,2);
- 377   2              }
- 378   1      }
- 379          
- 380          void mian1_chinese()
- 381          {
- 382   1        unsigned char* chineseWork[] ={gong,kuang,font_00,font_00,font_00};     //工况
- 383   1         unsigned char* chineseStandar[] ={biao,kuang,font_00,font_00,font_00}; //标况
- 384   1        //code unsigned char* chineseFlux[] ={font_38,font_02,font_37,font_00,font_00};        //流量  此处应改成工况
- 385   1        code unsigned char* chinesePase[] = {font_13,font_14,font_37,font_00,font_00}; //压力
- 386   1        code unsigned char* chineseCH4[] = {jia,wan,font_37,font_00,font_00}; //甲烷
- 387   1        //code unsigned char*  chineseMin[] = {font_32,font_33,font_34,font_35,font_36};//流量变送器
- 388   1        //unsigned char * code chineseisch4[] = {chun,font_02,font_37,font_00,font_00};        //纯量  此处应改成标况
- 389   1        unsigned char *code chineseTmp[] = {font_41,font_42,font_00,font_00,font_00};  //温度
- 390   1      
- 391   1      //   code char arrm3[] = {'m',59,'\0'};
- 392   1      
- 393   1         code char arr[] = {':','\0'};
- 394   1         code char arrS[] = {'m',59,'/','s','\0'};     //m3/s
- 395   1         code char arrMin[] = {'m',59,'/','m','i','n','\0'}; //m3/min
- 396   1         code char arrKPa[] = {'K','P','a','\0'};
- 397   1       //  code char arrERR[] = {' ','-','-',' ',' ',' ',' ','\0'};
- 398   1         code char arrch4[]   = {'%','\0'};
- 399   1         code char arrTmper[] = {34,'C','\0'};
- 400   1               
- 401   1          if(g_cWorkChange == 1)
- 402   1              { 
- 403   2                display_stringChinese(0,0,chineseWork);        //显示中文流量
- 404   2              }
- 405   1              else
- 406   1              {
- 407   2                display_stringChinese(0,0,chineseStandar);    
- 408   2              }
- 409   1              /*显示流量单位*/
- 410   1                if(g_cUint == 0)
- 411   1                {
- 412   2                      display_stringChar(12,0,arrS);
- 413   2                }
- 414   1                else
- 415   1                {
- 416   2                  display_stringChar(10,0,arrMin);
- 417   2                }
- 418   1      
- 419   1              display_stringChinese(0,1,chinesePase);  //显示中文压力
- 420   1              display_stringChar(13,1,arrKPa);         //显示绝压单位 
- 421   1      
- 422   1              display_stringChinese(0,2,chineseCH4);  //显示甲烷中文两个字
- 423   1              display_stringChar(15,2,arrch4);           //显示甲烷中的%
- 424   1              //display_stringChar(5,2,arrERR);                  //显示甲烷中的--
- 425   1      
- 426   1              display_stringChinese(0,3,chineseTmp);//显示温度字样
- 427   1              display_stringChar(4,3,arr);
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 8   
+ 366   3                         if(display_Protect1(chinese2,10) == 0)
+ 367   3                           {
+ 368   4                                  g_iArea = temp_area;
+ 369   4                                      area = g_iArea;
+ 370   4                               }
+ 371   3                               else
+ 372   3                               {
+ 373   4                                 Dateeprom();
+ 374   4                               }
+ 375   3                         Clean_Display(0,0,128,64,0);
+ 376   3                         display_stringChinese(0,0,chinese);
+ 377   3                         display_stringChar(5,1,arr);
+ 378   3                         disylay_mun(area,0,0,1);
+ 379   3                      }
+ 380   2                      key_delay();
+ 381   2                  if(return_Main())
+ 382   2                      {
+ 383   3                              return 0;
+ 384   3                      }
+ 385   2              //      disylay_mun(100,2,0,2);
+ 386   2              }
+ 387   1      }
+ 388          
+ 389          void mian1_chinese()
+ 390          {
+ 391   1        unsigned char* chineseWork[] ={gong,kuang,font_00,font_00,font_00};     //工况
+ 392   1         unsigned char* chineseStandar[] ={biao,kuang,font_00,font_00,font_00}; //标况
+ 393   1        //code unsigned char* chineseFlux[] ={font_38,font_02,font_37,font_00,font_00};        //流量  此处应改成工况
+ 394   1        code unsigned char* chinesePase[] = {font_13,font_14,font_37,font_00,font_00}; //压力
+ 395   1        code unsigned char* chineseCH4[] = {jia,wan,font_37,font_00,font_00}; //甲烷
+ 396   1        //code unsigned char*  chineseMin[] = {font_32,font_33,font_34,font_35,font_36};//流量变送器
+ 397   1        //unsigned char * code chineseisch4[] = {chun,font_02,font_37,font_00,font_00};        //纯量  此处应改成标况
+ 398   1        unsigned char *code chineseTmp[] = {font_41,font_42,font_00,font_00,font_00};  //温度
+ 399   1      
+ 400   1      //   code char arrm3[] = {'m',59,'\0'};
+ 401   1      
+ 402   1         code char arr[] = {':','\0'};
+ 403   1         code char arrS[] = {'m',59,'/','s','\0'};     //m3/s
+ 404   1         code char arrMin[] = {'m',59,'/','m','i','n','\0'}; //m3/min
+ 405   1         code char arrKPa[] = {'K','P','a','\0'};
+ 406   1       //  code char arrERR[] = {' ','-','-',' ',' ',' ',' ','\0'};
+ 407   1         code char arrch4[]   = {'%','\0'};
+ 408   1         code char arrTmper[] = {34,'C','\0'};
+ 409   1               
+ 410   1          if(g_cWorkChange == 1)
+ 411   1              { 
+ 412   2                display_stringChinese(0,0,chineseWork);        //显示中文流量
+ 413   2              }
+ 414   1              else
+ 415   1              {
+ 416   2                display_stringChinese(0,0,chineseStandar);    
+ 417   2              }
+ 418   1              /*显示流量单位*/
+ 419   1                if(g_cUint == 0)
+ 420   1                {
+ 421   2                      display_stringChar(12,0,arrS);
+ 422   2                }
+ 423   1                else
+ 424   1                {
+ 425   2                  display_stringChar(10,0,arrMin);
+ 426   2                }
+ 427   1      
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 8   
 
- 428   1              display_stringChar(14,3,arrTmper);
- 429   1      }
- 430          
- 431          void mian1_num(char i)
- 432          {
- 433   1         float pase;
- 434   1         float flux;
- 435   1         float ch4;
- 436   1         float tmper;
- 437   1         static float flux_sum =0.0;
- 438   1         static float flux_sum_old =0.0;
- 439   1         static char flux_num_1 = 0;
- 440   1        // static char first_flag = 1;
- 441   1         code char arrERR[] = {' ','-','-',' ',' ',' ',' ','\0'};
- 442   1         code char arr[] = {':','\0'};
- 443   1      
- 444   1                              ch4= read_ch4();
- 445   1                                          read_senser(&flux,&pase,ch4,&tmper);
- 446   1                                      disylay_mun(tmper*10,POINT_1,8,3);
- 447   1                                                      
- 448   1                                              if(flux_sum_old<0.01 && flux_sum_old>-0.01)
- 449   1                                              {
- 450   2                                                // flux_sum_old = flux;
- 451   2                                              }
- 452   1                                                                               
- 453   1                                         if(pase<1.0)
- 454   1                                         {
- 455   2                                            display_stringChar(5,1,arrERR);   //显示--
- 456   2                                                CR = 0;                         //PCA timer start run
- 457   2                                    EPCAI = 0;
- 458   2                                                OUT2 = 1;
- 459   2                                         }
- 460   1                                         else
- 461   1                                         {
- 462   2                                        disylay_mun(pase*10,POINT_1,7,1);      //显示绝压的数据
- 463   2                                            CR = 1;                         //PCA timer start run
- 464   2                                    EPCAI = 1;
- 465   2                                           pca_set2(pase);//设置绝压的输出脉冲
- 466   2                                         }
- 467   1                                         
- 468   1                                         /*设置甲烷的数据*/
- 469   1                                         if(ch4 >= 0.0 && ch4 < 100.001)
- 470   1                                              {
- 471   2                                                  disylay_mun(ch4*10,POINT_1,9,2);    //显示甲烷的百分比
- 472   2                                              }
- 473   1                                              else
- 474   1                                              {
- 475   2                                                      display_stringChar(5,2,arrERR); //显示--
- 476   2                                              }
- 477   1                                        if(i == 0)
- 478   1                                         {
- 479   2                          flux_num_1++;
- 480   2                                          flux_sum =flux_sum + flux;
- 481   2                                         }
- 482   1                                        if(40 == flux_num_1 || i == 1)
- 483   1                                              {
- 484   2                                               if(i == 1)
- 485   2                                               {
- 486   3                                                  flux = flux_sum_old ;
- 487   3                                               }
- 488   2                                               else
- 489   2                                               {
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 9   
+ 428   1              display_stringChinese(0,1,chinesePase);  //显示中文压力
+ 429   1              display_stringChar(13,1,arrKPa);         //显示绝压单位 
+ 430   1      
+ 431   1              display_stringChinese(0,2,chineseCH4);  //显示甲烷中文两个字
+ 432   1              display_stringChar(15,2,arrch4);           //显示甲烷中的%
+ 433   1              //display_stringChar(5,2,arrERR);                  //显示甲烷中的--
+ 434   1      
+ 435   1              display_stringChinese(0,3,chineseTmp);//显示温度字样
+ 436   1              display_stringChar(4,3,arr);
+ 437   1              display_stringChar(14,3,arrTmper);
+ 438   1      }
+ 439          
+ 440          void mian1_num(char i)
+ 441          {
+ 442   1         float pase;
+ 443   1         float flux;
+ 444   1         float ch4;
+ 445   1         float tmper;
+ 446   1         static float flux_sum =0.0;
+ 447   1         static float flux_sum_old =0.0;
+ 448   1         static char flux_num_1 = 0;
+ 449   1         static char flux_num_2 = 0;
+ 450   1        // static char first_flag = 1;
+ 451   1         code char arrERR[] = {' ','-','-',' ',' ',' ',' ','\0'};
+ 452   1         code char arr[] = {':','\0'};
+ 453   1      
+ 454   1                              ch4= read_ch4();
+ 455   1                                          read_senser(&flux,&pase,ch4,&tmper);
+ 456   1                                      disylay_mun(tmper*10,POINT_1,8,3);
+ 457   1                                                      
+ 458   1                                                                               
+ 459   1                                         if(pase<1.0)
+ 460   1                                         {
+ 461   2                                            display_stringChar(5,1,arrERR);   //显示--
+ 462   2                                                CR = 0;                         //PCA timer start run
+ 463   2                                    EPCAI = 0;
+ 464   2                                                OUT2 = 1;
+ 465   2                                         }
+ 466   1                                         else
+ 467   1                                         {
+ 468   2                                        disylay_mun(pase*10,POINT_1,7,1);      //显示绝压的数据
+ 469   2                                            CR = 1;                         //PCA timer start run
+ 470   2                                    EPCAI = 1;
+ 471   2                                           pca_set2(pase);//设置绝压的输出脉冲
+ 472   2                                         }
+ 473   1                                         
+ 474   1                                         /*设置甲烷的数据*/
+ 475   1                                         if(ch4 >= 0.0 && ch4 < 100.001)
+ 476   1                                              {
+ 477   2                                                  disylay_mun(ch4*10,POINT_1,9,2);    //显示甲烷的百分比
+ 478   2                                              }
+ 479   1                                              else
+ 480   1                                              {
+ 481   2                                                      display_stringChar(5,2,arrERR); //显示--
+ 482   2                                              }
+ 483   1                                        if(i == 0)
+ 484   1                                         {
+ 485   2                          flux_num_1++;
+ 486   2                                          flux_sum =flux_sum + flux;
+ 487   2                                         }
+ 488   1                                        if(10 == flux_num_1 || i == 1)
+ 489   1                                              {
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 9   
 
- 490   3                                                flux_num_1 = 0;
- 491   3                                                flux = flux_sum/40;
- 492   3                                                flux_sum_old = flux;
- 493   3                                                flux_sum = 0.0;
+ 490   2                                               
+ 491   2                                               if(i == 1)
+ 492   2                                               {
+ 493   3                                                  flux = flux_sum_old ;
  494   3                                               }
- 495   2                                               
- 496   2                                               if(g_cUint == 0)         //在秒单位下的流量显示
- 497   2                                                 {
- 498   3                                                  disylay_mun(flux*100,POINT_2,6,0);
- 499   3                                                  g_cOut1[0] = (65536-500000/(200+800.0/g_iRange*((float)flux))+3)/256; 
- 500   3                                                  g_cOut1[1] = (65536-500000/(int)(200+800.0/g_iRange*(float)flux)+3)%256;
- 501   3                                                 }
- 502   2                                                 else
- 503   2                                                 {
- 504   3                                               if(flux>g_iRangeMin)
- 505   3                                                        {
- 506   4                                                           flux = g_iRangeMin;
- 507   4                                                        }
- 508   3                                                         if(flux<100)
- 509   3                                                          {
- 510   4                                                           disylay_mun(flux*100,POINT_2,4,0);
- 511   4                                                               display_stringChar(4,0,arr);
- 512   4                                                              }
- 513   3                                                              else
- 514   3                                                              {
- 515   4                                                               if(flux>999.9)
- 516   4                                                                 {
- 517   5                                                                   flux = 999.9;
- 518   5                                                                 }
- 519   4                                                                disylay_mun(flux*10,POINT_1,4,0);
- 520   4                                                                display_stringChar(4,0,arr);
- 521   4                                                              }
- 522   3                                                              g_cOut1[0] = (65536-500000/(200+800.0/g_iRangeMin*flux)+3)/256;  
- 523   3                                                      g_cOut1[1] = (unsigned int)(65536-500000/(200+800.0/g_iRangeMin*flux)+3)%256;
- 524   3                                                 }     
- 525   2                                              }
- 526   1      
- 527   1      }
- 528          
- 529          void mian2_chinese()
- 530          {
- 531   1      
- 532   1         unsigned char* chinese[] ={zong,font_02,font_00,font_00,font_00};      //总量
- 533   1         unsigned char* chineseWork[] ={gong,kuang,font_00,font_00,font_00};    //工况
- 534   1         unsigned char* chineseStandar[] ={biao,kuang,font_00,font_00,font_00}; //标况
- 535   1         unsigned char* chineseStandar_cun[] ={biao,chun,font_00,font_00,font_00}; //  标纯
- 536   1         unsigned char* chineseClear[] ={qing,font_03,font_00,font_00,font_00};         //清零选择
- 537   1         code char arrOFF[] = {'O','F','F',' ','\0'};
- 538   1         code char arrON[] =  {'O','N',' ',' ','\0'};
- 539   1         code char arrm3[] = {'m',59,'\0'};
- 540   1         code char arr[] = {':','\0'};
- 541   1            
- 542   1              Clean_Display(0,0,128,64,0);  
- 543   1                      display_stringChinese(0,0,chinese);     //总量
- 544   1                      display_stringChar(4,0,arr); //总量后面的：                     
- 545   1                      if(g_cMaxOut == 1)
- 546   1                       {
- 547   2                           display_stringChar(7,0,arrOFF);
- 548   2                       }
- 549   1                      else if(g_cMaxOut == 0)
- 550   1                       {
- 551   2                               display_stringChar(7,0,arrON);
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 10  
+ 495   2                                               else
+ 496   2                                               {
+ 497   3                                                flux_num_1 = 0;
+ 498   3                                                flux = flux_sum/10;
+ 499   3                                                flux_sum_old = flux;
+ 500   3                                                flux_sum = 0.0;
+ 501   3                                               }
+ 502   2                                               flux_num_2++;
+ 503   2                                               if(flux_num_2 == 4 || i == 1)
+ 504   2                                               {
+ 505   3                                                  i = 0;
+ 506   3                                                  flux_num_2=0;
+ 507   3                                               if(g_cUint == 0)         //在秒单位下的流量显示
+ 508   3                                                 {
+ 509   4                                                  disylay_mun(flux*100,POINT_2,6,0);
+ 510   4                                                  g_cOut1[0] = (65536-500000/(200+800.0/g_iRange*((float)flux))+3)/256; 
+ 511   4                                                  g_cOut1[1] = (65536-500000/(int)(200+800.0/g_iRange*(float)flux)+3)%256;
+ 512   4                                                 }
+ 513   3                                                 else
+ 514   3                                                 {
+ 515   4                                               if(flux>g_iRangeMin)
+ 516   4                                                        {
+ 517   5                                                           flux = g_iRangeMin;
+ 518   5                                                        }
+ 519   4                                                         if(flux<100)
+ 520   4                                                          {
+ 521   5                                                           disylay_mun(flux*100,POINT_2,4,0);
+ 522   5                                                               display_stringChar(4,0,arr);
+ 523   5                                                              }
+ 524   4                                                              else
+ 525   4                                                              {
+ 526   5                                                               if(flux>999.9)
+ 527   5                                                                 {
+ 528   6                                                                   flux = 999.9;
+ 529   6                                                                 }
+ 530   5                                                                disylay_mun(flux*10,POINT_1,4,0);
+ 531   5                                                                display_stringChar(4,0,arr);
+ 532   5                                                              }
+ 533   4                                                              g_cOut1[0] = (65536-500000/(200+800.0/g_iRangeMin*flux)+3)/256;  
+ 534   4                                                      g_cOut1[1] = (unsigned int)(65536-500000/(200+800.0/g_iRangeMin*flux)+3)%256;
+ 535   4                                                 }
+ 536   3                                                }
+ 537   2                                                      
+ 538   2                                      }
+ 539   1      
+ 540   1      }
+ 541          
+ 542          void mian2_chinese()
+ 543          {
+ 544   1      
+ 545   1         unsigned char* chinese[] ={zong,font_02,font_00,font_00,font_00};      //总量
+ 546   1         unsigned char* chineseWork[] ={gong,kuang,font_00,font_00,font_00};    //工况
+ 547   1         unsigned char* chineseStandar[] ={biao,kuang,font_00,font_00,font_00}; //标况
+ 548   1         unsigned char* chineseStandar_cun[] ={biao,chun,font_00,font_00,font_00}; //  标纯
+ 549   1         unsigned char* chineseClear[] ={qing,font_03,font_00,font_00,font_00};         //清零选择
+ 550   1         code char arrOFF[] = {'O','F','F',' ','\0'};
+ 551   1         code char arrON[] =  {'O','N',' ',' ','\0'};
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 10  
 
- 552   2                       }
- 553   1                  else
- 554   1                       {
- 555   2                               display_stringChinese(7,0,chineseClear);
- 556   2                       }
- 557   1                       /*显示工况和其单位*/
- 558   1                      display_stringChinese(0,1,chineseWork);
- 559   1              display_stringChar(14,1,arrm3);
- 560   1              display_stringChar(4,1,arr);
- 561   1      
- 562   1                      /*显示标况和其单位*/
- 563   1                      display_stringChinese(0,2,chineseStandar);
- 564   1              display_stringChar(14,2,arrm3);
- 565   1              display_stringChar(4,2,arr);
- 566   1      
- 567   1                      /*显示纯标和其单位*/
- 568   1                      display_stringChinese(0,3,chineseStandar_cun);
- 569   1              display_stringChar(14,3,arrm3);
- 570   1                      display_stringChar(4,3,arr);
- 571   1      }
- 572          
- 573          
- 574          unsigned char display_Main()
- 575          {
- 576   1         unsigned char key_num;
- 577   1         char flag=0;
- 578   1         char flag_ret1 = 1;
- 579   1         char flag_ret2 = 1;
- 580   1         mian1_chinese();
- 581   1         mian1_num(1);
- 582   1         
- 583   1              while(1)
- 584   1              {   
- 585   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
- 586   2                      {
- 587   3                              read_Maxout();
- 588   3                      }
- 589   2                      key_num = key();        //检查按键
- 590   2                                      if(key_num == KEY_FUNC)
- 591   2                                      {
- 592   3                                         if(g_iProtect>=900)   //在第一次按下时跳转到密码一界面，不然跳转跳转到正常的下一个界面
- 593   3                                         {
- 594   4                                               g_cFunc = 15;
- 595   4                                         }
- 596   3                                         else
- 597   3                                         {
- 598   4                                       g_cFunc++;
- 599   4                                         }
- 600   3                                              key_release();  //按键释放
- 601   3                                      return 0;
- 602   3                                      }
- 603   2                  if(g_iTime%30 < 20 )         //在前20s显示第一种界面
- 604   2                      {
- 605   3                              if(flag_ret1 == 1)
- 606   3                                        {
- 607   4                                          Clean_Display(0,0,128,64,0);
- 608   4                                              mian1_chinese();
- 609   4                                              mian1_num(1);
- 610   4                                        }
- 611   3                                       flag_ret1 = 0;
- 612   3                                       flag_ret2 = 1;
- 613   3      
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 11  
+ 552   1         code char arrm3[] = {'m',59,'\0'};
+ 553   1         code char arr[] = {':','\0'};
+ 554   1            
+ 555   1              Clean_Display(0,0,128,64,0);  
+ 556   1                      display_stringChinese(0,0,chinese);     //总量
+ 557   1                      display_stringChar(4,0,arr); //总量后面的：                     
+ 558   1                      if(g_cMaxOut == 1)
+ 559   1                       {
+ 560   2                           display_stringChar(7,0,arrOFF);
+ 561   2                       }
+ 562   1                      else if(g_cMaxOut == 0)
+ 563   1                       {
+ 564   2                               display_stringChar(7,0,arrON);
+ 565   2                       }
+ 566   1                  else
+ 567   1                       {
+ 568   2                               display_stringChinese(7,0,chineseClear);
+ 569   2                       }
+ 570   1                       /*显示工况和其单位*/
+ 571   1                      display_stringChinese(0,1,chineseWork);
+ 572   1              display_stringChar(14,1,arrm3);
+ 573   1              display_stringChar(4,1,arr);
+ 574   1      
+ 575   1                      /*显示标况和其单位*/
+ 576   1                      display_stringChinese(0,2,chineseStandar);
+ 577   1              display_stringChar(14,2,arrm3);
+ 578   1              display_stringChar(4,2,arr);
+ 579   1      
+ 580   1                      /*显示纯标和其单位*/
+ 581   1                      display_stringChinese(0,3,chineseStandar_cun);
+ 582   1              display_stringChar(14,3,arrm3);
+ 583   1                      display_stringChar(4,3,arr);
+ 584   1      }
+ 585          
+ 586          
+ 587          unsigned char display_Main()
+ 588          {
+ 589   1         unsigned char key_num;
+ 590   1         char flag=0;
+ 591   1         char flag_ret1 = 1;
+ 592   1         char flag_ret2 = 1;
+ 593   1         mian1_chinese();
+ 594   1         mian1_num(1);
+ 595   1         
+ 596   1              while(1)
+ 597   1              {   
+ 598   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+ 599   2                      {
+ 600   3                              read_Maxout();
+ 601   3                      }
+ 602   2                      key_num = key();        //检查按键
+ 603   2                                      if(key_num == KEY_FUNC)
+ 604   2                                      {
+ 605   3                                         if(g_iProtect>=900)   //在第一次按下时跳转到密码一界面，不然跳转跳转到正常的下一个界面
+ 606   3                                         {
+ 607   4                                               g_cFunc = 15;
+ 608   4                                         }
+ 609   3                                         else
+ 610   3                                         {
+ 611   4                                       g_cFunc++;
+ 612   4                                         }
+ 613   3                                              key_release();  //按键释放
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 11  
 
- 614   3                                  
- 615   3                                      
- 616   3                                         
- 617   3                                      /*读取绝压和差压的传感器并显示*/
- 618   3                                      // if(flag == 0 && (g_iTimebase <= 5 || (g_iTimebase >=10 && g_iTimebase<=15)) )
- 619   3                                      if(0 == flag && g_iTimebase <= 5  )
- 620   3                                       {
- 621   4                                          flag = 1;
- 622   4                                              mian1_num(0);
- 623   4                                       }
- 624   3                                       else if(g_iTimebase>5)
- 625   3                                        {
- 626   4                                           flag = 0 ;
- 627   4                                        }
- 628   3                      }
- 629   2                      else
- 630   2                      {
- 631   3                        if(flag_ret2 == 1)
- 632   3                              {
- 633   4                                Clean_Display(0,0,128,64,0);
- 634   4                        mian2_chinese();                                              
- 635   4                              }
- 636   3                              flag_ret1 = 1;
- 637   3                              flag_ret2 = 0;
- 638   3                              if(0 == flag && g_iTimebase <= 5  )
- 639   3                              {
- 640   4                                          flag = 1;
- 641   4                                              display_sum(g_fSum,5,1); //显示工况累积值
- 642   4                                              display_sum(g_fSum_biao,5,2); //显示工况累积值
- 643   4                                              display_sum(g_fSum_biao_ch4,5,3);
- 644   4                                              //display_sum(12345678,6,3);
- 645   4      
- 646   4                              }
- 647   3                              else if(g_iTimebase>5)
- 648   3                              {
- 649   4                                           flag = 0 ;
- 650   4                              }                 
- 651   3                      }
- 652   2              }
- 653   1      }
- 654          
- 655          unsigned char display_WindSpeed()
- 656          {
- 657   1              unsigned char key_num;
- 658   1              float windSpeed;
- 659   1              unsigned int play;
- 660   1          code unsigned char* chinese[] ={font_38,font_04,font_00,font_00,font_00};  //流速
- 661   1          code char arr[] = {'m','/','s','\0'};
- 662   1      
- 663   1              display_stringChinese(0,0,chinese);
- 664   1              display_stringChar(6,1,arr);
- 665   1              windSpeed = Wid_Speed();
- 666   1              play = windSpeed*10;
- 667   1              disylay_mun(play,1,0,1); 
- 668   1      
- 669   1              while(1)
- 670   1              {
- 671   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
- 672   2                  read_Maxout();
- 673   2                      key_num = key();
- 674   2                      if(key_num == KEY_FUNC)
- 675   2                      {
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 12  
+ 614   3                                      return 0;
+ 615   3                                      }
+ 616   2                  if(g_iTime%30 < 20 )         //在前20s显示第一种界面
+ 617   2                      {
+ 618   3                              if(flag_ret1 == 1)
+ 619   3                                        {
+ 620   4                                          Clean_Display(0,0,128,64,0);
+ 621   4                                              mian1_chinese();
+ 622   4                                              mian1_num(1);
+ 623   4                                        }
+ 624   3                                       flag_ret1 = 0;
+ 625   3                                       flag_ret2 = 1;
+ 626   3      
+ 627   3                                  
+ 628   3                                      
+ 629   3                                         
+ 630   3                                      /*读取绝压和差压的传感器并显示*/
+ 631   3                                      // if(flag == 0 && (g_iTimebase <= 5 || (g_iTimebase >=10 && g_iTimebase<=15)) )
+ 632   3                                      if(0 == flag && g_iTimebase <= 5  )
+ 633   3                                       {
+ 634   4                                          flag = 1;
+ 635   4                                              mian1_num(0);
+ 636   4                                       }
+ 637   3                                       else if(g_iTimebase>5)
+ 638   3                                        {
+ 639   4                                           flag = 0 ;
+ 640   4                                        }
+ 641   3                      }
+ 642   2                      else
+ 643   2                      {
+ 644   3                        if(flag_ret2 == 1)
+ 645   3                              {
+ 646   4                                Clean_Display(0,0,128,64,0);
+ 647   4                        mian2_chinese();                                              
+ 648   4                              }
+ 649   3                              flag_ret1 = 1;
+ 650   3                              flag_ret2 = 0;
+ 651   3                              if(0 == flag && g_iTimebase <= 5  )
+ 652   3                              {
+ 653   4                                          flag = 1;
+ 654   4                                              display_sum(g_fSum,5,1); //显示工况累积值
+ 655   4                                              display_sum(g_fSum_biao,5,2); //显示工况累积值
+ 656   4                                              display_sum(g_fSum_biao_ch4,5,3);
+ 657   4                                              //display_sum(12345678,6,3);
+ 658   4      
+ 659   4                              }
+ 660   3                              else if(g_iTimebase>5)
+ 661   3                              {
+ 662   4                                           flag = 0 ;
+ 663   4                              }                 
+ 664   3                      }
+ 665   2              }
+ 666   1      }
+ 667          
+ 668          unsigned char display_WindSpeed()
+ 669          {
+ 670   1              unsigned char key_num;
+ 671   1              float windSpeed;
+ 672   1              unsigned int play;
+ 673   1          code unsigned char* chinese[] ={font_38,font_04,font_00,font_00,font_00};  //流速
+ 674   1          code char arr[] = {'m','/','s','\0'};
+ 675   1      
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 12  
 
- 676   3                      g_cFunc++;
- 677   3                              key_release();
- 678   3                      return 0;
- 679   3                      }
- 680   2      
- 681   2                  if((g_iTimebase%READ_TIME) == 0)
- 682   2                       {
- 683   3                          windSpeed = Wid_Speed();
- 684   3                              play =windSpeed*10;
- 685   3                              disylay_mun(play,POINT_1,0,1);
- 686   3                       }
- 687   2                      key_delay();
- 688   2                  if(return_Main())
- 689   2                      {
- 690   3                              return 0;
- 691   3                      }
- 692   2              }
- 693   1      }
- 694          
- 695          unsigned char display_WindSpeedZero()
- 696          {
- 697   1          char i;
- 698   1              char error;
- 699   1              unsigned char key_num;
- 700   1              float windSpeed;
- 701   1          int pressure = 0;
- 702   1              unsigned int temper;
- 703   1              float pressure_sum = 0;
- 704   1          int play;
- 705   1          code unsigned char* chinese[] ={font_03,font_24,font_05,font_06,font_00};     //零点校准
- 706   1              code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};     //密码2
- 707   1          code char arr[] = {'m','/','s','\0'};
- 708   1      
- 709   1              display_stringChinese(0,0,chinese);
- 710   1              display_stringChar(6,1,arr);
- 711   1              windSpeed = Wid_Speed();
- 712   1              play =  (int)(windSpeed*10);
- 713   1              disylay_mun(play,1,0,1);  
- 714   1              while(1)
- 715   1              {
- 716   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
- 717   2                  read_Maxout();
- 718   2                      key_num = key();
- 719   2                      if(key_num == KEY_FUNC)
- 720   2                      {
- 721   3                      g_cFunc++;
- 722   3                              key_release();
- 723   3                      return 0;
- 724   3                      }
- 725   2                      if(key_num == KEY_SURE)
- 726   2                        {
- 727   3                          g_iProtect = 0;
- 728   3                          key_release();
- 729   3                         Clean_Display(0,0,128,64,0);
- 730   3                         if(display_Protect1(chinese2,10) == 1 )
- 731   3                         {
- 732   4                                i =0;
- 733   4                                      while(i<5)
- 734   4                                         {
- 735   5                                             error = MS4515DO_read((unsigned char*)&pressure,(unsigned char*)&temper);
- 736   5                                      //         MS4515DO_read((unsigned char*)&dat1,(unsigned char*)temper) == 0
- 737   5                                                  if( error == 0)
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 13  
+ 676   1              display_stringChinese(0,0,chinese);
+ 677   1              display_stringChar(6,1,arr);
+ 678   1              windSpeed = Wid_Speed();
+ 679   1              play = windSpeed*10;
+ 680   1              disylay_mun(play,1,0,1); 
+ 681   1      
+ 682   1              while(1)
+ 683   1              {
+ 684   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+ 685   2                  read_Maxout();
+ 686   2                      key_num = key();
+ 687   2                      if(key_num == KEY_FUNC)
+ 688   2                      {
+ 689   3                      g_cFunc++;
+ 690   3                              key_release();
+ 691   3                      return 0;
+ 692   3                      }
+ 693   2      
+ 694   2                  if((g_iTimebase%READ_TIME) == 0)
+ 695   2                       {
+ 696   3                          windSpeed = Wid_Speed();
+ 697   3                              play =windSpeed*10;
+ 698   3                              disylay_mun(play,POINT_1,0,1);
+ 699   3                       }
+ 700   2                      key_delay();
+ 701   2                  if(return_Main())
+ 702   2                      {
+ 703   3                              return 0;
+ 704   3                      }
+ 705   2              }
+ 706   1      }
+ 707          
+ 708          unsigned char display_WindSpeedZero()
+ 709          {
+ 710   1          char i;
+ 711   1              char error;
+ 712   1              unsigned char key_num;
+ 713   1              float windSpeed;
+ 714   1          int pressure = 0;
+ 715   1              unsigned int temper;
+ 716   1              float pressure_sum = 0;
+ 717   1          int play;
+ 718   1          code unsigned char* chinese[] ={font_03,font_24,font_05,font_06,font_00};     //零点校准
+ 719   1              code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};     //密码2
+ 720   1          code char arr[] = {'m','/','s','\0'};
+ 721   1      
+ 722   1              display_stringChinese(0,0,chinese);
+ 723   1              display_stringChar(6,1,arr);
+ 724   1              windSpeed = Wid_Speed();
+ 725   1              play =  (int)(windSpeed*10);
+ 726   1              disylay_mun(play,1,0,1);  
+ 727   1              while(1)
+ 728   1              {
+ 729   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+ 730   2                  read_Maxout();
+ 731   2                      key_num = key();
+ 732   2                      if(key_num == KEY_FUNC)
+ 733   2                      {
+ 734   3                      g_cFunc++;
+ 735   3                              key_release();
+ 736   3                      return 0;
+ 737   3                      }
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 13  
 
- 738   5                                                      {
- 739   6                                                         i++;
- 740   6                                                              if(pressure<=1638)
- 741   6                                                          {
- 742   7                                                                pressure = 1638;
- 743   7                                                      }
- 744   6                                                    if(pressure>=14746)
- 745   6                                                  {
- 746   7                                                            pressure = 14746;
- 747   7                                                      }
- 748   6                                                       pressure_sum =pressure_sum+pressure;
- 749   6                                                       
- 750   6                                                      }
- 751   5                              //                      disylay_mun(i,0,7,2);
- 752   5                                                      delay(500);
- 753   5                                         }   
- 754   4                                         pressure_sum = pressure_sum/5;
- 755   4                                         g_fZero = pressure_sum*0.07751938-635;
- 756   4                                         g_fZero_rev = g_fZero;
- 757   4                                         Dateeprom(); 
- 758   4                         }
- 759   3                         Clean_Display(0,0,128,64,0);
- 760   3                         display_stringChinese(0,0,chinese);
- 761   3                         display_stringChar(6,1,arr);
- 762   3                              windSpeed = Wid_Speed();
- 763   3                      play =  (int)(windSpeed*10);
- 764   3                      disylay_mun(play,1,0,1);
- 765   3                      
- 766   3                        }
- 767   2                      if((g_iTimebase%READ_TIME) == 0)
- 768   2                        {
- 769   3                          windSpeed = Wid_Speed();
- 770   3                              play =  (int)(windSpeed*10);
- 771   3                              disylay_mun(play,1,0,1);
- 772   3      //                      disylay_mun(g_fZero*100,2,0,2);   //调试用，显示零点值为多少
- 773   3                        }
- 774   2                      key_delay();
- 775   2                  if(return_Main())
- 776   2                      {
- 777   3                              return 0;
- 778   3                      }
- 779   2              }
- 780   1      }
- 781          
- 782          unsigned char display_WindSpeedRate()
- 783          {
- 784   1              unsigned char key_num;
- 785   1              float windSpeed;
- 786   1              unsigned int play;
- 787   1              float k1;
- 788   1         code unsigned char* chinese[] ={font_26,font_27,font_05,font_06,font_00};      //精度校准
- 789   1         code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};          //密码2
- 790   1         code char arr[] = {'m','/','s','\0'};
- 791   1           k1=g_fK1;
- 792   1              display_stringChinese(0,0,chinese);
- 793   1              display_stringChar(6,1,arr);
- 794   1              windSpeed = Wid_Speed();
- 795   1              play =  (int)(windSpeed*10);
- 796   1              disylay_mun(play,1,0,1); 
- 797   1              while(1)
- 798   1              {
- 799   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 14  
+ 738   2                      if(key_num == KEY_SURE)
+ 739   2                        {
+ 740   3                          g_iProtect = 0;
+ 741   3                          key_release();
+ 742   3                         Clean_Display(0,0,128,64,0);
+ 743   3                         if(display_Protect1(chinese2,10) == 1 )
+ 744   3                         {
+ 745   4                                i =0;
+ 746   4                                      while(i<5)
+ 747   4                                         {
+ 748   5                                             error = MS4515DO_read((unsigned char*)&pressure,(unsigned char*)&temper);
+ 749   5                                      //         MS4515DO_read((unsigned char*)&dat1,(unsigned char*)temper) == 0
+ 750   5                                                  if( error == 0)
+ 751   5                                                      {
+ 752   6                                                         i++;
+ 753   6                                                              if(pressure<=1638)
+ 754   6                                                          {
+ 755   7                                                                pressure = 1638;
+ 756   7                                                      }
+ 757   6                                                    if(pressure>=14746)
+ 758   6                                                  {
+ 759   7                                                            pressure = 14746;
+ 760   7                                                      }
+ 761   6                                                       pressure_sum =pressure_sum+pressure;
+ 762   6                                                       
+ 763   6                                                      }
+ 764   5                              //                      disylay_mun(i,0,7,2);
+ 765   5                                                      delay(500);
+ 766   5                                         }   
+ 767   4                                         pressure_sum = pressure_sum/5;
+ 768   4                                         g_fZero = pressure_sum*0.07751938-635;
+ 769   4                                         g_fZero_rev = g_fZero;
+ 770   4                                         Dateeprom(); 
+ 771   4                         }
+ 772   3                         Clean_Display(0,0,128,64,0);
+ 773   3                         display_stringChinese(0,0,chinese);
+ 774   3                         display_stringChar(6,1,arr);
+ 775   3                              windSpeed = Wid_Speed();
+ 776   3                      play =  (int)(windSpeed*10);
+ 777   3                      disylay_mun(play,1,0,1);
+ 778   3                      
+ 779   3                        }
+ 780   2                      if((g_iTimebase%READ_TIME) == 0)
+ 781   2                        {
+ 782   3                          windSpeed = Wid_Speed();
+ 783   3                              play =  (int)(windSpeed*10);
+ 784   3                              disylay_mun(play,1,0,1);
+ 785   3      //                      disylay_mun(g_fZero*100,2,0,2);   //调试用，显示零点值为多少
+ 786   3                        }
+ 787   2                      key_delay();
+ 788   2                  if(return_Main())
+ 789   2                      {
+ 790   3                              return 0;
+ 791   3                      }
+ 792   2              }
+ 793   1      }
+ 794          
+ 795          unsigned char display_WindSpeedRate()
+ 796          {
+ 797   1              unsigned char key_num;
+ 798   1              float windSpeed;
+ 799   1              unsigned int play;
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 14  
 
- 800   2                  read_Maxout();
- 801   2                      key_num = key();
- 802   2                      if(key_num == KEY_FUNC)
- 803   2                      {
- 804   3                      g_cFunc++;
- 805   3                              g_fK1 = k1;
- 806   3                              key_release();
- 807   3                      return 0;
- 808   3                      }
- 809   2      
- 810   2                      if(key_num == KEY_ADD)
- 811   2                        {
- 812   3                         g_iProtect = 0;
- 813   3                         windSpeed = Wid_Speed(); 
- 814   3                         g_fK1 = (windSpeed+0.1)/windSpeed*g_fK1;
- 815   3                     if(g_fK1 >= 20)
- 816   3                              {
- 817   4                                g_fK1 = 20;
- 818   4                          }
- 819   3                         if(g_fK1 <= 0.1)
- 820   3                              {
- 821   4                                g_fK1 = 0.1;
- 822   4                          }
- 823   3                              windSpeed = Wid_Speed();
- 824   3                              play =  (int)(windSpeed*10);
- 825   3                              disylay_mun(play,1,0,1);  
- 826   3                        }
- 827   2                        
- 828   2                        if(key_num == KEY_SUB)
- 829   2                        {
- 830   3                         g_iProtect = 0;
- 831   3                         windSpeed = Wid_Speed(); 
- 832   3                         g_fK1 = (windSpeed-0.1)/windSpeed*g_fK1;
- 833   3                     if(g_fK1 >= 20)
- 834   3                              {
- 835   4                                g_fK1 = 20;
- 836   4                          }
- 837   3                         if(g_fK1 <= 0.1)
- 838   3                              {
- 839   4                                g_fK1 = 0.1;
- 840   4                          }
- 841   3                              windSpeed = Wid_Speed();
- 842   3                              play =  (int)(windSpeed*10);
- 843   3                              disylay_mun(play,POINT_1,0,1);  
- 844   3                        }
- 845   2      
- 846   2                        if(key_num == KEY_SURE)
- 847   2                        {
- 848   3                          g_iProtect = 0;
- 849   3                         Clean_Display(0,0,128,64,0);
- 850   3                         if(display_Protect1(chinese2,10) == 0)
- 851   3                           {
- 852   4                                  
- 853   4                                  g_fK1 = k1;
- 854   4                               }
- 855   3                               else
- 856   3                               {
- 857   4                                 Dateeprom();
- 858   4                                 k1 = g_fK1;
- 859   4                               }
- 860   3                         Clean_Display(0,0,128,64,0);
- 861   3                         display_stringChinese(0,0,chinese);
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 15  
+ 800   1              float k1;
+ 801   1         code unsigned char* chinese[] ={font_26,font_27,font_05,font_06,font_00};      //精度校准
+ 802   1         code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};          //密码2
+ 803   1         code char arr[] = {'m','/','s','\0'};
+ 804   1           k1=g_fK1;
+ 805   1              display_stringChinese(0,0,chinese);
+ 806   1              display_stringChar(6,1,arr);
+ 807   1              windSpeed = Wid_Speed();
+ 808   1              play =  (int)(windSpeed*10);
+ 809   1              disylay_mun(play,1,0,1); 
+ 810   1              while(1)
+ 811   1              {
+ 812   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+ 813   2                  read_Maxout();
+ 814   2                      key_num = key();
+ 815   2                      if(key_num == KEY_FUNC)
+ 816   2                      {
+ 817   3                      g_cFunc++;
+ 818   3                              g_fK1 = k1;
+ 819   3                              key_release();
+ 820   3                      return 0;
+ 821   3                      }
+ 822   2      
+ 823   2                      if(key_num == KEY_ADD)
+ 824   2                        {
+ 825   3                         g_iProtect = 0;
+ 826   3                         windSpeed = Wid_Speed(); 
+ 827   3                         g_fK1 = (windSpeed+0.1)/windSpeed*g_fK1;
+ 828   3                     if(g_fK1 >= 20)
+ 829   3                              {
+ 830   4                                g_fK1 = 20;
+ 831   4                          }
+ 832   3                         if(g_fK1 <= 0.1)
+ 833   3                              {
+ 834   4                                g_fK1 = 0.1;
+ 835   4                          }
+ 836   3                              windSpeed = Wid_Speed();
+ 837   3                              play =  (int)(windSpeed*10);
+ 838   3                              disylay_mun(play,1,0,1);  
+ 839   3                        }
+ 840   2                        
+ 841   2                        if(key_num == KEY_SUB)
+ 842   2                        {
+ 843   3                         g_iProtect = 0;
+ 844   3                         windSpeed = Wid_Speed(); 
+ 845   3                         g_fK1 = (windSpeed-0.1)/windSpeed*g_fK1;
+ 846   3                     if(g_fK1 >= 20)
+ 847   3                              {
+ 848   4                                g_fK1 = 20;
+ 849   4                          }
+ 850   3                         if(g_fK1 <= 0.1)
+ 851   3                              {
+ 852   4                                g_fK1 = 0.1;
+ 853   4                          }
+ 854   3                              windSpeed = Wid_Speed();
+ 855   3                              play =  (int)(windSpeed*10);
+ 856   3                              disylay_mun(play,POINT_1,0,1);  
+ 857   3                        }
+ 858   2      
+ 859   2                        if(key_num == KEY_SURE)
+ 860   2                        {
+ 861   3                          g_iProtect = 0;
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 15  
 
- 862   3                              windSpeed = Wid_Speed();
- 863   3                      play =  (int)(windSpeed*10);
- 864   3                 disylay_mun(play,POINT_1,0,1);
- 865   3                       //  disylay_mun(range,2,3,1);  
- 866   3                        }
- 867   2                       if(g_iTimebase == 1)
- 868   2                       {
- 869   3                         windSpeed = Wid_Speed();
- 870   3                              play =  (int)(windSpeed*10);
- 871   3                              disylay_mun(play,POINT_1,0,1);
- 872   3                       }
- 873   2                      key_delay();
- 874   2                  if(return_Main())
- 875   2                      {
- 876   3                         // g_fK1 = k1;
- 877   3                              return 0;
- 878   3                      }
- 879   2              //      disylay_mun(100,2,0,2);
- 880   2              }
- 881   1      }
- 882          
- 883          unsigned char display_Rate()
- 884          {
- 885   1              unsigned char key_num;
- 886   1         unsigned int range ;
- 887   1          float temp_K2;                                              
- 888   1         code unsigned char* chinese[] = {font_39,font_40,font_09,font_10,font_00};     //补偿系数
- 889   1         code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};          //密码2
- 890   1          range = g_fK2*100;
- 891   1              temp_K2 = g_fK2;
- 892   1       //  char arr[] = {'m','/','s','\0'};
- 893   1              display_stringChinese(0,0,chinese);
- 894   1      //      display_stringChar(6,1,arr);
- 895   1          disylay_mun(range,2,0,1); 
- 896   1              while(1)
- 897   1              {
- 898   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
- 899   2                  read_Maxout();
- 900   2                      key_num = key();
- 901   2                      if(key_num == KEY_FUNC)
- 902   2                      {
- 903   3                      g_cFunc++;
- 904   3                              key_release();
- 905   3                      return 0;
- 906   3                      }
- 907   2                      range = key_AddSub(range,2,0,1,200);
- 908   2                      if(key_num == KEY_SURE)
- 909   2                      {
- 910   3                         g_iProtect = 0;
- 911   3                         g_fK2 = (float)range/100;
- 912   3                         Clean_Display(0,0,128,64,0);
- 913   3                         if(display_Protect1(chinese2,10) == 0)
- 914   3                           {
- 915   4                                
- 916   4                                  g_fK2 = temp_K2;
- 917   4                                      range = g_fK2*100;
- 918   4                               }
- 919   3                               else
- 920   3                               {
- 921   4                                   Dateeprom();
- 922   4                               }
- 923   3                         Clean_Display(0,0,128,64,0);
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 16  
+ 862   3                         Clean_Display(0,0,128,64,0);
+ 863   3                         if(display_Protect1(chinese2,10) == 0)
+ 864   3                           {
+ 865   4                                  
+ 866   4                                  g_fK1 = k1;
+ 867   4                               }
+ 868   3                               else
+ 869   3                               {
+ 870   4                                 Dateeprom();
+ 871   4                                 k1 = g_fK1;
+ 872   4                               }
+ 873   3                         Clean_Display(0,0,128,64,0);
+ 874   3                         display_stringChinese(0,0,chinese);
+ 875   3                              windSpeed = Wid_Speed();
+ 876   3                      play =  (int)(windSpeed*10);
+ 877   3                 disylay_mun(play,POINT_1,0,1);
+ 878   3                       //  disylay_mun(range,2,3,1);  
+ 879   3                        }
+ 880   2                       if(g_iTimebase == 1)
+ 881   2                       {
+ 882   3                         windSpeed = Wid_Speed();
+ 883   3                              play =  (int)(windSpeed*10);
+ 884   3                              disylay_mun(play,POINT_1,0,1);
+ 885   3                       }
+ 886   2                      key_delay();
+ 887   2                  if(return_Main())
+ 888   2                      {
+ 889   3                         // g_fK1 = k1;
+ 890   3                              return 0;
+ 891   3                      }
+ 892   2              //      disylay_mun(100,2,0,2);
+ 893   2              }
+ 894   1      }
+ 895          
+ 896          unsigned char display_Rate()
+ 897          {
+ 898   1              unsigned char key_num;
+ 899   1         unsigned int range , temp ;
+ 900   1          float temp_K2;                                              
+ 901   1         code unsigned char* chinese[] = {font_39,font_40,font_09,font_10,font_00};     //补偿系数
+ 902   1         code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};          //密码2
+ 903   1          range = g_fK2*100;
+ 904   1              temp_K2 = g_fK2;
+ 905   1       //  char arr[] = {'m','/','s','\0'};
+ 906   1              display_stringChinese(0,0,chinese);
+ 907   1      //      display_stringChar(6,1,arr);
+ 908   1          disylay_mun(range,2,0,1); 
+ 909   1              while(1)
+ 910   1              {
+ 911   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+ 912   2                  read_Maxout();
+ 913   2                      key_num = key();
+ 914   2                      if(key_num == KEY_FUNC)
+ 915   2                      {
+ 916   3                      g_cFunc++;
+ 917   3                              key_release();
+ 918   3                      return 0;
+ 919   3                      }
+ 920   2                      temp = key_AddSub(range,2,0,1,200);
+ 921   2                      range = temp;
+ 922   2                      if(key_num == KEY_SURE)
+ 923   2                      {
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 16  
 
- 924   3                         display_stringChinese(0,0,chinese);
- 925   3                         disylay_mun(range,2,0,1);
- 926   3                      }
- 927   2                       key_delay();
- 928   2                  if(return_Main())
- 929   2                      {
- 930   3                              return 0;
- 931   3                      }
- 932   2              //      disylay_mun(100,2,0,2);
- 933   2              }
- 934   1      }
- 935          
- 936          unsigned char display_Renew()
- 937          {
- 938   1              unsigned char key_num;
- 939   1              unsigned char integral;
- 940   1              unsigned char temp_integral;
- 941   1          code unsigned char* chinese[] ={font_07,font_08,font_09,font_10,font_00};     //积分系数
- 942   1          code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};         //密码2
- 943   1       //  char arr[] = {'m','/','s','\0'};
- 944   1          integral = g_cIntegral;
- 945   1              temp_integral = g_cIntegral;
- 946   1              display_stringChinese(0,0,chinese);
- 947   1              disylay_mun(g_cIntegral,0,0,1);
- 948   1      //      display_stringChar(6,1,arr); 
- 949   1              while(1)
- 950   1              {
- 951   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
- 952   2                  read_Maxout();
- 953   2                      key_num = key();
- 954   2                      if(key_num == KEY_FUNC)
- 955   2                      {
- 956   3                      g_cFunc++;
- 957   3                              key_release();
- 958   3                      return 0;
- 959   3                      }
- 960   2                      integral = key_AddSub(integral,0,0,1,19);
- 961   2              if(key_num == KEY_SURE)
- 962   2                      {
- 963   3                         g_iProtect = 0;
- 964   3                         g_cIntegral = integral;
- 965   3                         Clean_Display(0,0,128,64,0);
- 966   3                         if(display_Protect1(chinese2,10) == 0)
- 967   3                         {
- 968   4                           
- 969   4                           g_cIntegral = temp_integral;
- 970   4                               integral = g_cIntegral; 
- 971   4                         }
- 972   3                         else
- 973   3                         {
- 974   4                           Dateeprom();
- 975   4                         }
- 976   3                         Clean_Display(0,0,128,64,0);
- 977   3                         display_stringChinese(0,0,chinese);
- 978   3                         disylay_mun(integral,0,0,1);
- 979   3                      }
- 980   2      
- 981   2                      key_delay();
- 982   2                  if(return_Main())
- 983   2                      {
- 984   3                              return 0;
- 985   3                      }
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 17  
+ 924   3                         g_iProtect = 0;
+ 925   3                         g_fK2 = (float)range/100;
+ 926   3                         Clean_Display(0,0,128,64,0);
+ 927   3                         if(display_Protect1(chinese2,10) == 0)
+ 928   3                           {
+ 929   4                                
+ 930   4                                  g_fK2 = temp_K2;
+ 931   4                                      range = g_fK2*100;
+ 932   4                               }
+ 933   3                               else
+ 934   3                               {
+ 935   4                                   Dateeprom();
+ 936   4                               }
+ 937   3                         Clean_Display(0,0,128,64,0);
+ 938   3                         display_stringChinese(0,0,chinese);
+ 939   3                         disylay_mun(range,2,0,1);
+ 940   3                      }
+ 941   2                       key_delay();
+ 942   2                  if(return_Main())
+ 943   2                      {
+ 944   3                              return 0;
+ 945   3                      }
+ 946   2              //      disylay_mun(100,2,0,2);
+ 947   2              }
+ 948   1      }
+ 949          
+ 950          unsigned char display_Renew()
+ 951          {
+ 952   1              unsigned char key_num;
+ 953   1              unsigned char integral,temp;
+ 954   1              unsigned char temp_integral;
+ 955   1          code unsigned char* chinese[] ={font_07,font_08,font_09,font_10,font_00};     //积分系数
+ 956   1          code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};         //密码2
+ 957   1       //  char arr[] = {'m','/','s','\0'};
+ 958   1          integral = g_cIntegral;
+ 959   1              temp_integral = g_cIntegral;
+ 960   1              display_stringChinese(0,0,chinese);
+ 961   1              disylay_mun(g_cIntegral,0,0,1);
+ 962   1      //      display_stringChar(6,1,arr); 
+ 963   1              while(1)
+ 964   1              {
+ 965   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+ 966   2                  read_Maxout();
+ 967   2                      key_num = key();
+ 968   2                      if(key_num == KEY_FUNC)
+ 969   2                      {
+ 970   3                      g_cFunc++;
+ 971   3                              key_release();
+ 972   3                      return 0;
+ 973   3                      }
+ 974   2                      temp = key_AddSub(integral,0,0,1,19);
+ 975   2                       integral  = temp;
+ 976   2              if(key_num == KEY_SURE)
+ 977   2                      {
+ 978   3                         g_iProtect = 0;
+ 979   3                         g_cIntegral = integral;
+ 980   3                         Clean_Display(0,0,128,64,0);
+ 981   3                         if(display_Protect1(chinese2,10) == 0)
+ 982   3                         {
+ 983   4                           
+ 984   4                           g_cIntegral = temp_integral;
+ 985   4                               integral = g_cIntegral; 
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 17  
 
- 986   2                      
- 987   2              //      disylay_mun(100,2,0,2);
- 988   2              }
- 989   1      }
- 990          
- 991          unsigned char display_ZKSet()
- 992          {
- 993   1              unsigned char key_num;
- 994   1              float k1,zero;
- 995   1              unsigned char temp1,temp2;
- 996   1         code unsigned char* chinese[] ={font_17,font_18,font_25,font_28,font_29};      //恢复初始值
- 997   1         code unsigned char* chinese1[] ={font_30,font_29,font_00,font_00,font_00};  //原值
- 998   1         code unsigned char* chinese2[] ={font_31,font_29,font_00,font_00,font_00};   //新值
- 999   1         code unsigned char* chinese3[] ={font_22,font_23,er,font_00,font_00};          //密码2
-1000   1       //  char arr[] = {'m','/','s','\0'};
-1001   1             k1 = g_fK1;
-1002   1                 zero = g_fZero;
-1003   1              display_stringChinese(0,0,chinese);
-1004   1      //      display_stringChar(6,1,arr); 
-1005   1           if((g_fZero>(g_fZero_rev-0.01)&&g_fZero<(g_fZero_rev+0.01)) && g_fK1>0.99 && g_fK1<1.01 )
-1006   1                 {
-1007   2                    display_stringChinese(0,1,chinese1);
-1008   2                 }
-1009   1                 else
-1010   1                 {
-1011   2                    display_stringChinese(0,1,chinese2);
-1012   2                 }
-1013   1              while(1)
-1014   1              {
-1015   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
-1016   2                  read_Maxout();
-1017   2                      key_num = key();
-1018   2                      if(key_num == KEY_FUNC)
-1019   2                      {
-1020   3                      g_cFunc++;
-1021   3                              key_release();
-1022   3                      return 0;
-1023   3                      }
-1024   2                      if(key_num == KEY_SURE)
-1025   2                      {
-1026   3                         temp1 = IapReadByte(ZERO_ADD_REV_1);
-1027   3                         temp2 = IapReadByte(ZERO_ADD_REV_2);
-1028   3                         g_fZero_rev = (temp1*100+temp2)/100;
-1029   3                         g_iProtect = 0;
-1030   3                         g_fK1 = 1.0;
-1031   3                         g_fZero =g_fZero_rev ;
-1032   3                         Clean_Display(0,0,128,64,0);
-1033   3      
-1034   3                         if(display_Protect1(chinese3,10)==0)
-1035   3                           {
-1036   4                                 
-1037   4                                 g_fK1 = k1;
-1038   4                                 g_fZero = zero;
-1039   4                               }
-1040   3                               else
-1041   3                               {
-1042   4                                Dateeprom();
-1043   4                               }
-1044   3                         Clean_Display(0,0,128,64,0);
-1045   3                         display_stringChinese(0,0,chinese);
-1046   3                         if((g_fZero>(g_fZero_rev-0.01)&&g_fZero<(g_fZero_rev+0.01)) && g_fK1>0.99 && g_fK1<1.01 )
-1047   3                     {
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 18  
+ 986   4                         }
+ 987   3                         else
+ 988   3                         {
+ 989   4                           Dateeprom();
+ 990   4                         }
+ 991   3                         Clean_Display(0,0,128,64,0);
+ 992   3                         display_stringChinese(0,0,chinese);
+ 993   3                         disylay_mun(integral,0,0,1);
+ 994   3                      }
+ 995   2      
+ 996   2                      key_delay();
+ 997   2                  if(return_Main())
+ 998   2                      {
+ 999   3                              return 0;
+1000   3                      }
+1001   2                      
+1002   2              //      disylay_mun(100,2,0,2);
+1003   2              }
+1004   1      }
+1005          
+1006          unsigned char display_ZKSet()
+1007          {
+1008   1              unsigned char key_num;
+1009   1              float k1,zero;
+1010   1              unsigned char temp1,temp2;
+1011   1         code unsigned char* chinese[] ={font_17,font_18,font_25,font_28,font_29};      //恢复初始值
+1012   1         code unsigned char* chinese1[] ={font_30,font_29,font_00,font_00,font_00};  //原值
+1013   1         code unsigned char* chinese2[] ={font_31,font_29,font_00,font_00,font_00};   //新值
+1014   1         code unsigned char* chinese3[] ={font_22,font_23,er,font_00,font_00};          //密码2
+1015   1       //  char arr[] = {'m','/','s','\0'};
+1016   1             k1 = g_fK1;
+1017   1                 zero = g_fZero;
+1018   1              display_stringChinese(0,0,chinese);
+1019   1      //      display_stringChar(6,1,arr); 
+1020   1           if((g_fZero>(g_fZero_rev-0.01)&&g_fZero<(g_fZero_rev+0.01)) && g_fK1>0.99 && g_fK1<1.01 )
+1021   1                 {
+1022   2                    display_stringChinese(0,1,chinese1);
+1023   2                 }
+1024   1                 else
+1025   1                 {
+1026   2                    display_stringChinese(0,1,chinese2);
+1027   2                 }
+1028   1              while(1)
+1029   1              {
+1030   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+1031   2                  read_Maxout();
+1032   2                      key_num = key();
+1033   2                      if(key_num == KEY_FUNC)
+1034   2                      {
+1035   3                      g_cFunc++;
+1036   3                              key_release();
+1037   3                      return 0;
+1038   3                      }
+1039   2                      if(key_num == KEY_SURE)
+1040   2                      {
+1041   3                         temp1 = IapReadByte(ZERO_ADD_REV_1);
+1042   3                         temp2 = IapReadByte(ZERO_ADD_REV_2);
+1043   3                         g_fZero_rev = (temp1*100+temp2)/100;
+1044   3                         g_iProtect = 0;
+1045   3                         g_fK1 = 1.0;
+1046   3                         g_fZero =g_fZero_rev ;
+1047   3                         Clean_Display(0,0,128,64,0);
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 18  
 
-1048   4                       display_stringChinese(0,1,chinese1);
-1049   4                     }
-1050   3                     else
-1051   3                     {
-1052   4                       display_stringChinese(0,1,chinese2);
-1053   4                     }        
-1054   3                      }
-1055   2      
-1056   2      
-1057   2                      key_delay();
-1058   2                  if(return_Main())
-1059   2                      {
-1060   3                              return 0;
-1061   3                      }
-1062   2              //      disylay_mun(100,2,0,2);
-1063   2              }
-1064   1      }
-1065          
-1066          
-1067          unsigned char display_uint()
-1068          {
-1069   1              unsigned char key_num;
-1070   1              char uint1 ;
-1071   1              char temp_uint1;
-1072   1        code unsigned char* chinese[] ={font_15,font_16,font_00,font_00,font_00};       //单位
-1073   1        code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};   //密码2
-1074   1        code char arr0[] = {'m',59,'/','s',' ',' ','\0'};
-1075   1        code char arr1[] = {'m',59,'/','m','i','n','\0'};
-1076   1         uint1 = g_cUint;
-1077   1         temp_uint1 = g_cUint;
-1078   1              display_stringChinese(0,0,chinese);
-1079   1               if(uint1 == 1)
-1080   1                {
-1081   2                        display_stringChar(3,1,arr1);
-1082   2                }
-1083   1                 else
-1084   1                {
-1085   2                        display_stringChar(3,1,arr0);
-1086   2                }
-1087   1              while(1)
-1088   1              {
-1089   2                 if(g_cMaxOut ==0 || g_cMaxOut ==2)
-1090   2                  read_Maxout();
-1091   2                      key_num = key();
-1092   2                      if(key_num == KEY_FUNC)
-1093   2                      {
-1094   3                      g_cFunc++;
-1095   3                              key_release();
-1096   3                      return 0;
-1097   3                      }
-1098   2              if(key_num == KEY_ADD)
-1099   2                       {
-1100   3                          g_iProtect = 0;
-1101   3                          uint1++;
-1102   3                              if(uint1 == 2)
-1103   3                                uint1 = 0;
-1104   3                         if(uint1 == 1)
-1105   3                         {
-1106   4                           display_stringChar(3,1,arr1);
-1107   4                         }
-1108   3                         else
-1109   3                         {
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 19  
+1048   3      
+1049   3                         if(display_Protect1(chinese3,10)==0)
+1050   3                           {
+1051   4                                 
+1052   4                                 g_fK1 = k1;
+1053   4                                 g_fZero = zero;
+1054   4                               }
+1055   3                               else
+1056   3                               {
+1057   4                                Dateeprom();
+1058   4                               }
+1059   3                         Clean_Display(0,0,128,64,0);
+1060   3                         display_stringChinese(0,0,chinese);
+1061   3                         if((g_fZero>(g_fZero_rev-0.01)&&g_fZero<(g_fZero_rev+0.01)) && g_fK1>0.99 && g_fK1<1.01 )
+1062   3                     {
+1063   4                       display_stringChinese(0,1,chinese1);
+1064   4                     }
+1065   3                     else
+1066   3                     {
+1067   4                       display_stringChinese(0,1,chinese2);
+1068   4                     }        
+1069   3                      }
+1070   2      
+1071   2      
+1072   2                      key_delay();
+1073   2                  if(return_Main())
+1074   2                      {
+1075   3                              return 0;
+1076   3                      }
+1077   2              //      disylay_mun(100,2,0,2);
+1078   2              }
+1079   1      }
+1080          
+1081          
+1082          unsigned char display_uint()
+1083          {
+1084   1              unsigned char key_num;
+1085   1              char uint1 ;
+1086   1              char temp_uint1;
+1087   1        code unsigned char* chinese[] ={font_15,font_16,font_00,font_00,font_00};       //单位
+1088   1        code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};   //密码2
+1089   1        code char arr0[] = {'m',59,'/','s',' ',' ','\0'};
+1090   1        code char arr1[] = {'m',59,'/','m','i','n','\0'};
+1091   1         uint1 = g_cUint;
+1092   1         temp_uint1 = g_cUint;
+1093   1              display_stringChinese(0,0,chinese);
+1094   1               if(uint1 == 1)
+1095   1                {
+1096   2                        display_stringChar(3,1,arr1);
+1097   2                }
+1098   1                 else
+1099   1                {
+1100   2                        display_stringChar(3,1,arr0);
+1101   2                }
+1102   1              while(1)
+1103   1              {
+1104   2                 if(g_cMaxOut ==0 || g_cMaxOut ==2)
+1105   2                  read_Maxout();
+1106   2                      key_num = key();
+1107   2                      if(key_num == KEY_FUNC)
+1108   2                      {
+1109   3                      g_cFunc++;
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 19  
 
-1110   4                           display_stringChar(3,1,arr0);
-1111   4                         }
-1112   3                       }
-1113   2                       if(key_num == KEY_SUB)
+1110   3                              key_release();
+1111   3                      return 0;
+1112   3                      }
+1113   2              if(key_num == KEY_ADD)
 1114   2                       {
-1115   3                         g_iProtect = 0;
-1116   3                         uint1--;
-1117   3                         if(uint1 < 0)
-1118   3                          uint1 = 1;
-1119   3                              if(uint1 == 1)
+1115   3                          g_iProtect = 0;
+1116   3                          uint1++;
+1117   3                              if(uint1 == 2)
+1118   3                                uint1 = 0;
+1119   3                         if(uint1 == 1)
 1120   3                         {
 1121   4                           display_stringChar(3,1,arr1);
 1122   4                         }
@@ -1170,490 +1170,507 @@ line level    source
 1125   4                           display_stringChar(3,1,arr0);
 1126   4                         }
 1127   3                       }
-1128   2      
-1129   2                       if(key_num == KEY_SURE)
-1130   2                         {
-1131   3                             g_iProtect = 0;
-1132   3                             g_cUint = uint1;
-1133   3                                 Clean_Display(0,0,128,64,0);
-1134   3                             if(display_Protect1(chinese2,10)==0)
-1135   3                                   {
-1136   4                                          g_cUint = temp_uint1;
-1137   4                                              uint1 = g_cUint;
-1138   4                                       }
-1139   3                                       else
-1140   3                                       {
-1141   4                                         Dateeprom();
-1142   4                                       }
-1143   3                             Clean_Display(0,0,128,64,0);
-1144   3                             display_stringChinese(0,0,chinese);
-1145   3                                 if(uint1 == 1)
-1146   3                                 {
-1147   4                                   display_stringChar(3,1,arr1);
-1148   4                                 }
-1149   3                                 else
-1150   3                                 {
-1151   4                                   display_stringChar(3,1,arr0);
-1152   4                                 }
-1153   3                         }
-1154   2      
-1155   2                      key_delay();
-1156   2                  if(return_Main())
-1157   2                      {
-1158   3                              return 0;
-1159   3                      }
-1160   2              //      disylay_mun(100,2,0,2);
-1161   2              }
-1162   1      
-1163   1      }
-1164          
-1165          unsigned char display_workchang()
-1166          {
-1167   1              unsigned char key_num;
-1168   1              char workChange ;
-1169   1              char temp_workChange;
-1170   1        code unsigned char* chinese[] ={font_38,font_02,lei,xin,font_00};       //流量类型
-1171   1        code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};   //密码2
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 20  
+1128   2                       if(key_num == KEY_SUB)
+1129   2                       {
+1130   3                         g_iProtect = 0;
+1131   3                         uint1--;
+1132   3                         if(uint1 < 0)
+1133   3                          uint1 = 1;
+1134   3                              if(uint1 == 1)
+1135   3                         {
+1136   4                           display_stringChar(3,1,arr1);
+1137   4                         }
+1138   3                         else
+1139   3                         {
+1140   4                           display_stringChar(3,1,arr0);
+1141   4                         }
+1142   3                       }
+1143   2      
+1144   2                       if(key_num == KEY_SURE)
+1145   2                         {
+1146   3                             g_iProtect = 0;
+1147   3                             g_cUint = uint1;
+1148   3                                 Clean_Display(0,0,128,64,0);
+1149   3                             if(display_Protect1(chinese2,10)==0)
+1150   3                                   {
+1151   4                                          g_cUint = temp_uint1;
+1152   4                                              uint1 = g_cUint;
+1153   4                                       }
+1154   3                                       else
+1155   3                                       {
+1156   4                                         Dateeprom();
+1157   4                                       }
+1158   3                             Clean_Display(0,0,128,64,0);
+1159   3                             display_stringChinese(0,0,chinese);
+1160   3                                 if(uint1 == 1)
+1161   3                                 {
+1162   4                                   display_stringChar(3,1,arr1);
+1163   4                                 }
+1164   3                                 else
+1165   3                                 {
+1166   4                                   display_stringChar(3,1,arr0);
+1167   4                                 }
+1168   3                         }
+1169   2      
+1170   2                      key_delay();
+1171   2                  if(return_Main())
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 20  
 
-1172   1        code unsigned char* chinese_isCh4[] ={gong,kuang,font_38,font_02,font_00};      //纯甲烷流量  此处改成工况
-1173   1        code unsigned char* chinese_noCh4[] ={biao,kuang,font_38,font_02,font_00};      //混合流量  此处改成标况
-1174   1         workChange = g_cWorkChange;
-1175   1         temp_workChange = g_cWorkChange;
-1176   1              display_stringChinese(0,0,chinese);
-1177   1               if(workChange == 1)
-1178   1                {
-1179   2                   display_stringChinese(0,1,chinese_isCh4);
-1180   2                }
-1181   1                 else
-1182   1                {
-1183   2                        display_stringChinese(0,1,chinese_noCh4);
-1184   2                }
-1185   1              while(1)
-1186   1              {
-1187   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
-1188   2                  read_Maxout();
-1189   2                      key_num = key();
-1190   2                      if(key_num == KEY_FUNC)
-1191   2                      {
-1192   3                      g_cFunc++;
-1193   3                              key_release();
-1194   3                      return 0;
-1195   3                      }
-1196   2              if(key_num == KEY_ADD)
-1197   2                       {
-1198   3                          g_iProtect = 0;
-1199   3                          workChange++;
-1200   3                              if(workChange == 2)
-1201   3                                workChange = 0;
-1202   3                         if(workChange == 1)
-1203   3                         {
-1204   4                           display_stringChinese(0,1,chinese_isCh4);
-1205   4                         }
-1206   3                         else
-1207   3                         {
-1208   4                           display_stringChinese(0,1,chinese_noCh4);
-1209   4                         }
-1210   3                       }
-1211   2                       if(key_num == KEY_SUB)
+1172   2                      {
+1173   3                              return 0;
+1174   3                      }
+1175   2              //      disylay_mun(100,2,0,2);
+1176   2              }
+1177   1      
+1178   1      }
+1179          
+1180          unsigned char display_workchang()
+1181          {
+1182   1              unsigned char key_num;
+1183   1              char workChange ;
+1184   1              char temp_workChange;
+1185   1        code unsigned char* chinese[] ={font_38,font_02,lei,xin,font_00};       //流量类型
+1186   1        code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};   //密码2
+1187   1        code unsigned char* chinese_isCh4[] ={gong,kuang,font_38,font_02,font_00};      //纯甲烷流量  此处改成工况
+1188   1        code unsigned char* chinese_noCh4[] ={biao,kuang,font_38,font_02,font_00};      //混合流量  此处改成标况
+1189   1         workChange = g_cWorkChange;
+1190   1         temp_workChange = g_cWorkChange;
+1191   1              display_stringChinese(0,0,chinese);
+1192   1               if(workChange == 1)
+1193   1                {
+1194   2                   display_stringChinese(0,1,chinese_isCh4);
+1195   2                }
+1196   1                 else
+1197   1                {
+1198   2                        display_stringChinese(0,1,chinese_noCh4);
+1199   2                }
+1200   1              while(1)
+1201   1              {
+1202   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+1203   2                  read_Maxout();
+1204   2                      key_num = key();
+1205   2                      if(key_num == KEY_FUNC)
+1206   2                      {
+1207   3                      g_cFunc++;
+1208   3                              key_release();
+1209   3                      return 0;
+1210   3                      }
+1211   2              if(key_num == KEY_ADD)
 1212   2                       {
-1213   3                         g_iProtect = 0;
-1214   3                         workChange--;
-1215   3                         if(workChange < 0)
-1216   3                          {
-1217   4                            workChange = 1;
-1218   4                              }
-1219   3                              if(workChange == 1)
-1220   3                         {
-1221   4                           display_stringChinese(0,1,chinese_isCh4);
-1222   4                         }
-1223   3                         else
-1224   3                         {
-1225   4                           display_stringChinese(0,1,chinese_noCh4);
-1226   4                         }
-1227   3                       }
-1228   2      
-1229   2                       if(key_num == KEY_SURE)
-1230   2                         {
-1231   3                             g_iProtect = 0;
-1232   3                             g_cWorkChange = workChange;
-1233   3                                 Clean_Display(0,0,128,64,0);
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 21  
+1213   3                          g_iProtect = 0;
+1214   3                          workChange++;
+1215   3                              if(workChange == 2)
+1216   3                                workChange = 0;
+1217   3                         if(workChange == 1)
+1218   3                         {
+1219   4                           display_stringChinese(0,1,chinese_isCh4);
+1220   4                         }
+1221   3                         else
+1222   3                         {
+1223   4                           display_stringChinese(0,1,chinese_noCh4);
+1224   4                         }
+1225   3                       }
+1226   2                       if(key_num == KEY_SUB)
+1227   2                       {
+1228   3                         g_iProtect = 0;
+1229   3                         workChange--;
+1230   3                         if(workChange < 0)
+1231   3                          {
+1232   4                            workChange = 1;
+1233   4                              }
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 21  
 
-1234   3                             if(display_Protect1(chinese2,10)==0)
-1235   3                                   {
-1236   4                                          g_cWorkChange = temp_workChange;
-1237   4                                              workChange = g_cWorkChange;
-1238   4                                       }
-1239   3                                       else
-1240   3                                       {
-1241   4                                         Dateeprom();
-1242   4                                       }
-1243   3                             Clean_Display(0,0,128,64,0);
-1244   3                             display_stringChinese(0,0,chinese);
-1245   3                                 if(workChange == 1)
-1246   3                                 {
-1247   4                                   display_stringChinese(0,1,chinese_isCh4);
-1248   4                                 }
-1249   3                                 else
-1250   3                                 {
-1251   4                                   display_stringChinese(0,1,chinese_noCh4);
-1252   4                                 }
-1253   3                         }
-1254   2      
-1255   2                      key_delay();
-1256   2                  if(return_Main())
-1257   2                      {
-1258   3                              return 0;
-1259   3                      }
-1260   2              }
-1261   1      
-1262   1      }
-1263          
-1264          
-1265          unsigned char display_MaxOut()
-1266          {
-1267   1              unsigned char key_num;
-1268   1              char maxout ;
-1269   1              char temp_maxout;
-1270   1              char flag = 0;
-1271   1          unsigned char* chineseClear[] ={qing,font_03,font_00,font_00,font_00};        //清零选择
-1272   1              code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};     //密码2
-1273   1         code char arrOFF[] = {'O','F','F',' ','\0'};
-1274   1         code char arrON[] =  {'O','N',' ',' ','\0'};
-1275   1        // code char arrm3[] = {'m',59,'\0'};
-1276   1       //  code char arr[] = {':','\0'};
-1277   1      
-1278   1         maxout = g_cMaxOut;
-1279   1         temp_maxout = g_cMaxOut;
-1280   1      
-1281   1         mian2_chinese();
-1282   1      
-1283   1              while(1)
-1284   1              {
-1285   2                  if(maxout == 0 || maxout == 2)
-1286   2                      {
-1287   3                    read_Maxout();
-1288   3                      }
-1289   2                      if(0 == flag && g_iTimebase <= 5  )
-1290   2                              {
-1291   3                                          flag = 1;
-1292   3                                              display_sum(g_fSum,5,1); //显示工况累积值
-1293   3                                              display_sum(g_fSum_biao,5,2); //显示工况累积值
-1294   3                                              display_sum(g_fSum_biao_ch4,5,3);
-1295   3                                              //display_sum(12345678,6,3);
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 22  
+1234   3                              if(workChange == 1)
+1235   3                         {
+1236   4                           display_stringChinese(0,1,chinese_isCh4);
+1237   4                         }
+1238   3                         else
+1239   3                         {
+1240   4                           display_stringChinese(0,1,chinese_noCh4);
+1241   4                         }
+1242   3                       }
+1243   2      
+1244   2                       if(key_num == KEY_SURE)
+1245   2                         {
+1246   3                             g_iProtect = 0;
+1247   3                             g_cWorkChange = workChange;
+1248   3                                 Clean_Display(0,0,128,64,0);
+1249   3                             if(display_Protect1(chinese2,10)==0)
+1250   3                                   {
+1251   4                                          g_cWorkChange = temp_workChange;
+1252   4                                              workChange = g_cWorkChange;
+1253   4                                       }
+1254   3                                       else
+1255   3                                       {
+1256   4                                         Dateeprom();
+1257   4                                       }
+1258   3                             Clean_Display(0,0,128,64,0);
+1259   3                             display_stringChinese(0,0,chinese);
+1260   3                                 if(workChange == 1)
+1261   3                                 {
+1262   4                                   display_stringChinese(0,1,chinese_isCh4);
+1263   4                                 }
+1264   3                                 else
+1265   3                                 {
+1266   4                                   display_stringChinese(0,1,chinese_noCh4);
+1267   4                                 }
+1268   3                         }
+1269   2      
+1270   2                      key_delay();
+1271   2                  if(return_Main())
+1272   2                      {
+1273   3                              return 0;
+1274   3                      }
+1275   2              }
+1276   1      
+1277   1      }
+1278          
+1279          
+1280          unsigned char display_MaxOut()
+1281          {
+1282   1              unsigned char key_num;
+1283   1              char maxout ;
+1284   1              char temp_maxout;
+1285   1              char flag = 0;
+1286   1          unsigned char* chineseClear[] ={qing,font_03,font_00,font_00,font_00};        //清零选择
+1287   1              code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};     //密码2
+1288   1         code char arrOFF[] = {'O','F','F',' ','\0'};
+1289   1         code char arrON[] =  {'O','N',' ',' ','\0'};
+1290   1        // code char arrm3[] = {'m',59,'\0'};
+1291   1       //  code char arr[] = {':','\0'};
+1292   1      
+1293   1         maxout = g_cMaxOut;
+1294   1         temp_maxout = g_cMaxOut;
+1295   1      
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 22  
 
-1296   3      
-1297   3                              }
-1298   2                              else if(g_iTimebase>5)
-1299   2                              {
-1300   3                                           flag = 0 ;
-1301   3                              }                 
-1302   2                      
-1303   2                      key_num = key();
-1304   2                      if(key_num == KEY_FUNC)
-1305   2                      {
-1306   3                      g_cFunc++;
-1307   3                              key_release();
-1308   3                      return 0;
-1309   3                      }
-1310   2              if(key_num == KEY_ADD)
-1311   2                       {
-1312   3                          g_iProtect = 0;
-1313   3                          maxout++;
-1314   3                              if(maxout == 3)
-1315   3                                maxout = 0;
-1316   3                         if(maxout == 1)
-1317   3                         {
-1318   4                           display_stringChar(7,0,arrOFF);
-1319   4                         }
-1320   3                         else if(maxout == 0)
-1321   3                         {
-1322   4                           display_stringChar(7,0,arrON);
-1323   4                         }
-1324   3                         else
-1325   3                         {
-1326   4                           display_stringChinese(7,0,chineseClear);
-1327   4                         }
-1328   3                       }
-1329   2                       if(key_num == KEY_SUB)
-1330   2                       {
-1331   3                         g_iProtect = 0;
-1332   3                         maxout--;
-1333   3                         if(maxout < 0)
-1334   3                          maxout = 2;
-1335   3                              if(maxout == 1)
+1296   1         mian2_chinese();
+1297   1      
+1298   1              while(1)
+1299   1              {
+1300   2                  if(maxout == 0 || maxout == 2)
+1301   2                      {
+1302   3                    read_Maxout();
+1303   3                      }
+1304   2                      if(0 == flag && g_iTimebase <= 5  )
+1305   2                              {
+1306   3                                          flag = 1;
+1307   3                                              display_sum(g_fSum,5,1); //显示工况累积值
+1308   3                                              display_sum(g_fSum_biao,5,2); //显示工况累积值
+1309   3                                              display_sum(g_fSum_biao_ch4,5,3);
+1310   3                                              //display_sum(12345678,6,3);
+1311   3      
+1312   3                              }
+1313   2                              else if(g_iTimebase>5)
+1314   2                              {
+1315   3                                           flag = 0 ;
+1316   3                              }                 
+1317   2                      
+1318   2                      key_num = key();
+1319   2                      if(key_num == KEY_FUNC)
+1320   2                      {
+1321   3                      g_cFunc++;
+1322   3                              key_release();
+1323   3                      return 0;
+1324   3                      }
+1325   2              if(key_num == KEY_ADD)
+1326   2                       {
+1327   3                          g_iProtect = 0;
+1328   3                          maxout++;
+1329   3                              if(maxout == 3)
+1330   3                                maxout = 0;
+1331   3                         if(maxout == 1)
+1332   3                         {
+1333   4                           display_stringChar(7,0,arrOFF);
+1334   4                         }
+1335   3                         else if(maxout == 0)
 1336   3                         {
-1337   4                           display_stringChar(7,0,arrOFF);
+1337   4                           display_stringChar(7,0,arrON);
 1338   4                         }
-1339   3                         else if(maxout == 0)
+1339   3                         else
 1340   3                         {
-1341   4                           display_stringChar(7,0,arrON);
+1341   4                           display_stringChinese(7,0,chineseClear);
 1342   4                         }
-1343   3                         else
-1344   3                         {
-1345   4                           display_stringChinese(7,0,chineseClear);
-1346   4                         }
-1347   3      
-1348   3                       }
-1349   2      
-1350   2                       if(key_num == KEY_SURE)
-1351   2                         {
-1352   3                             g_iProtect = 0;
-1353   3                             g_cMaxOut = maxout;
-1354   3                                 Clean_Display(0,0,128,64,0);
-1355   3                             if(display_Protect1(chinese2,10)==0)
-1356   3                                   {
-1357   4                                          g_cMaxOut = temp_maxout;
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 23  
+1343   3                       }
+1344   2                       if(key_num == KEY_SUB)
+1345   2                       {
+1346   3                         g_iProtect = 0;
+1347   3                         maxout--;
+1348   3                         if(maxout < 0)
+1349   3                          maxout = 2;
+1350   3                              if(maxout == 1)
+1351   3                         {
+1352   4                           display_stringChar(7,0,arrOFF);
+1353   4                         }
+1354   3                         else if(maxout == 0)
+1355   3                         {
+1356   4                           display_stringChar(7,0,arrON);
+1357   4                         }
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 23  
 
-1358   4                                              maxout = g_cMaxOut;
-1359   4                                       }
-1360   3                                       else
-1361   3                                       {
-1362   4                                         if(maxout == 2)
-1363   4                                           {
-1364   5                                                  g_fSum = 0.0;
-1365   5                                                      g_fSum_biao = 0.0;
-1366   5                                                      g_fSum_biao_ch4 = 0.0;
-1367   5                                               }
-1368   4                                         Dateeprom();
-1369   4                                       }
-1370   3                             Clean_Display(0,0,128,64,0);
-1371   3                            mian2_chinese();
-1372   3                                display_sum(g_fSum,5,1); //显示工况累积值
-1373   3                                display_sum(g_fSum_biao,5,2); //显示工况累积值
-1374   3                                display_sum(g_fSum_biao_ch4,5,3); 
-1375   3                         }
-1376   2      
-1377   2                      key_delay();
-1378   2                  if(return_Main())
-1379   2                      {
-1380   3                              return 0;
-1381   3                      }
-1382   2              }
-1383   1      
-1384   1      }  
-1385          unsigned char display_Range()
-1386          {
-1387   1              unsigned char key_num;
-1388   1              unsigned int range,rangeMin,temp_range,temp_rangeMin;
-1389   1      
-1390   1        code unsigned char* chinese[] ={font_02,font_21,font_00,font_00,font_00};       //量程
-1391   1        code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};   //密码2
-1392   1        code char arr0[] = {'m',59,'/','s',' ',' ','\0'};
-1393   1        code char arr1[] = {'m',59,'/','m','i','n','\0'};
-1394   1           range = g_iRange;
-1395   1               temp_range = range;
-1396   1               rangeMin = g_iRangeMin;
-1397   1               temp_rangeMin = rangeMin;
-1398   1              display_stringChinese(0,0,chinese);
-1399   1              if(g_cUint == 0)
-1400   1              {
-1401   2                display_stringChar(5,1,arr0);
-1402   2                disylay_mun(range,0,0,1);
-1403   2              }
-1404   1              else
-1405   1              {
-1406   2                display_stringChar(5,1,arr1);
-1407   2                disylay_mun(rangeMin,0,0,1);
-1408   2              } 
-1409   1              while(1)
-1410   1              {
-1411   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
-1412   2                  read_Maxout();
-1413   2                      key_num = key();
-1414   2                      if(key_num == KEY_FUNC)
-1415   2                      {
-1416   3                      g_cFunc++;
-1417   3                              key_release();
-1418   3                      return 0;
-1419   3                      }
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 24  
+1358   3                         else
+1359   3                         {
+1360   4                           display_stringChinese(7,0,chineseClear);
+1361   4                         }
+1362   3      
+1363   3                       }
+1364   2      
+1365   2                       if(key_num == KEY_SURE)
+1366   2                         {
+1367   3                             g_iProtect = 0;
+1368   3                             g_cMaxOut = maxout;
+1369   3                                 Clean_Display(0,0,128,64,0);
+1370   3                             if(display_Protect1(chinese2,10)==0)
+1371   3                                   {
+1372   4                                          g_cMaxOut = temp_maxout;
+1373   4                                              maxout = g_cMaxOut;
+1374   4                                       }
+1375   3                                       else
+1376   3                                       {
+1377   4                                         if(maxout == 2)
+1378   4                                           {
+1379   5                                                  g_fSum = 0.0;
+1380   5                                                      g_fSum_biao = 0.0;
+1381   5                                                      g_fSum_biao_ch4 = 0.0;
+1382   5                                               }
+1383   4                                         Dateeprom();
+1384   4                                       }
+1385   3                             Clean_Display(0,0,128,64,0);
+1386   3                            mian2_chinese();
+1387   3                                display_sum(g_fSum,5,1); //显示工况累积值
+1388   3                                display_sum(g_fSum_biao,5,2); //显示工况累积值
+1389   3                                display_sum(g_fSum_biao_ch4,5,3); 
+1390   3                         }
+1391   2      
+1392   2                      key_delay();
+1393   2                  if(return_Main())
+1394   2                      {
+1395   3                              return 0;
+1396   3                      }
+1397   2              }
+1398   1      
+1399   1      }  
+1400          unsigned char display_Range()
+1401          {
+1402   1              unsigned char key_num;
+1403   1              unsigned int range,rangeMin,temp_range,temp_rangeMin;
+1404   1      
+1405   1        code unsigned char* chinese[] ={font_02,font_21,font_00,font_00,font_00};       //量程
+1406   1        code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};   //密码2
+1407   1        code char arr0[] = {'m',59,'/','s',' ',' ','\0'};
+1408   1        code char arr1[] = {'m',59,'/','m','i','n','\0'};
+1409   1           range = g_iRange;
+1410   1               temp_range = range;
+1411   1               rangeMin = g_iRangeMin;
+1412   1               temp_rangeMin = rangeMin;
+1413   1              display_stringChinese(0,0,chinese);
+1414   1              if(g_cUint == 0)
+1415   1              {
+1416   2                display_stringChar(5,1,arr0);
+1417   2                disylay_mun(range,0,0,1);
+1418   2              }
+1419   1              else
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 24  
 
-1420   2      
-1421   2                      if(key_num == KEY_ADD)
-1422   2                      {
-1423   3                          g_iProtect = 0;
-1424   3                      if(g_cUint == 0)
-1425   3                                {
-1426   4                                  range++;
-1427   4                                      if(range > 10)
-1428   4                                       {
-1429   5                                        range = 10;
-1430   5                                       }
-1431   4                                       disylay_mun(range,0,0,1);
-1432   4                                }
-1433   3                                else
-1434   3                                {
-1435   4                                  rangeMin = rangeMin+5;
-1436   4                                      if(rangeMin > 1000)
-1437   4                                         rangeMin = 1000;
-1438   4                                      disylay_mun(rangeMin,0,0,1);
-1439   4                                }
-1440   3                      }
-1441   2      
-1442   2                      if(key_num == KEY_SUB)
-1443   2                      {
-1444   3                          g_iProtect = 0;
-1445   3                      if(g_cUint == 0)
-1446   3                                {
-1447   4                                  range--;
-1448   4                                      if(range == 0)
-1449   4                                       {
-1450   5                                        range = 1;
-1451   5                                       }
-1452   4                                       disylay_mun(range,0,0,1);
-1453   4                                }
-1454   3                                else
-1455   3                                {
-1456   4                                  rangeMin = rangeMin-5;
-1457   4                                      if(rangeMin == 0)
-1458   4                                         rangeMin = 5;
-1459   4                                      disylay_mun(rangeMin,0,0,1);
-1460   4                                }
-1461   3                      }
-1462   2      
-1463   2                      if(key_num == KEY_SURE)
-1464   2                        {
-1465   3                             g_iProtect = 0;
-1466   3                             g_iRange =range;
-1467   3                         g_iRangeMin = rangeMin ;
-1468   3                                 Clean_Display(0,0,128,64,0);
-1469   3                             if(display_Protect1(chinese2,10)==0)
-1470   3                                   {
-1471   4                                         g_iRange = temp_range;
-1472   4                                         g_iRangeMin = temp_rangeMin;
-1473   4                                         range = g_iRange;
-1474   4                                         rangeMin = g_iRangeMin;
-1475   4                                       }
-1476   3                                       else
-1477   3                                       {
-1478   4                                         Dateeprom();
-1479   4                                       }
-1480   3                             Clean_Display(0,0,128,64,0);
-1481   3                             display_stringChinese(0,0,chinese);
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 25  
+1420   1              {
+1421   2                display_stringChar(5,1,arr1);
+1422   2                disylay_mun(rangeMin,0,0,1);
+1423   2              } 
+1424   1              while(1)
+1425   1              {
+1426   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+1427   2                  read_Maxout();
+1428   2                      key_num = key();
+1429   2                      if(key_num == KEY_FUNC)
+1430   2                      {
+1431   3                      g_cFunc++;
+1432   3                              key_release();
+1433   3                      return 0;
+1434   3                      }
+1435   2      
+1436   2                      if(key_num == KEY_ADD)
+1437   2                      {
+1438   3                          g_iProtect = 0;
+1439   3                      if(g_cUint == 0)
+1440   3                                {
+1441   4                                  range++;
+1442   4                                      if(range > 10)
+1443   4                                       {
+1444   5                                        range = 10;
+1445   5                                       }
+1446   4                                       disylay_mun(range,0,0,1);
+1447   4                                }
+1448   3                                else
+1449   3                                {
+1450   4                                  rangeMin = rangeMin+5;
+1451   4                                      if(rangeMin > 1000)
+1452   4                                         rangeMin = 1000;
+1453   4                                      disylay_mun(rangeMin,0,0,1);
+1454   4                                }
+1455   3                      }
+1456   2      
+1457   2                      if(key_num == KEY_SUB)
+1458   2                      {
+1459   3                          g_iProtect = 0;
+1460   3                      if(g_cUint == 0)
+1461   3                                {
+1462   4                                  range--;
+1463   4                                      if(range == 0)
+1464   4                                       {
+1465   5                                        range = 1;
+1466   5                                       }
+1467   4                                       disylay_mun(range,0,0,1);
+1468   4                                }
+1469   3                                else
+1470   3                                {
+1471   4                                  rangeMin = rangeMin-5;
+1472   4                                      if(rangeMin == 0)
+1473   4                                         rangeMin = 5;
+1474   4                                      disylay_mun(rangeMin,0,0,1);
+1475   4                                }
+1476   3                      }
+1477   2      
+1478   2                      if(key_num == KEY_SURE)
+1479   2                        {
+1480   3                             g_iProtect = 0;
+1481   3                             g_iRange =range;
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 25  
 
-1482   3                                      if(g_cUint == 0)
-1483   3                                      {
-1484   4                                        display_stringChar(5,1,arr0);
-1485   4                                        disylay_mun(range,0,0,1);
-1486   4                                      }
-1487   3                                      else
-1488   3                                      {
-1489   4                                        display_stringChar(5,1,arr1);
-1490   4                                        disylay_mun(rangeMin,0,0,1);
-1491   4                                      } 
-1492   3                        }
-1493   2      
-1494   2                      key_delay();
-1495   2                  if(return_Main())
-1496   2                      {
-1497   3                              return 0;
-1498   3                      }
-1499   2              //      disylay_mun(100,2,0,2);
-1500   2              }
-1501   1      }
-1502          
-1503          unsigned char display_Protect1(unsigned char ** chinese,char num)
-1504          {
-1505   1              unsigned char key_num;
-1506   1      //      unsigned char i;
-1507   1          
-1508   1         unsigned char password=0;
-1509   1       //  unsigned char* chinese[] ={font_22,font_23,yi,font_00,font_00};      //密码1
-1510   1         code char arrOK[] = {'O','K',' ',' ',' ','\0'};
-1511   1         code char arrNO[] = {'N','O',' ',' ',' ','\0'};
-1512   1         code char arr[] = {'e','r','r','\0'};
-1513   1              display_stringChinese(0,0,chinese);
-1514   1              
-1515   1        //    display_stringChar(6,1,arr); 
-1516   1          disylay_mun(password,0,0,1);
-1517   1              key_release();
-1518   1              while(1)
-1519   1              {
-1520   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
-1521   2                  read_Maxout();
-1522   2                      key_num = key();
-1523   2      //              if(key_num == KEY_FUNC)
-1524   2      //              {
-1525   2      //                      key_release();
-1526   2      //              return 0;
-1527   2      //              }                                                                                                                                                                               `
-1528   2                      if(key_num == KEY_ADD)
-1529   2                      {
-1530   3                         g_iProtect = 0;
-1531   3                         password++;
-1532   3                         disylay_mun(password,0,0,1);
-1533   3                        
-1534   3                      }
-1535   2                      if(key_num == KEY_SUB)
-1536   2                      {
-1537   3                         g_iProtect = 0;
-1538   3                         password--;
-1539   3                         disylay_mun(password,0,0,1);
-1540   3                        
-1541   3                      }
-1542   2                      if(key_num == KEY_SURE)
-1543   2                      {
-C51 COMPILER V9.01   DISPLAY                                                               05/17/2015 23:01:56 PAGE 26  
+1482   3                         g_iRangeMin = rangeMin ;
+1483   3                                 Clean_Display(0,0,128,64,0);
+1484   3                             if(display_Protect1(chinese2,10)==0)
+1485   3                                   {
+1486   4                                         g_iRange = temp_range;
+1487   4                                         g_iRangeMin = temp_rangeMin;
+1488   4                                         range = g_iRange;
+1489   4                                         rangeMin = g_iRangeMin;
+1490   4                                       }
+1491   3                                       else
+1492   3                                       {
+1493   4                                         Dateeprom();
+1494   4                                       }
+1495   3                             Clean_Display(0,0,128,64,0);
+1496   3                             display_stringChinese(0,0,chinese);
+1497   3                                      if(g_cUint == 0)
+1498   3                                      {
+1499   4                                        display_stringChar(5,1,arr0);
+1500   4                                        disylay_mun(range,0,0,1);
+1501   4                                      }
+1502   3                                      else
+1503   3                                      {
+1504   4                                        display_stringChar(5,1,arr1);
+1505   4                                        disylay_mun(rangeMin,0,0,1);
+1506   4                                      } 
+1507   3                        }
+1508   2      
+1509   2                      key_delay();
+1510   2                  if(return_Main())
+1511   2                      {
+1512   3                              return 0;
+1513   3                      }
+1514   2              //      disylay_mun(100,2,0,2);
+1515   2              }
+1516   1      }
+1517          
+1518          unsigned char display_Protect1(unsigned char ** chinese,char num)
+1519          {
+1520   1              unsigned char key_num;
+1521   1      //      unsigned char i;
+1522   1          
+1523   1         unsigned char password=0;
+1524   1       //  unsigned char* chinese[] ={font_22,font_23,yi,font_00,font_00};      //密码1
+1525   1         code char arrOK[] = {'O','K',' ',' ',' ','\0'};
+1526   1         code char arrNO[] = {'N','O',' ',' ',' ','\0'};
+1527   1         code char arr[] = {'e','r','r','\0'};
+1528   1              display_stringChinese(0,0,chinese);
+1529   1              
+1530   1        //    display_stringChar(6,1,arr); 
+1531   1          disylay_mun(password,0,0,1);
+1532   1              key_release();
+1533   1              while(1)
+1534   1              {
+1535   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
+1536   2                  read_Maxout();
+1537   2                      key_num = key();
+1538   2      //              if(key_num == KEY_FUNC)
+1539   2      //              {
+1540   2      //                      key_release();
+1541   2      //              return 0;
+1542   2      //              }                                                                                                                                                                               `
+1543   2                      if(key_num == KEY_ADD)
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 26  
 
-1544   3                         key_release();
+1544   2                      {
 1545   3                         g_iProtect = 0;
-1546   3                         if(password == num)
-1547   3                           {
-1548   4                                      display_stringChar(0,1,arrOK);
-1549   4                                      delay(1000);
-1550   4                                      g_cFunc = 1;
-1551   4                                      return 1;
-1552   4                               }
-1553   3                               else
-1554   3                               {
-1555   4                                      display_stringChar(0,1,arrNO);
-1556   4                                      delay(1000);
-1557   4                                      disylay_mun(password,0,0,1);
-1558   4                                      if(g_cFunc == 13) 
-1559   4                                        {
-1560   5                                           g_cSecrit_Num++;
-1561   5                                                 if(g_cSecrit_Num == 5)
-1562   5                                                     g_cSecrit_Num = 4;
-1563   5                                               Dateeprom();
-1564   5                                               if(g_cSecrit_Num>=3)
-1565   5                                                {
-1566   6                                                  Clean_Display(0,0,128,64,0);
-1567   6                                                       display_stringChar(6,1,arr);
-1568   6                                                              while(1)
-1569   6                                                      {
-1570   7                                                      }
-1571   6                                                }
-1572   5                                        }
-1573   4                               }
-1574   3                      }
-1575   2                      if(key_num == KEY_FUNC)
-1576   2                      {
-1577   3                          key_release();
-1578   3                              return 0;
-1579   3                      }
-1580   2                         key_delay();
-1581   2                              if(return_Main())
-1582   2                               {
-1583   3                                  return 0;
-1584   3                               }
-1585   2              //      disylay_mun(100,2,0,2);
-1586   2              }
-1587   1      }
-1588          
-1589          
-1590          
+1546   3                         password++;
+1547   3                         disylay_mun(password,0,0,1);
+1548   3                        
+1549   3                      }
+1550   2                      if(key_num == KEY_SUB)
+1551   2                      {
+1552   3                         g_iProtect = 0;
+1553   3                         password--;
+1554   3                         disylay_mun(password,0,0,1);
+1555   3                        
+1556   3                      }
+1557   2                      if(key_num == KEY_SURE)
+1558   2                      {
+1559   3                         key_release();
+1560   3                         g_iProtect = 0;
+1561   3                         if(password == num)
+1562   3                           {
+1563   4                                      display_stringChar(0,1,arrOK);
+1564   4                                      delay(1000);
+1565   4                                      g_cFunc = 1;
+1566   4                                      return 1;
+1567   4                               }
+1568   3                               else
+1569   3                               {
+1570   4                                      display_stringChar(0,1,arrNO);
+1571   4                                      delay(1000);
+1572   4                                      disylay_mun(password,0,0,1);
+1573   4                                      if(g_cFunc == 13) 
+1574   4                                        {
+1575   5                                           g_cSecrit_Num++;
+1576   5                                                 if(g_cSecrit_Num == 5)
+1577   5                                                     g_cSecrit_Num = 4;
+1578   5                                               Dateeprom();
+1579   5                                               if(g_cSecrit_Num>=3)
+1580   5                                                {
+1581   6                                                  Clean_Display(0,0,128,64,0);
+1582   6                                                       display_stringChar(6,1,arr);
+1583   6                                                              while(1)
+1584   6                                                      {
+1585   7                                                      }
+1586   6                                                }
+1587   5                                        }
+1588   4                               }
+1589   3                      }
+1590   2                      if(key_num == KEY_FUNC)
+1591   2                      {
+1592   3                          key_release();
+1593   3                              return 0;
+1594   3                      }
+1595   2                         key_delay();
+1596   2                              if(return_Main())
+1597   2                               {
+1598   3                                  return 0;
+1599   3                               }
+1600   2              //      disylay_mun(100,2,0,2);
+1601   2              }
+1602   1      }
+1603          
+1604          
+1605          
+C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 21:09:19 PAGE 27  
+
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   7530    ----
+   CODE SIZE        =   7512    ----
    CONSTANT SIZE    =    679    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =     12     299
+   PDATA SIZE       =     13     303
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

@@ -67,25 +67,14 @@ unsigned int key_AddSub(unsigned int number,unsigned char point,unsigned char st
 		}
 	   if(key() == KEY_SUB)
 	    {
-		  number--;
-		  g_iProtect = 0;
-		  if(g_cFunc != 5)
-		  {
-			  if(number ==65535)
+		    g_iProtect = 0;
+		    number--;
+		    if(number == 65535)
 			   {
 			     number = max;
 			   }
-		   }
-		   else
-		   {
-		      if(number ==0)
-			   {
-			     number = max;
-			   }
-		   }
 		  disylay_mun(number,point,start_x,start_y);
 		}
-		
 		return number;
 
 } 

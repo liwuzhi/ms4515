@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   SPD6000                                                               05/17/2015 23:01:58 PAGE 1   
+C51 COMPILER V9.01   SPD6000                                                               05/20/2015 21:09:21 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE SPD6000
@@ -62,7 +62,7 @@ line level    source
   53   1        return rxByte;
   54   1      }
   55          
-C51 COMPILER V9.01   SPD6000                                                               05/17/2015 23:01:58 PAGE 2   
+C51 COMPILER V9.01   SPD6000                                                               05/20/2015 21:09:21 PAGE 2   
 
   56          /*向传感器读取压差值*/
   57          unsigned char MS4515DO_read(unsigned char * p,unsigned char* temperature)
@@ -120,92 +120,78 @@ line level    source
  108           float date_Smooth()
  109           {
  110   1          
- 111   1      //   static float pressre[SMOTH_NUMBER] = {0.0,0.0,0.0};
+ 111   1         static float pressre[SMOTH_NUMBER] = {0.0,0.0,0.0};
  112   1         static float sum_old = 0;
  113   1      //   static char first_flag = 1;
  114   1         float ret;
  115   1         float sum = 0;
  116   1         char j=0;
-C51 COMPILER V9.01   SPD6000                                                               05/17/2015 23:01:58 PAGE 3   
+C51 COMPILER V9.01   SPD6000                                                               05/20/2015 21:09:21 PAGE 3   
 
- 117   1      //   static char i = 0;
+ 117   1         static char i = 0;
  118   1      
  119   1        Ms4515 date1;
- 120   1        /*    if(first_flag == 1)
- 121   1                {
- 122   1                    data_read(&date1);
- 123   1                    pressre[0] = date1.pressure;
- 124   1                        
- 125   1                        data_read(&date1);
- 126   1                    pressre[1] = date1.pressure;
- 127   1                        
- 128   1                        data_read(&date1);
- 129   1                    pressre[2] = date1.pressure;      
- 130   1                        
- 131   1                        for(j=0;j<10;i++)
- 132   1      
- 133   1                        SomeNOP()
- 134   1                        first_flag = 0;      
- 135   1                }*/
- 136   1           data_read(&date1);
- 137   1      //       pressre[i] = date1.pressure;
- 138   1      //       i++;
- 139   1      //       if(i == SMOTH_NUMBER)
- 140   1      //         {
- 141   1      //           i= 0;
- 142   1      //         }
- 143   1      //        for(j=0;j<SMOTH_NUMBER;j++)
- 144   1      //         {
- 145   1      //           sum = sum+pressre[j];
- 146   1      //         }
- 147   1              sum = date1.pressure;
- 148   1                 //sum = sum/SMOTH_NUMBER;
- 149   1                 ret = ((INTEGRAL_MAX+1-g_cIntegral)*sum+g_cIntegral*sum_old)/(INTEGRAL_MAX+1);
- 150   1                 sum_old = ret;
- 151   1                 return ret;
- 152   1       }
- 153          
- 154           /***风速值******/
- 155          float Wid_Speed()
- 156           {
- 157   1              
- 158   1           float windSpeed; //最后的流速
- 159   1               int pressure; // 风速的差压值
- 160   1               float ch4;  //甲烷值
- 161   1               float tmpter;    //温度值
- 162   1               float p_pase;    //绝压值
- 163   1               #ifndef _DEBUG_
- 164   1                pressure = date_Smooth();
- 165   1                ch4= read_ch4();
- 166   1                if(ch4<0.001)
- 167   1                {
- 168   2                  ch4 = 0.0;
- 169   2                }
- 170   1                p_pase = date_Smooth_4525(&tmpter);
- 171   1               #endif
- 172   1               // windSpeed = (sqrt(pressure*1.6))*g_fK1*g_fK2;
- 173   1               windSpeed = (sqrt(pressure*2/((3.458-0.01533*ch4)*p_pase/(273.15+tmpter))))*g_fK1*g_fK2;
- 174   1      //        ret = ((INTEGRAL_MAX+1-g_cIntegral)*windSpeed+g_cIntegral*windSpeed_old)/(INTEGRAL_MAX+1);
- 175   1      //        windSpeed_old = ret;
- 176   1                return windSpeed ;      
- 177   1       }
- 178          
-C51 COMPILER V9.01   SPD6000                                                               05/17/2015 23:01:58 PAGE 4   
-
- 179          
- 180          
- 181          
- 182          
- 183           
+ 120   1           data_read(&date1);
+ 121   1               pressre[i] = date1.pressure;
+ 122   1               i++;
+ 123   1               if(i == SMOTH_NUMBER)
+ 124   1                 {
+ 125   2                   i= 0;
+ 126   2                 }
+ 127   1                for(j=0;j<SMOTH_NUMBER;j++)
+ 128   1                 {
+ 129   2                   sum = sum+pressre[j];
+ 130   2                 }
+ 131   1              //sum = date1.pressure;
+ 132   1                 sum = sum/SMOTH_NUMBER;
+ 133   1                 ret = ((INTEGRAL_MAX+1-g_cIntegral)*sum+g_cIntegral*sum_old)/(INTEGRAL_MAX+1);
+ 134   1                 sum_old = ret;
+ 135   1                 return ret;
+ 136   1       }
+ 137          
+ 138           /***风速值******/
+ 139          float Wid_Speed()
+ 140           {
+ 141   1              
+ 142   1           float windSpeed; //最后的流速
+ 143   1               int pressure; // 风速的差压值
+ 144   1               float ch4;  //甲烷值
+ 145   1               float tmpter;    //温度值
+ 146   1               float p_pase;    //绝压值
+ 147   1               int temp = 0;
+ 148   1               #ifndef _DEBUG_
+ 149   1                pressure = date_Smooth();
+ 150   1                ch4= read_ch4();
+ 151   1                if(ch4<0.001)
+ 152   1                {
+ 153   2                  ch4 = 0.0;
+ 154   2                }
+ 155   1                p_pase = date_Smooth_4525(&tmpter);
+ 156   1               #endif
+ 157   1               
+ 158   1               windSpeed = (sqrt(pressure*2/((3.458-0.01533*ch4)*p_pase/(273.15+tmpter))))*g_fK1*g_fK2;
+ 159   1      
+ 160   1            temp = windSpeed*10;
+ 161   1                windSpeed = (float)temp/10;
+ 162   1                return windSpeed ;      
+ 163   1       }
+ 164          
+ 165          
+ 166          
+ 167          
+ 168          
+ 169           
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    835    ----
+   CODE SIZE        =    985    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =      4      45
+   PDATA SIZE       =     17      51
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
+C51 COMPILER V9.01   SPD6000                                                               05/20/2015 21:09:21 PAGE 4   
+
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
