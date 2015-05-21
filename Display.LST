@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 1   
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE DISPLAY
@@ -62,7 +62,7 @@ line level    source
   53   2               }
   54   1               else
   55   1               {
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 2   
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 2   
 
   56   2                 num =0;
   57   2               }
@@ -126,7 +126,7 @@ line level    source
  115   2                 Display_Onechar((start_x+3)*8,start_y*2,temp[3],0);
  116   2                 Display_Onechar((start_x+4)*8,start_y*2,temp[4],0);
  117   2                 Display_Onechar((start_x+5)*8,start_y*2,temp[5],0);
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 3   
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 3   
 
  118   2              }
  119   1              else
@@ -190,7 +190,7 @@ line level    source
  177   3                       }
  178   2               }
  179   1         for(i=0;i<9;i++)
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 4   
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 4   
 
  180   1         {
  181   2            Display_Onechar((start_x+i)*8,start_y*2,temp[i],0);
@@ -254,7 +254,7 @@ line level    source
  239   1         float p_flux;
  240   1         float p_pase;
  241   1         float ch4;
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 5   
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 5   
 
  242   1         static char flag=0;
  243   1         static char flag1=0;
@@ -318,7 +318,7 @@ line level    source
  301   1              display_stringChar(6,1,arr);
  302   1              disylay_mun(preassure,0,0,1); 
  303   1      
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 6   
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 6   
 
  304   1              while(1)
  305   1              {
@@ -382,7 +382,7 @@ line level    source
  363   3                      }
  364   2              area = key_AddSub(area,0,0,1,10000);
  365   2                      if(key_num == KEY_SURE)
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 7   
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 7   
 
  366   2                      {
  367   3                         g_iProtect = 0;
@@ -416,8 +416,8 @@ line level    source
  395   1        unsigned char* chineseWork[] ={gong,kuang,font_00,font_00,font_00};     //工况
  396   1         unsigned char* chineseStandar[] ={biao,kuang,font_00,font_00,font_00}; //标况
  397   1        //code unsigned char* chineseFlux[] ={font_38,font_02,font_37,font_00,font_00};        //流量  此处应改成工况
- 398   1        code unsigned char* chinesePase[] = {font_13,font_14,font_37,font_00,font_00}; //压力
- 399   1        code unsigned char* chineseCH4[] = {jia,wan,font_37,font_00,font_00}; //甲烷
+ 398   1        code unsigned char* chinesePase[] = {font_13,font_14,font_00,font_00,font_00}; //压力
+ 399   1        code unsigned char* chineseCH4[] = {jia,wan,font_00,font_00,font_00}; //甲烷
  400   1        //code unsigned char*  chineseMin[] = {font_32,font_33,font_34,font_35,font_36};//流量变送器
  401   1        //unsigned char * code chineseisch4[] = {chun,font_02,font_37,font_00,font_00};        //纯量  此处应改成标况
  402   1        unsigned char *code chineseTmp[] = {font_41,font_42,font_00,font_00,font_00};  //温度
@@ -446,7 +446,7 @@ line level    source
  425   2                      display_stringChar(12,0,arrS);
  426   2                }
  427   1                else
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 8   
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 8   
 
  428   1                {
  429   2                  display_stringChar(10,0,arrMin);
@@ -510,7 +510,7 @@ line level    source
  487   2                                                      display_stringChar(5,2,arrERR); //显示--
  488   2                                              }
  489   1                                        if(i == 0)
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 9   
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 9   
 
  490   1                                         {
  491   2                          flux_num_1++;
@@ -574,7 +574,7 @@ line level    source
  549          {
  550   1      
  551   1         unsigned char* chinese[] ={zong,font_02,font_00,font_00,font_00};      //总量
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 10  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 10  
 
  552   1         unsigned char* chineseWork[] ={gong,kuang,font_00,font_00,font_00};    //工况
  553   1         unsigned char* chineseStandar[] ={biao,kuang,font_00,font_00,font_00}; //标况
@@ -638,7 +638,7 @@ line level    source
  611   3                                         if(g_iProtect>=900)   //在第一次按下时跳转到密码一界面，不然跳转跳转到正常的下一个界面
  612   3                                         {
  613   4                                               g_cFunc = 15;
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 11  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 11  
 
  614   4                                         }
  615   3                                         else
@@ -702,7 +702,7 @@ line level    source
  673   1      }
  674          
  675          unsigned char display_WindSpeed()
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 12  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 12  
 
  676          {
  677   1              unsigned char key_num;
@@ -766,7 +766,7 @@ line level    source
  735   1              while(1)
  736   1              {
  737   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 13  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 13  
 
  738   2                  read_Maxout();
  739   2                      key_num = key();
@@ -830,7 +830,7 @@ line level    source
  797   2                  if(return_Main())
  798   2                      {
  799   3                              return 0;
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 14  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 14  
 
  800   3                      }
  801   2              }
@@ -894,7 +894,7 @@ line level    source
  859   4                          }
  860   3                         if(g_fK1 <= 0.1)
  861   3                              {
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 15  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 15  
 
  862   4                                g_fK1 = 0.1;
  863   4                          }
@@ -958,7 +958,7 @@ line level    source
  921   2                  if(g_cMaxOut ==0 || g_cMaxOut ==2)
  922   2                  read_Maxout();
  923   2                      key_num = key();
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 16  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 16  
 
  924   2                      if(key_num == KEY_FUNC)
  925   2                      {
@@ -1022,7 +1022,7 @@ line level    source
  983   3                              key_release();
  984   3                      return 0;
  985   3                      }
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 17  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 17  
 
  986   2                      temp = key_AddSub(integral,0,0,1,19);
  987   2                       integral  = temp;
@@ -1086,7 +1086,7 @@ line level    source
 1045   2                      if(key_num == KEY_FUNC)
 1046   2                      {
 1047   3                          g_iProtect = 0;
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 18  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 18  
 
 1048   3                      g_cFunc++;
 1049   3                              key_release();
@@ -1150,7 +1150,7 @@ line level    source
 1107   1              display_stringChinese(0,0,chinese);
 1108   1               if(uint1 == 1)
 1109   1                {
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 19  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 19  
 
 1110   2                        display_stringChar(3,1,arr1);
 1111   2                }
@@ -1214,7 +1214,7 @@ line level    source
 1169   3                                       else
 1170   3                                       {
 1171   4                                         Dateeprom();
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 20  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 20  
 
 1172   4                                       }
 1173   3                             Clean_Display(0,0,128,64,0);
@@ -1278,7 +1278,7 @@ line level    source
 1231   3                              if(workChange == 2)
 1232   3                                workChange = 0;
 1233   3                         if(workChange == 1)
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 21  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 21  
 
 1234   3                         {
 1235   4                           display_stringChinese(0,1,chinese_isCh4);
@@ -1342,7 +1342,7 @@ line level    source
 1293   1      }
 1294          
 1295          
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 22  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 22  
 
 1296          unsigned char display_MaxOut()
 1297          {
@@ -1406,7 +1406,7 @@ line level    source
 1355   4                         }
 1356   3                         else
 1357   3                         {
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 23  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 23  
 
 1358   4                           display_stringChinese(7,0,chineseClear);
 1359   4                         }
@@ -1470,7 +1470,7 @@ line level    source
 1417          unsigned char display_Range()
 1418          {
 1419   1              unsigned char key_num;
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 24  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 24  
 
 1420   1              unsigned int range,rangeMin,temp_range,temp_rangeMin;
 1421   1      
@@ -1534,7 +1534,7 @@ line level    source
 1479   3                                {
 1480   4                                  range--;
 1481   4                                      if(range == 0)
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 25  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 25  
 
 1482   4                                       {
 1483   5                                        range = 1;
@@ -1598,7 +1598,7 @@ line level    source
 1541   1         unsigned char password=0;
 1542   1       //  unsigned char* chinese[] ={font_22,font_23,yi,font_00,font_00};      //密码1
 1543   1         code char arrOK[] = {'O','K',' ',' ',' ','\0'};
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 26  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 26  
 
 1544   1         code char arrNO[] = {'N','O',' ',' ',' ','\0'};
 1545   1         code char arr[] = {'e','r','r','\0'};
@@ -1662,7 +1662,7 @@ line level    source
 1603   7                                                      }
 1604   6                                                }
 1605   5                                        }
-C51 COMPILER V9.01   DISPLAY                                                               05/20/2015 23:55:46 PAGE 27  
+C51 COMPILER V9.01   DISPLAY                                                               05/21/2015 22:39:39 PAGE 27  
 
 1606   4                               }
 1607   3                      }

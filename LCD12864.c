@@ -8,7 +8,7 @@ void Delay_1ms(uint x)
 	unsigned char j;
 	while(x--)
 	{
-		for(j=0;j<125;j++)
+		for(j=0;j<120;j++)
 		{;}
 	}
 }
@@ -16,7 +16,7 @@ void Delay_1ms(uint x)
 void Lcm_Delay(void)//液晶延时，防止单片机时钟过快，乱显
 {
    char i;
-   for(i=0;i<3;i++)
+   for(i=0;i<2;i++)
    {	
 	_nop_();
 	_nop_();

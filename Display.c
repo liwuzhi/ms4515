@@ -395,8 +395,8 @@ void mian1_chinese()
   unsigned char* chineseWork[] ={gong,kuang,font_00,font_00,font_00};	  //工况
    unsigned char* chineseStandar[] ={biao,kuang,font_00,font_00,font_00}; //标况
   //code unsigned char* chineseFlux[] ={font_38,font_02,font_37,font_00,font_00};	 //流量	 此处应改成工况
-  code unsigned char* chinesePase[] = {font_13,font_14,font_37,font_00,font_00}; //压力
-  code unsigned char* chineseCH4[] = {jia,wan,font_37,font_00,font_00}; //甲烷
+  code unsigned char* chinesePase[] = {font_13,font_14,font_00,font_00,font_00}; //压力
+  code unsigned char* chineseCH4[] = {jia,wan,font_00,font_00,font_00}; //甲烷
   //code unsigned char*  chineseMin[] = {font_32,font_33,font_34,font_35,font_36};//流量变送器
   //unsigned char * code chineseisch4[] = {chun,font_02,font_37,font_00,font_00};	 //纯量	 此处应改成标况
   unsigned char *code chineseTmp[] = {font_41,font_42,font_00,font_00,font_00};	 //温度

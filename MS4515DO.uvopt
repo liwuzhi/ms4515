@@ -989,9 +989,9 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>11</ColumnNumber>
+      <ColumnNumber>20</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>15</TopLine>
+      <TopLine>4</TopLine>
       <CurrentLine>15</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\LCD12864.c</PathWithFileName>
@@ -1003,10 +1003,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>7</ColumnNumber>
+      <ColumnNumber>14</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>426</TopLine>
-      <CurrentLine>447</CurrentLine>
+      <TopLine>302</TopLine>
+      <CurrentLine>307</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\ziku.c</PathWithFileName>
       <FilenameWithoutPath>ziku.c</FilenameWithoutPath>
@@ -1017,10 +1017,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>119</ColumnNumber>
+      <ColumnNumber>54</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1598</TopLine>
-      <CurrentLine>1611</CurrentLine>
+      <TopLine>459</TopLine>
+      <CurrentLine>473</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Display.c</PathWithFileName>
       <FilenameWithoutPath>Display.c</FilenameWithoutPath>
@@ -1045,10 +1045,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>7</ColumnNumber>
+      <ColumnNumber>35</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>26</TopLine>
-      <CurrentLine>30</CurrentLine>
+      <CurrentLine>35</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\key.c</PathWithFileName>
       <FilenameWithoutPath>key.c</FilenameWithoutPath>
@@ -1059,10 +1059,10 @@
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>4</ColumnNumber>
+      <ColumnNumber>17</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>408</TopLine>
-      <CurrentLine>421</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>20</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\storage.c</PathWithFileName>
       <FilenameWithoutPath>storage.c</FilenameWithoutPath>
@@ -1101,10 +1101,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>9</ColumnNumber>
+      <ColumnNumber>22</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>13</TopLine>
+      <CurrentLine>28</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\pwm.c</PathWithFileName>
       <FilenameWithoutPath>pwm.c</FilenameWithoutPath>
@@ -1129,41 +1129,15 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>85</ColumnNumber>
+      <ColumnNumber>13</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>26</TopLine>
-      <CurrentLine>32</CurrentLine>
+      <CurrentLine>31</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\CH4.C</PathWithFileName>
       <FilenameWithoutPath>CH4.C</FilenameWithoutPath>
     </File>
   </Group>
-
-  <AlienFiles>
-    <PathWithFilename>F:\小舅程序\MS4515DO_NEW_新版字\CH4.H</PathWithFilename>
-    <TopLine>1</TopLine>
-    <CurrentLine>1</CurrentLine>
-    <Constant>0</Constant>
-    <WindowPosition>
-      <length>0</length>
-      <flags>0</flags>
-      <showCmd>0</showCmd>
-      <MinPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MinPosition>
-      <MaxPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MaxPosition>
-      <NormalPosition>
-        <Top>0</Top>
-        <Left>0</Left>
-        <Right>0</Right>
-        <Bottom>0</Bottom>
-      </NormalPosition>
-    </WindowPosition>
-  </AlienFiles>
 
   <AlienFiles>
     <PathWithFilename>F:\小舅程序\MS4515DO_NEW_新版字\MS4525.H</PathWithFilename>
@@ -1299,6 +1273,32 @@
     <PathWithFilename>F:\小舅程序\MS4515DO_NEW_新版字\GLOBAL_VAR.H</PathWithFilename>
     <TopLine>50</TopLine>
     <CurrentLine>75</CurrentLine>
+    <Constant>0</Constant>
+    <WindowPosition>
+      <length>0</length>
+      <flags>0</flags>
+      <showCmd>0</showCmd>
+      <MinPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MinPosition>
+      <MaxPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MaxPosition>
+      <NormalPosition>
+        <Top>0</Top>
+        <Left>0</Left>
+        <Right>0</Right>
+        <Bottom>0</Bottom>
+      </NormalPosition>
+    </WindowPosition>
+  </AlienFiles>
+
+  <AlienFiles>
+    <PathWithFilename>F:\小舅程序\MS4515DO_NEW_新版字\CH4.H</PathWithFilename>
+    <TopLine>1</TopLine>
+    <CurrentLine>1</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -2662,13 +2662,37 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>2</ActiveTab>
+      <ActiveTab>6</ActiveTab>
       <Documents>
         <Doc>
+          <Name>.\pwm.c</Name>
+          <ColumnNumber>22</ColumnNumber>
+          <TopLine>13</TopLine>
+          <CurrentLine>28</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\CH4.C</Name>
+          <ColumnNumber>13</ColumnNumber>
+          <TopLine>26</TopLine>
+          <CurrentLine>31</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\ziku.c</Name>
+          <ColumnNumber>14</ColumnNumber>
+          <TopLine>302</TopLine>
+          <CurrentLine>307</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\LCD12864.c</Name>
+          <ColumnNumber>20</ColumnNumber>
+          <TopLine>4</TopLine>
+          <CurrentLine>15</CurrentLine>
+        </Doc>
+        <Doc>
           <Name>.\storage.c</Name>
-          <ColumnNumber>4</ColumnNumber>
-          <TopLine>408</TopLine>
-          <CurrentLine>421</CurrentLine>
+          <ColumnNumber>17</ColumnNumber>
+          <TopLine>1</TopLine>
+          <CurrentLine>20</CurrentLine>
         </Doc>
         <Doc>
           <Name>CH4.H</Name>
@@ -2678,15 +2702,15 @@
         </Doc>
         <Doc>
           <Name>.\Display.c</Name>
-          <ColumnNumber>119</ColumnNumber>
-          <TopLine>1598</TopLine>
-          <CurrentLine>1611</CurrentLine>
+          <ColumnNumber>54</ColumnNumber>
+          <TopLine>459</TopLine>
+          <CurrentLine>473</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\key.c</Name>
-          <ColumnNumber>7</ColumnNumber>
+          <ColumnNumber>35</ColumnNumber>
           <TopLine>26</TopLine>
-          <CurrentLine>30</CurrentLine>
+          <CurrentLine>35</CurrentLine>
         </Doc>
         <Doc>
           <Name>GLOBAL_VAR.H</Name>
@@ -2731,18 +2755,6 @@
           <CurrentLine>1</CurrentLine>
         </Doc>
         <Doc>
-          <Name>.\ziku.c</Name>
-          <ColumnNumber>7</ColumnNumber>
-          <TopLine>426</TopLine>
-          <CurrentLine>447</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\CH4.C</Name>
-          <ColumnNumber>85</ColumnNumber>
-          <TopLine>26</TopLine>
-          <CurrentLine>32</CurrentLine>
-        </Doc>
-        <Doc>
           <Name>ZIKU.H</Name>
           <ColumnNumber>22</ColumnNumber>
           <TopLine>39</TopLine>
@@ -2759,12 +2771,6 @@
           <ColumnNumber>16</ColumnNumber>
           <TopLine>1</TopLine>
           <CurrentLine>10</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\LCD12864.c</Name>
-          <ColumnNumber>11</ColumnNumber>
-          <TopLine>15</TopLine>
-          <CurrentLine>15</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

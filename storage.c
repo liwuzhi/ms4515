@@ -2,8 +2,8 @@
 #include "eeprom.h"
 #include "global_var.h"
 
-#define SECRIT     0x6800
-#define START      0x6801
+#define SECRIT     0x6a00
+#define START      0x6a01
 
 #define ZERO_ADD_1 0x6fF0
 #define ZERO_ADD_2 0x6fF1
@@ -51,55 +51,55 @@
 #define ZERO_ADD_REV_2 0x6fe2
 
 
-#define START1     0x6af0
-#define START2     0x6af1
+#define START1     0x6cf0
+#define START2     0x6cf1
 
 /**********二级eeprom保护数据******************/
-#define ZERO_ADD_1_2 0x64F0
-#define ZERO_ADD_2_2 0x64F1
+#define ZERO_ADD_1_2 0x68F0
+#define ZERO_ADD_2_2 0x68F1
 
-#define K2_ADD_1_2    0x64F2
-#define K2_ADD_2_2    0x64F3
+#define K2_ADD_1_2    0x68F2
+#define K2_ADD_2_2    0x68F3
 
-#define K1_ADD_1_2    0x64FB
-#define K1_ADD_2_2    0x64FC
+#define K1_ADD_1_2    0x68FB
+#define K1_ADD_2_2    0x68FC
 
-#define INTEGRAL_2   0x64f4
+#define INTEGRAL_2   0x68f4
 
-#define AREA_1_2     0x64f9
-#define AREA_2_2     0x64fa
+#define AREA_1_2     0x68f9
+#define AREA_2_2     0x68fa
 
-#define UNIT_2       0x64f7
+#define UNIT_2       0x68f7
 
-#define RANGE_2      0x64f8
+#define RANGE_2      0x68f8
 
-#define RANGEMIN1_2  0x64f5
-#define RANGEMIN2_2  0x64f6
+#define RANGEMIN1_2  0x68f5
+#define RANGEMIN2_2  0x68f6
 
-#define SECRIT_NUM_2 0x64ff
+#define SECRIT_NUM_2 0x68ff
 
-#define ISCH4_2      0x64ef
+#define ISCH4_2      0x68ef
 
-#define MAXOUT_2     0x64ea
+#define MAXOUT_2     0x68ea
 
-#define SUM1_2       0x64ee
-#define SUM2_2       0x64ed
-#define SUM3_2       0x64ec
-#define SUM4_2       0x64eb
+#define SUM1_2       0x68ee
+#define SUM2_2       0x68ed
+#define SUM3_2       0x68ec
+#define SUM4_2       0x68eb
 
-#define SUM2_BIAO_1       0x64e6
-#define SUM2_BIAO_2       0x64e7
-#define SUM2_BIAO_3       0x64e8
-#define SUM2_BIAO_4       0x64e9
+#define SUM2_BIAO_1       0x68e6
+#define SUM2_BIAO_2       0x68e7
+#define SUM2_BIAO_3       0x68e8
+#define SUM2_BIAO_4       0x68e9
 
 
-#define SUM2_BIAO_CUN_1       0x64e5
-#define SUM2_BIAO_CUN_2       0x64e4
-#define SUM2_BIAO_CUN_3       0x64e3
-#define SUM2_BIAO_CUN_4       0x64e0  
+#define SUM2_BIAO_CUN_1       0x68e5
+#define SUM2_BIAO_CUN_2       0x68e4
+#define SUM2_BIAO_CUN_3       0x68e3
+#define SUM2_BIAO_CUN_4       0x68e0  
  
-#define ZERO_ADD_REV_1_2 0x64e1
-#define ZERO_ADD_REV_2_2 0x64e2
+#define ZERO_ADD_REV_1_2 0x68e1
+#define ZERO_ADD_REV_2_2 0x68e2
 
 
 void dat_Init()
