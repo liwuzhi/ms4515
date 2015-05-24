@@ -110,7 +110,6 @@ unsigned char MS4515DO_read(unsigned char * p,unsigned char* temperature)
     
    static float pressre[SMOTH_NUMBER] = {0.0,0.0,0.0};
    static float sum_old = 0;
-//   static char first_flag = 1;
    float ret;
    float sum = 0;
    char j=0;
@@ -128,7 +127,6 @@ unsigned char MS4515DO_read(unsigned char * p,unsigned char* temperature)
 	   {
 	     sum = sum+pressre[j];
 	   }
-        //sum = date1.pressure;
 	   sum = sum/SMOTH_NUMBER;
 	   ret = ((INTEGRAL_MAX+1-g_cIntegral)*sum+g_cIntegral*sum_old)/(INTEGRAL_MAX+1);
 	   sum_old = ret;
@@ -136,14 +134,14 @@ unsigned char MS4515DO_read(unsigned char * p,unsigned char* temperature)
  }
 
  /***风速值******/
-float Wid_Speed()
+float Wid_Speed(float *p_pase,float * tempter)
  {
         
      float windSpeed; //最后的流速
 	 int pressure; // 风速的差压值
 	 float ch4;  //甲烷值
-	 float tmpter;	  //温度值
-	 float p_pase;	  //绝压值
+//	 float tmpter;	  //温度值
+//	 float p_pase;	  //绝压值
 	 int temp = 0;
 	 #ifndef _DEBUG_
 	  pressure = date_Smooth();
@@ -152,10 +150,12 @@ float Wid_Speed()
 	  {
 	    ch4 = 0.0;
 	  }
-	  p_pase = date_Smooth_4525(&tmpter);
+	  *p_pase = date_Smooth_4525(tempter);
+	 //  *p_pase = 85.0;
+	  // *tempter = 26.5;
 	 #endif
 	 
-	 windSpeed = (sqrt(pressure*2/((3.458-0.01533*ch4)*p_pase/(273.15+tmpter))))*g_fK1*g_fK2;
+	 windSpeed = (sqrt(pressure*2/((3.458-0.01533*ch4)*(*p_pase)/(273.15+*tempter))))*g_fK1*g_fK2;
 
       temp = windSpeed*10;
 	  windSpeed = (float)temp/10;

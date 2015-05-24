@@ -12,5 +12,5 @@ unsigned char SPI_ReadByte();
 unsigned char MS4515DO_read(unsigned char * p,unsigned char* temperature);
 void data_read(Ms4515* date)  ;
  float date_Smooth();
-float Wid_Speed();
+float Wid_Speed(float *p_pase,float * tempter);
 #endif

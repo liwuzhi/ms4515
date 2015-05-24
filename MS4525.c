@@ -4,9 +4,9 @@
 #include "global_var.h"
 #include "MS4525.h"
 
-#define SMOTH_NUMBER 5
+#define SMOTH_NUMBER 3
 
-#define ZER0_SIZE 3
+//#define ZER0_SIZE 3
 
 #define INTEGRAL_MAX 19
 
@@ -40,45 +40,54 @@ unsigned char MS4525DO_read(unsigned char * p,unsigned char* temperature)
 		    {
 			  dat1 = 1638;
 	        }
-	      if(dat1>=14746)
+	   /*   if(dat1>=14746)
             {
 		      dat1 = 14746;
-	        }
+	        } */
 	     date->pressure = (dat1)*0.00789-12.928;//  date->pressure = ((dat1)*0.07751938-635)-g_fZero;
 		 if(date->pressure< 0.0)
 		   {
-		     date->pressure = -date->pressure;
+		     date->pressure = 0.0;
 		   }
 		   temper = temper/32;
 		date->temperature = temper*0.0977-50;
+		if(date->temperature > 150.0)
+		   {
+		    date->temperature = 150.0;
+		   }
+		else if(date->temperature < -50.0)
+		    {
+			  date->temperature = -50.0;
+			}
+
 	}
  }
  
 
 float date_Smooth_4525(float *tmp)
  {
-   static float pressre[SMOTH_NUMBER] = {0.0,0.0,0.0};
-   float sum = 0;
+//   static float pressre[SMOTH_NUMBER] = {0.0,0.0,0.0};
+ //  float sum = 0;
    static float sum_old = 0;
    float ret ;
-   char j=0;
-   static char i = 0;
+//   char j=0;
+//   static char i = 0;
 
   Ms4515 date1;
      data_read_4525(&date1);
 	 *tmp = date1.temperature;
-	 pressre[i] = date1.pressure;
-	 i++;
-	 if(i == SMOTH_NUMBER)
+//	 pressre[i] = date1.pressure;
+//	 i++;
+/*	 if(i == SMOTH_NUMBER)
 	   {
 	     i= 0;
 	   }
 	  for(j=0;j<SMOTH_NUMBER;j++)
 	   {
 	     sum = sum+pressre[j];
-	   }
-	   sum = sum/SMOTH_NUMBER;
-	   ret = ((INTEGRAL_MAX+1-g_cIntegral)*sum+g_cIntegral*sum_old)/(INTEGRAL_MAX+1);
+	   }  */
+//	   sum = sum/SMOTH_NUMBER;
+	   ret = ((INTEGRAL_MAX+1-g_cIntegral)*date1.pressure+g_cIntegral*sum_old)/(INTEGRAL_MAX+1);
 	   sum_old = ret;
 	   return ret;
  }

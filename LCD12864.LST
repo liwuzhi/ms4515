@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   LCD12864                                                              05/21/2015 22:39:39 PAGE 1   
+C51 COMPILER V9.01   LCD12864                                                              05/24/2015 16:02:55 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE LCD12864
@@ -62,7 +62,7 @@ line level    source
   53   1              RW=0;
   54   1              LCMdata=wrdata;
   55   1              E=1;    
-C51 COMPILER V9.01   LCD12864                                                              05/21/2015 22:39:39 PAGE 2   
+C51 COMPILER V9.01   LCD12864                                                              05/24/2015 16:02:55 PAGE 2   
 
   56   1              Lcm_Delay();//必须加延时，30M以上晶振须再加长延时
   57   1              E=0; 
@@ -126,7 +126,7 @@ line level    source
  115   3                                      disp_data=~(*graphic++);
  116   3                              else
  117   3                                      disp_data=*graphic++;           
-C51 COMPILER V9.01   LCD12864                                                              05/21/2015 22:39:39 PAGE 3   
+C51 COMPILER V9.01   LCD12864                                                              05/24/2015 16:02:55 PAGE 3   
 
  118   3                              if(address<64)
  119   3                              {
@@ -190,7 +190,7 @@ line level    source
  177   2                      address=pos_x;
  178   2                      page++;
  179   2              }                       
-C51 COMPILER V9.01   LCD12864                                                              05/21/2015 22:39:39 PAGE 4   
+C51 COMPILER V9.01   LCD12864                                                              05/24/2015 16:02:55 PAGE 4   
 
  180   1      }
  181          
@@ -254,7 +254,7 @@ line level    source
  239   1              Wr_Command_L(START_LINE); 
  240   1              Wr_Command_R(START_LINE);  //显示起始行
  241   1      
-C51 COMPILER V9.01   LCD12864                                                              05/21/2015 22:39:39 PAGE 5   
+C51 COMPILER V9.01   LCD12864                                                              05/24/2015 16:02:55 PAGE 5   
 
  242   1              Wr_Command_L(X_ADDRESS); 
  243   1              Wr_Command_R(X_ADDRESS);        //设置页地址

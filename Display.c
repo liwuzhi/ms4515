@@ -192,14 +192,10 @@ void read_senser(float* p_flux,float* p_pase,float ch4,float* tmpter)
 		      {
 			     ch4_temp= 0.0;
 			  }
-           *p_pase = date_Smooth_4525(tmpter); //读取绝压值
-		   temp = Wid_Speed();
-		  // if(temp>0.001)
-		   //  {
-		//	   num++;
-		//	 }
-		   //disylay_mun(temp*100,POINT_2,6,1);
-		   //disylay_mun(num,POINT_0,6,2);
+          // *p_pase = date_Smooth_4525(tmpter); //读取绝压值
+
+		   temp = Wid_Speed(p_pase,tmpter);
+		  
 	       if(g_cUint == 0)
 		   {
 		    if(g_cWorkChange == 1)	//工况
@@ -265,8 +261,8 @@ void read_Maxout()
 		  {
 		     ch4 =0.0;
 		  }
-           p_pase = date_Smooth_4525(&temper); //读取绝压值
-		  p_flux = Wid_Speed()*g_iArea/10000;
+          // p_pase = date_Smooth_4525(&temper); //读取绝压值
+		  p_flux = Wid_Speed(&p_pase,&temper)*g_iArea/10000;
 	       
 		 if(g_cUint == 0)
 		  {
@@ -474,7 +470,7 @@ void mian1_num(char i)
 			          disylay_mun(pase*10,POINT_1,7,1);	 //显示绝压的数据
 				      CR = 1;                         //PCA timer start run
 		              EPCAI = 1;
-				     pca_set2(pase);//设置绝压的输出脉冲
+				      pca_set2(pase);//设置绝压的输出脉冲
 				   }
 				   
 				   /*设置甲烷的数据*/
@@ -661,7 +657,7 @@ unsigned char display_Main()
 					display_sum(g_fSum,5,1); //显示工况累积值
 					display_sum(g_fSum_biao,5,2); //显示工况累积值
 					display_sum(g_fSum_biao_ch4,5,3);
-					//display_sum(12345678,6,3);
+					
 
 			}
 			else if(g_iTimebase>5)
@@ -677,12 +673,13 @@ unsigned char display_WindSpeed()
    	unsigned char key_num;
 	float windSpeed;
 	unsigned int play;
+	float pase,temper;
     code unsigned char* chinese[] ={font_38,font_04,font_00,font_00,font_00};  //流速
     code char arr[] = {'m','/','s','\0'};
 
 	display_stringChinese(0,0,chinese);
 	display_stringChar(6,1,arr);
-	windSpeed = Wid_Speed();
+	windSpeed = Wid_Speed(&pase,&temper);
 	play = windSpeed*10;
 	disylay_mun(play,1,0,1); 
 
@@ -701,7 +698,7 @@ unsigned char display_WindSpeed()
 
 	    if((g_iTimebase%READ_TIME) == 0)
 		 {
-		    windSpeed = Wid_Speed();
+		    windSpeed = Wid_Speed(&pase,&temper);
 			play =windSpeed*10;
 			disylay_mun(play,POINT_1,0,1);
 		 }
@@ -723,13 +720,14 @@ unsigned char display_WindSpeedZero()
 	unsigned int temper;
 	float pressure_sum = 0;
     int play;
+	float pase,tmpter;
     code unsigned char* chinese[] ={font_03,font_24,font_05,font_06,font_00};	  //零点校准
 	code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
     code char arr[] = {'m','/','s','\0'};
 
 	display_stringChinese(0,0,chinese);
 	display_stringChar(6,1,arr);
-	windSpeed = Wid_Speed();
+	windSpeed = Wid_Speed(&pase,&tmpter);
 	play = 	(int)(windSpeed*10);
 	disylay_mun(play,1,0,1);  
 	while(1)
@@ -781,14 +779,14 @@ unsigned char display_WindSpeedZero()
 		   Clean_Display(0,0,128,64,0);
 		   display_stringChinese(0,0,chinese);
 		   display_stringChar(6,1,arr);
-		   	windSpeed = Wid_Speed();
+		   	windSpeed = Wid_Speed(&pase,&tmpter);
         	play = 	(int)(windSpeed*10);
         	disylay_mun(play,1,0,1);
 		
 		  }
 		if((g_iTimebase%READ_TIME) == 0)
 		  {
-		    windSpeed = Wid_Speed();
+		    windSpeed = Wid_Speed(&pase,&tmpter);
 			play = 	(int)(windSpeed*10);
 			disylay_mun(play,1,0,1);
 //			disylay_mun(g_fZero*100,2,0,2);   //调试用，显示零点值为多少
@@ -807,13 +805,14 @@ unsigned char display_WindSpeedRate()
 	float windSpeed;
 	unsigned int play;
 	float k1;
+	float pase,tmpter;
    code unsigned char* chinese[] ={font_26,font_27,font_05,font_06,font_00};	  //精度校准
    code unsigned char* chinese2[] ={font_22,font_23,er,font_00,font_00};	  //密码2
    code char arr[] = {'m','/','s','\0'};
      k1=g_fK1;
 	display_stringChinese(0,0,chinese);
 	display_stringChar(6,1,arr);
-	windSpeed = Wid_Speed();
+	windSpeed = Wid_Speed(&pase,&tmpter);
 	play = 	(int)(windSpeed*10);
 	disylay_mun(play,1,0,1); 
 	while(1)
@@ -833,7 +832,7 @@ unsigned char display_WindSpeedRate()
 		if(key_num == KEY_ADD)
 		  {
 		   g_iProtect = 0;
-		   windSpeed = Wid_Speed(); 
+		   windSpeed = Wid_Speed(&pase,&tmpter); 
 		   g_fK1 = (windSpeed+0.1)/windSpeed*g_fK1;
 	       if(g_fK1 >= 20)
 			{
@@ -843,7 +842,7 @@ unsigned char display_WindSpeedRate()
 			{
 			  g_fK1 = 0.1;
 		    }
-			windSpeed = Wid_Speed();
+			windSpeed = Wid_Speed(&pase,&tmpter);
 			play = 	(int)(windSpeed*10);
 			disylay_mun(play,1,0,1);  
 		  }
@@ -851,7 +850,7 @@ unsigned char display_WindSpeedRate()
 		  if(key_num == KEY_SUB)
 		  {
 		   g_iProtect = 0;
-		   windSpeed = Wid_Speed(); 
+		   windSpeed = Wid_Speed(&pase,&tmpter); 
 		   g_fK1 = (windSpeed-0.1)/windSpeed*g_fK1;
 	       if(g_fK1 >= 20)
 			{
@@ -861,7 +860,7 @@ unsigned char display_WindSpeedRate()
 			{
 			  g_fK1 = 0.1;
 		    }
-			windSpeed = Wid_Speed();
+			windSpeed = Wid_Speed(&pase,&tmpter);
 			play = 	(int)(windSpeed*10);
 			disylay_mun(play,POINT_1,0,1);  
 		  }
@@ -882,14 +881,14 @@ unsigned char display_WindSpeedRate()
 			 }
 		   Clean_Display(0,0,128,64,0);
 		   display_stringChinese(0,0,chinese);
-		   	windSpeed = Wid_Speed();
+		   	windSpeed = Wid_Speed(&pase,&tmpter);
         	play = 	(int)(windSpeed*10);
      	   disylay_mun(play,POINT_1,0,1);
 		 //  disylay_mun(range,2,3,1);  
 		  }
 		 if(g_iTimebase == 1)
 		 {
-		   windSpeed = Wid_Speed();
+		   windSpeed = Wid_Speed(&pase,&tmpter);
 			play = 	(int)(windSpeed*10);
 			disylay_mun(play,POINT_1,0,1);
 		 }
